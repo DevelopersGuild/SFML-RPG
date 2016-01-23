@@ -24,9 +24,6 @@
     <ClCompile Include="..\..\src\ResourcePathWindows.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Overlap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tmx\DebugShape.cpp">
       <Filter>Source Files\tmxloader</Filter>
     </ClCompile>
@@ -50,9 +47,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Overlap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\ResourcePath.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -7,13 +7,15 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(640, 640), "DGProject");
 
-#ifdef _MSC_VER	//if Visual Studio
-	tmx::MapLoader map("..\\..\\maps\\");
-#endif
+	//set MapLoader to open the "map" folder
+	//we will add a resource manager later
 #ifdef __MACH__	//if Mac
 	tmx::MapLoader map(resourcePath() + "maps/");
 #endif
-
+#ifdef _MSC_VER	//if Visual Studio
+	tmx::MapLoader map("..\\..\\maps\\");
+#endif
+	//load the map here, currently the map name is "test.tmx"
 	map.Load("test.tmx");
 
 	while (window.isOpen())
@@ -26,7 +28,7 @@ int main()
 		}
 
 		window.clear(sf::Color::White);
-		window.draw(map);
+		window.draw(map);		//draw the map here
 		window.display();
 	}
 
