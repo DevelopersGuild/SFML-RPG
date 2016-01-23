@@ -1,2 +1,2 @@
-# samplegame
-Sample Game project for the C++ SFML group for Fall 2015
+# C++ game
+A RPG project in Winter 2016
