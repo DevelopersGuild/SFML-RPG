@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="54">
+ <tileset firstgid="1" name="desert" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48">
+  <image source="tmw_desert_spacing.png" trans="ff00ff" width="265" height="199"/>
+  <terraintypes>
+   <terrain name="cobblestone" tile="-1"/>
+  </terraintypes>
+  <tile id="0" terrain=",,,0"/>
+  <tile id="1" terrain=",,0,0"/>
+  <tile id="2" terrain=",,0,"/>
+  <tile id="8" terrain=",0,,0"/>
+  <tile id="9" terrain="0,0,0,0"/>
+  <tile id="10" terrain="0,,0,"/>
+  <tile id="16" terrain=",0,,"/>
+  <tile id="17" terrain="0,0,,"/>
+  <tile id="18" terrain="0,,,"/>
+  <tile id="19" terrain="0,0,0,"/>
+  <tile id="20" terrain="0,0,,0"/>
+  <tile id="27" terrain="0,,0,0"/>
+  <tile id="28" terrain=",0,0,0"/>
+  <tile id="38">
+   <objectgroup draworder="index"/>
+  </tile>
+  <tile id="46">
+   <properties>
+    <property name="accessable" value="false"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJytlLEOwyAMRGk7NZ3arm3iDaaS//+6emBAJ/viJAxPSICeLwSzppRWwl2ZlMfGvp6Z0Pu8PaWNzFccXyFe9GWlBvPlNi7Ed/R7q+ETpz76quGJ5hPw/Ug2MXwX5Qp8m+9jrN1IvtpliYL/HPMd9XnnN9Ing31n82XD91ReO3iTfBnWthBjzrvP2PPYB5F+QyJ5sW7kPVh21EEfe9vYuaFvJH/ZdCyr
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="1" name="Start" x="271" y="308" width="54" height="64"/>
+  <object id="43" name="Event_HelloWorld" type="Event" x="249" y="1" width="108" height="30"/>
+  <object id="46" name="event_HelloFromTheOtherSide" type="event" x="329" y="163" width="73" height="77">
+   <properties>
+    <property name="talk" value="Hello from the other side!"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="collision">
+  <object id="5" x="223" y="188" width="37" height="35"/>
+  <object id="6" x="3" y="6" width="253" height="27"/>
+  <object id="10" x="2" y="34" width="27" height="605"/>
+  <object id="12" x="22" y="607" width="617" height="32"/>
+  <object id="13" x="609" y="603" width="37"/>
+  <object id="14" x="611" y="7" width="30" height="595"/>
+  <object id="15" x="353" y="0" width="255" height="30"/>
+  <object id="16" x="353" y="186" width="25" height="34"/>
+  <object id="17" x="195" y="64" width="27" height="29"/>
+  <object id="18" x="194" y="158" width="26" height="27"/>
+  <object id="19" x="96" y="91" width="62" height="37"/>
+  <object id="20" x="65" y="159" width="31" height="29"/>
+  <object id="21" x="62" y="258" width="32" height="29"/>
+  <object id="22" x="68" y="354" width="26" height="25"/>
+  <object id="23" x="63" y="448" width="38" height="28"/>
+  <object id="24" x="98" y="572" width="34" height="31"/>
+  <object id="26" x="161" y="479" width="33" height="33"/>
+  <object id="27" x="194" y="507" width="33" height="31"/>
+  <object id="28" x="262" y="543" width="24" height="21"/>
+  <object id="29" x="292" y="484" width="28" height="27"/>
+  <object id="30" x="383" y="543" width="34" height="62"/>
+  <object id="31" x="451" y="442" width="31" height="35"/>
+  <object id="32" x="480" y="508" width="34" height="32"/>
+  <object id="33" x="545" y="487" width="28" height="19"/>
+  <object id="34" x="576" y="381" width="33" height="29"/>
+  <object id="35" x="540" y="253" width="35" height="31"/>
+  <object id="36" x="582" y="197" width="28" height="30"/>
+  <object id="37" x="548" y="137" width="26" height="18"/>
+  <object id="38" x="516" y="97" width="28" height="26"/>
+  <object id="39" x="547" y="33" width="28" height="30"/>
+  <object id="40" x="447" y="97" width="30" height="29"/>
+  <object id="41" x="380" y="61" width="38" height="38"/>
+  <object id="42" x="390" y="159" width="25" height="30"/>
+  <object id="45" x="242" y="1" width="130" height="11"/>
+ </objectgroup>
+</map>
