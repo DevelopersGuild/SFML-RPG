@@ -16,6 +16,12 @@
     <Filter Include="Source Files\tmxloader">
       <UniqueIdentifier>{ccbf2dc5-1263-40f1-a985-d501b178b838}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Interface">
+      <UniqueIdentifier>{3fb01b83-10aa-4048-bc70-4cb1c1d7cc16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Interface">
+      <UniqueIdentifier>{bddc00e8-3bbe-4d20-8eb5-1be5de46bef4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cpp">
@@ -45,9 +51,27 @@
     <ClCompile Include="..\..\src\tmx\QuadTreeNode.cpp">
       <Filter>Source Files\tmxloader</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tinsInterface\AnimationObject.cpp">
+      <Filter>Source Files\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tinsInterface\Bound.cpp">
+      <Filter>Source Files\Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\ResourcePath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tinsInterface\AnimationObject.h">
+      <Filter>Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tinsInterface\Bound.h">
+      <Filter>Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tinsInterface\InterfaceEvent.h">
+      <Filter>Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\myTest5\src\tinsInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

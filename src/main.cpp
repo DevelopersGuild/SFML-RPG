@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <tmx/MapLoader.h>
 #include "ResourcePath.h"
+#include "tinsInterface.h"
 #include <iostream>
 
 int main()
