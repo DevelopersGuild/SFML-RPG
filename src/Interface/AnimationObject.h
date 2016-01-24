@@ -39,8 +39,7 @@ public:
 	enum Style{ Accelerating, Decelerating, Regularly};
 
 	/*
-	Set the object animates to the destination within n seconds with
-	particular AnimationType
+	Set the object animates to the destination within n seconds with particular Animation style
 	*/
 	void animateTo(sf::Vector2f destination, sf::Time seconds, AnimationObject::Style style);
 

@@ -66,8 +66,10 @@ void AnimationObject::animateUpdate()
 		animation_setPosition(m_destination);
 		stopAnimation();
 	}
-
-	animation_Move(delta);
+	else
+	{
+		animation_Move(delta);
+	}
 }
 
 bool AnimationObject::m_isExcess(sf::Vector2f currentPoint, sf::Vector2f displacement)

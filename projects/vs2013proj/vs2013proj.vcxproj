@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Interface\AnimationObject.cpp" />
+    <ClCompile Include="..\..\src\Interface\Bar.cpp" />
     <ClCompile Include="..\..\src\Interface\Bound.cpp" />
     <ClCompile Include="..\..\src\Interface\Button.cpp" />
     <ClCompile Include="..\..\src\Interface\DragBound.cpp" />
@@ -96,6 +97,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\Interface.h" />
     <ClInclude Include="..\..\src\Interface\AnimationObject.h" />
+    <ClInclude Include="..\..\src\Interface\Bar.h" />
     <ClInclude Include="..\..\src\Interface\Bound.h" />
     <ClInclude Include="..\..\src\Interface\Button.h" />
     <ClInclude Include="..\..\src\Interface\DragBound.h" />
