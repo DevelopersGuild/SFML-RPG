@@ -1,12 +1,13 @@
 #include <SFML/Graphics.hpp>
 #include <tmx/MapLoader.h>
 #include "ResourcePath.h"
-#include "tinsInterface.h"
+#include "Interface.h"
 #include <iostream>
 
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(640, 640), "DGProject");
+	window.setFramerateLimit(60);
 
 	//set MapLoader to open the "map" folder
 	//we will add a resource manager later
@@ -27,9 +28,8 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-
 		window.clear(sf::Color::White);
-		window.draw(map);		//draw the map here
+		//window.draw(map);		//draw the map here
 		window.display();
 	}
 

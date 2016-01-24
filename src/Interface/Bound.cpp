@@ -27,16 +27,6 @@ void Bound::setSize(const sf::Vector2f& newSize)
 	height = newSize.y;
 }
 
-void Bound::animateTo(const sf::Vector2f destination, const sf::Time& seconds, AnimationType type)
-{
-
-}
-
-void Bound::animateUpdate()
-{
-
-}
-
 void Bound::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	sf::VertexArray vertex(sf::PrimitiveType::Quads, 4);
