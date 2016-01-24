@@ -8,6 +8,7 @@ Bar::Bar()
 	m_acceleration = 0;
 	m_finalPercentage = width;
 	setColor(sf::Color::White);
+	setOpacity(255);
 }
 
 Bar::Bar(const sf::Color& color)
@@ -17,6 +18,7 @@ Bar::Bar(const sf::Color& color)
 	m_speed = 0;
 	m_acceleration = 0;
 	setColor(color);
+	setOpacity(255);
 }
 
 Bar::Bar(const sf::Color& rightTop, const sf::Color& rightBottom,
@@ -50,15 +52,24 @@ Bar::~Bar()
 
 void Bar::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	int opacity = getOpacity();
+	sf::Color temp1 = m_color_leftTop;
+	temp1.a = opacity;
+	sf::Color temp2 = m_color_rightTop;
+	temp2.a = opacity;
+	sf::Color temp3 = m_color_rightBottom;
+	temp3.a = opacity;
+	sf::Color temp4 = m_color_leftBottom;
+	temp4.a = opacity;
 	sf::VertexArray vertex(sf::PrimitiveType::Quads, 4);
 	vertex[0].position = sf::Vector2f(left, top);
-	vertex[0].color = m_color_leftTop;
+	vertex[0].color = temp1;
 	vertex[1].position = sf::Vector2f(left + width * m_percentage, top);
-	vertex[1].color = m_color_rightTop;
+	vertex[1].color = temp2;
 	vertex[2].position = sf::Vector2f(left + width * m_percentage, top + height);
-	vertex[2].color = m_color_rightBottom;
+	vertex[2].color = temp3;
 	vertex[3].position = sf::Vector2f(left, top + height);
-	vertex[3].color = m_color_leftBottom;
+	vertex[3].color = temp4;
 	target.draw(vertex, states);
 }
 

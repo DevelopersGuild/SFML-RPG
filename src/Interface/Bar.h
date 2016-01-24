@@ -48,5 +48,11 @@ public:
 
 	//get the percentage of the bar
 	float getPercent(){ return m_percentage; }
+
+	//Disappear the bar in certain time
+	//void disappear();
+
+	//Appear the bar in certain time
+	//void appear();
 };
 #endif

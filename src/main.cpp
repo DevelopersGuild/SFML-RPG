@@ -9,6 +9,11 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(640, 640), "DGProject");
 	window.setFramerateLimit(60);
 
+	Bar bound;
+	bound.setSize(sf::Vector2f(600, 50));
+	bound.setBarAnimation(0.2);
+	bound.animateOpacityTo(100, sf::seconds(5));
+	bound.animateTo(sf::Vector2f(0, 500), sf::seconds(5), AnimationObject::Style::Regularly);
 
 	//set MapLoader to open the "map" folder
 	//we will add a resource manager later
@@ -28,10 +33,18 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+			if (event.type == sf::Event::MouseButtonPressed)
+			{
+				bound.animateOpacityTo(255, sf::seconds(0.5));
+				bound.setBarAnimation(1);
+			}
 				
 		}
+		bound.animateUpdate();
+		bound.barAnimationUpdate();
 		window.clear(sf::Color::White);
 		window.draw(map);		//draw the map here
+		window.draw(bound);
 		window.display();
 	}
 

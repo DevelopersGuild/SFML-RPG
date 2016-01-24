@@ -35,6 +35,12 @@ private:
 	sf::Vector2f animation_getPosition(){ return rect.getPosition(); }
 	void animation_Move(sf::Vector2f displacement){ rect.move(displacement); }
 	void animation_setPosition(sf::Vector2f position){ rect.setPosition(position); }
+	void setOpacity(int value)
+	{ 
+		AnimationObject::setOpacity(value);
+		sf::Color temp = rect.getFillColor();
+		rect.setFillColor(sf::Color(temp.r, temp.g, temp.b, value));
+	}
 
 public:
 	Button();

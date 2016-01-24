@@ -5,6 +5,7 @@ Button::Button() :texture(nullptr), texture_focus(nullptr)
 	rect.setSize(sf::Vector2f(50, 50));
 	rect.setOutlineThickness(2);
 	rect.setOutlineColor(sf::Color::Black);
+	setOpacity(0);
 	//do nothing unless the user has set the function "onClick"
 	onClickFunc = [](){};
 }
