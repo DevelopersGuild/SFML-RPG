@@ -5,4 +5,6 @@
 #include "Interface/DragBound.h"
 #include "Interface/Button.h"
 #include "Interface/Bar.h"
+#include "Interface/TextBox.h"
+
 #endif
