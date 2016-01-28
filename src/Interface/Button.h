@@ -8,7 +8,6 @@
 
 /*
 Button class
-Basically button is a 
 */
 class Button :
 	public InterfaceEvent,
@@ -30,6 +29,8 @@ private:
 	void setFocus();
 	//the function when clicked
 	std::function<void()> onClickFunc;
+    //the function when release
+    std::function<void()> onRelease;
 
 	//implement AnimationObject
 	sf::Vector2f animation_getPosition(){ return rect.getPosition(); }
@@ -58,6 +59,9 @@ public:
 
 	//set user-defined function when button is clicked
 	void setOnClick(std::function<void()> function) { onClickFunc = function; }
+    
+    //set user-defined function when button is released
+    void setOnRelease(std::function<void()> function){ onRelease = function;}
 
 	//draw the button on the target
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

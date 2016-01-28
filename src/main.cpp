@@ -8,19 +8,23 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(640, 640), "DGProject");
 	window.setFramerateLimit(60);
-
+    
 	Bar bound;
 	bound.setSize(sf::Vector2f(600, 50));
 	bound.setBarAnimation(0.2);
 	bound.animateOpacityTo(100, sf::seconds(5));
 	bound.animateTo(sf::Vector2f(0, 500), sf::seconds(5), AnimationObject::Style::Regularly);
-
+    bound.setColor(sf::Color(255,102,102,255), sf::Color(255,102,102,255), sf::Color(255,51,51,255), sf::Color(255,51,51,255));
 	sf::Font font;
-	font.loadFromFile("..\\..\\Texture/arial.ttf");
-
+	//font.loadFromFile("..\\..\\Texture/arial.ttf");
+    font.loadFromFile(resourcePath() + "Texture/arial.ttf");
+    
 	TextBox textbox(font);
 	textbox.animateTo(sf::Vector2f(600, 600), sf::seconds(4), AnimationObject::Style::Decelerating);
-	textbox.setText("hmfgwertya\nha\t lol\0 NULL lol!");		//sample text to be fixed...
+    //textbox.setText("thisStringhasmorethantwentywordsohmygodthisisawesome!!");
+    textbox.setText("Test");
+    //textbox.setText("this String has morrrre than twenty words!");
+	//textbox.setText("hmf\tgwertya\nha\t lol\0 NULL lol!");		//sample text to be fixed...
 
 	//set MapLoader to open the "map" folder
 	//we will add a resource manager later
@@ -44,7 +48,7 @@ int main()
 			{
 				bound.animateOpacityTo(255, sf::seconds(0.5));
 				bound.setBarAnimation(1);
-				textbox.animateOpacityTo(100, sf::seconds(5));
+				textbox.animateOpacityTo(180, sf::seconds(5));
 				textbox.animateTo(sf::Vector2f(20, 20), sf::seconds(5), AnimationObject::Style::Accelerating);
 			}
 				

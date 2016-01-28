@@ -8,6 +8,7 @@ Button::Button() :texture(nullptr), texture_focus(nullptr)
 	setOpacity(0);
 	//do nothing unless the user has set the function "onClick"
 	onClickFunc = [](){};
+    onRelease = [](){};
 }
 
 Button::Button(sf::Texture *texture, sf::Texture *texture_focus): Button()

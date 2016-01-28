@@ -35,7 +35,6 @@
 		5F35EB7D1BC84F5D00FCF070 /* vorbisfile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F35EB641BC84F5D00FCF070 /* vorbisfile.framework */; };
 		5F35EB7E1BC84F5D00FCF070 /* vorbisfile.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5F35EB641BC84F5D00FCF070 /* vorbisfile.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5F3A1B3C1BC8519100726EBF /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F35EB531BC84F3800FCF070 /* main.cpp */; };
-		5FB6B9931BD18FC600ACC995 /* Overlap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FB6B9911BD18FC600ACC995 /* Overlap.cpp */; };
 		FA0497571C4A2F1F00AC7816 /* Texture in Resources */ = {isa = PBXBuildFile; fileRef = FA0497561C4A2F1F00AC7816 /* Texture */; };
 		FA0497601C4A2F5800AC7816 /* DebugShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA04975A1C4A2F5800AC7816 /* DebugShape.cpp */; };
 		FA0497611C4A2F5800AC7816 /* MapLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA04975B1C4A2F5800AC7816 /* MapLayer.cpp */; };
@@ -46,6 +45,13 @@
 		FA0497671C4A2F6500AC7816 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA0497661C4A2F6500AC7816 /* pugixml.cpp */; };
 		FA0497691C4A2F9000AC7816 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FA0497681C4A2F9000AC7816 /* libz.tbd */; };
 		FA04976B1C4A309500AC7816 /* maps in Resources */ = {isa = PBXBuildFile; fileRef = FA04976A1C4A309400AC7816 /* maps */; };
+		FAAB85121C56F7530028AF0B /* Bar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB85061C56F7530028AF0B /* Bar.cpp */; };
+		FAAB85131C56F7530028AF0B /* Bound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB85081C56F7530028AF0B /* Bound.cpp */; };
+		FAAB85141C56F7530028AF0B /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB850A1C56F7530028AF0B /* Button.cpp */; };
+		FAAB85151C56F7530028AF0B /* DragBound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB850C1C56F7530028AF0B /* DragBound.cpp */; };
+		FAAB85161C56F7530028AF0B /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB850F1C56F7530028AF0B /* TextBox.cpp */; };
+		FAAB85191C56F7EF0028AF0B /* AnimationObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB85171C56F7EF0028AF0B /* AnimationObject.cpp */; };
+		FAAB851C1C5993090028AF0B /* Slot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB851B1C5993090028AF0B /* Slot.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -91,8 +97,6 @@
 		5F35EB621BC84F5D00FCF070 /* vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vorbis.framework; path = frameworks/vorbis.framework; sourceTree = "<group>"; };
 		5F35EB631BC84F5D00FCF070 /* vorbisenc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vorbisenc.framework; path = frameworks/vorbisenc.framework; sourceTree = "<group>"; };
 		5F35EB641BC84F5D00FCF070 /* vorbisfile.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vorbisfile.framework; path = frameworks/vorbisfile.framework; sourceTree = "<group>"; };
-		5FB6B9911BD18FC600ACC995 /* Overlap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Overlap.cpp; path = ../src/Overlap.cpp; sourceTree = SOURCE_ROOT; };
-		5FB6B9921BD18FC600ACC995 /* Overlap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Overlap.h; path = ../src/Overlap.h; sourceTree = SOURCE_ROOT; };
 		5FF4FE981BB33EE60079FC4C /* Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Game.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA0497561C4A2F1F00AC7816 /* Texture */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Texture; path = ../../Texture; sourceTree = "<group>"; };
 		FA04975A1C4A2F5800AC7816 /* DebugShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DebugShape.cpp; path = ../src/tmx/DebugShape.cpp; sourceTree = "<group>"; };
@@ -104,6 +108,22 @@
 		FA0497661C4A2F6500AC7816 /* pugixml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pugixml.cpp; path = ../src/tmx/pugixml/pugixml.cpp; sourceTree = "<group>"; };
 		FA0497681C4A2F9000AC7816 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		FA04976A1C4A309400AC7816 /* maps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = maps; path = ../../maps; sourceTree = "<group>"; };
+		FAAB85021C56F6EF0028AF0B /* Interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Interface.h; path = ../src/Interface.h; sourceTree = SOURCE_ROOT; };
+		FAAB85061C56F7530028AF0B /* Bar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Bar.cpp; path = ../../src/Interface/Bar.cpp; sourceTree = "<group>"; };
+		FAAB85071C56F7530028AF0B /* Bar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bar.h; path = ../../src/Interface/Bar.h; sourceTree = "<group>"; };
+		FAAB85081C56F7530028AF0B /* Bound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Bound.cpp; path = ../../src/Interface/Bound.cpp; sourceTree = "<group>"; };
+		FAAB85091C56F7530028AF0B /* Bound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bound.h; path = ../../src/Interface/Bound.h; sourceTree = "<group>"; };
+		FAAB850A1C56F7530028AF0B /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Button.cpp; path = ../../src/Interface/Button.cpp; sourceTree = "<group>"; };
+		FAAB850B1C56F7530028AF0B /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Button.h; path = ../../src/Interface/Button.h; sourceTree = "<group>"; };
+		FAAB850C1C56F7530028AF0B /* DragBound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DragBound.cpp; path = ../../src/Interface/DragBound.cpp; sourceTree = "<group>"; };
+		FAAB850D1C56F7530028AF0B /* DragBound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DragBound.h; path = ../../src/Interface/DragBound.h; sourceTree = "<group>"; };
+		FAAB850E1C56F7530028AF0B /* InterfaceEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InterfaceEvent.h; path = ../../src/Interface/InterfaceEvent.h; sourceTree = "<group>"; };
+		FAAB850F1C56F7530028AF0B /* TextBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextBox.cpp; path = ../../src/Interface/TextBox.cpp; sourceTree = "<group>"; };
+		FAAB85101C56F7530028AF0B /* TextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextBox.h; path = ../../src/Interface/TextBox.h; sourceTree = "<group>"; };
+		FAAB85171C56F7EF0028AF0B /* AnimationObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationObject.cpp; sourceTree = "<group>"; };
+		FAAB85181C56F7EF0028AF0B /* AnimationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationObject.h; sourceTree = "<group>"; };
+		FAAB851A1C598F8F0028AF0B /* Slot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Slot.h; sourceTree = "<group>"; };
+		FAAB851B1C5993090028AF0B /* Slot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Slot.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,11 +199,11 @@
 		5FF4FE9A1BB33EE60079FC4C /* SampleGame */ = {
 			isa = PBXGroup;
 			children = (
+				FAAB85031C56F7400028AF0B /* Interface */,
+				FAAB85021C56F6EF0028AF0B /* Interface.h */,
 				5F35EB531BC84F3800FCF070 /* main.cpp */,
 				5F35EB551BC84F4300FCF070 /* ResourcePath.h */,
 				5F35EB561BC84F4300FCF070 /* ResourcePathMac.mm */,
-				5FB6B9921BD18FC600ACC995 /* Overlap.h */,
-				5FB6B9911BD18FC600ACC995 /* Overlap.cpp */,
 				5FF4FE9B1BB33EE60079FC4C /* Supporting Files */,
 				5FD0A8261BB354C2003B9327 /* Mac Frameworks */,
 			);
@@ -199,6 +219,29 @@
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
+		};
+		FAAB85031C56F7400028AF0B /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				FAAB85171C56F7EF0028AF0B /* AnimationObject.cpp */,
+				FAAB85181C56F7EF0028AF0B /* AnimationObject.h */,
+				FAAB85061C56F7530028AF0B /* Bar.cpp */,
+				FAAB85071C56F7530028AF0B /* Bar.h */,
+				FAAB85081C56F7530028AF0B /* Bound.cpp */,
+				FAAB85091C56F7530028AF0B /* Bound.h */,
+				FAAB850A1C56F7530028AF0B /* Button.cpp */,
+				FAAB850B1C56F7530028AF0B /* Button.h */,
+				FAAB850C1C56F7530028AF0B /* DragBound.cpp */,
+				FAAB850D1C56F7530028AF0B /* DragBound.h */,
+				FAAB850E1C56F7530028AF0B /* InterfaceEvent.h */,
+				FAAB850F1C56F7530028AF0B /* TextBox.cpp */,
+				FAAB85101C56F7530028AF0B /* TextBox.h */,
+				FAAB851A1C598F8F0028AF0B /* Slot.h */,
+				FAAB851B1C5993090028AF0B /* Slot.cpp */,
+			);
+			name = Interface;
+			path = ../src/Interface;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -287,14 +330,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA0497671C4A2F6500AC7816 /* pugixml.cpp in Sources */,
-				5FB6B9931BD18FC600ACC995 /* Overlap.cpp in Sources */,
 				5F3A1B3C1BC8519100726EBF /* main.cpp in Sources */,
 				5F35EB571BC84F4300FCF070 /* ResourcePathMac.mm in Sources */,
 				FA0497641C4A2F5800AC7816 /* MapObject.cpp in Sources */,
 				FA0497611C4A2F5800AC7816 /* MapLayer.cpp in Sources */,
+				FAAB85131C56F7530028AF0B /* Bound.cpp in Sources */,
+				FAAB85161C56F7530028AF0B /* TextBox.cpp in Sources */,
 				FA0497631C4A2F5800AC7816 /* MapLoaderPublic.cpp in Sources */,
+				FAAB85151C56F7530028AF0B /* DragBound.cpp in Sources */,
+				FAAB85141C56F7530028AF0B /* Button.cpp in Sources */,
 				FA0497601C4A2F5800AC7816 /* DebugShape.cpp in Sources */,
+				FAAB851C1C5993090028AF0B /* Slot.cpp in Sources */,
 				FA0497621C4A2F5800AC7816 /* MapLoaderPrivate.cpp in Sources */,
+				FAAB85121C56F7530028AF0B /* Bar.cpp in Sources */,
+				FAAB85191C56F7EF0028AF0B /* AnimationObject.cpp in Sources */,
 				FA0497651C4A2F5800AC7816 /* QuadTreeNode.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

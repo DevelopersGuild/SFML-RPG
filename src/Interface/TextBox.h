@@ -7,7 +7,7 @@
 Textbox may be used as dialogBox, hints, messages or character's name...
 The position of textbox is at its center, not the leftTop corner.
 Textbox is not a button, nothing will happen when clicked.
-Default : a gray box with text "DEFAULT_STRING", rowSize is 14
+Default : a gray box with text "DEBUG_DEFAULT_STRING", rowSize is 20
 */
 class TextBox : public AnimationObject, public sf::Drawable
 {
