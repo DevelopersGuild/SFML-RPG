@@ -84,6 +84,7 @@
     <ClCompile Include="..\..\src\Interface\Bound.cpp" />
     <ClCompile Include="..\..\src\Interface\Button.cpp" />
     <ClCompile Include="..\..\src\Interface\DragBound.cpp" />
+    <ClCompile Include="..\..\src\Interface\Slot.cpp" />
     <ClCompile Include="..\..\src\Interface\TextBox.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\ResourcePathWindows.cpp" />
@@ -101,8 +102,10 @@
     <ClInclude Include="..\..\src\Interface\Bar.h" />
     <ClInclude Include="..\..\src\Interface\Bound.h" />
     <ClInclude Include="..\..\src\Interface\Button.h" />
+    <ClInclude Include="..\..\src\Interface\Cursor.h" />
     <ClInclude Include="..\..\src\Interface\DragBound.h" />
     <ClInclude Include="..\..\src\Interface\InterfaceEvent.h" />
+    <ClInclude Include="..\..\src\Interface\Slot.h" />
     <ClInclude Include="..\..\src\Interface\TextBox.h" />
     <ClInclude Include="..\..\src\ResourcePath.h" />
   </ItemGroup>

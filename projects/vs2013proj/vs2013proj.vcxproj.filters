@@ -69,6 +69,9 @@
     <ClCompile Include="..\..\src\Interface\TextBox.cpp">
       <Filter>Source Files\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Interface\Slot.cpp">
+      <Filter>Source Files\Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\ResourcePath.h">
@@ -96,6 +99,12 @@
       <Filter>Header Files\Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Interface\TextBox.h">
+      <Filter>Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Interface\Slot.h">
+      <Filter>Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Interface\Cursor.h">
       <Filter>Header Files\Interface</Filter>
     </ClInclude>
   </ItemGroup>
