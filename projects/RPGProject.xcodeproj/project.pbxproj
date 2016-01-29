@@ -52,6 +52,7 @@
 		FAAB85161C56F7530028AF0B /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB850F1C56F7530028AF0B /* TextBox.cpp */; };
 		FAAB85191C56F7EF0028AF0B /* AnimationObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB85171C56F7EF0028AF0B /* AnimationObject.cpp */; };
 		FAAB851C1C5993090028AF0B /* Slot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB851B1C5993090028AF0B /* Slot.cpp */; };
+		FAAB851F1C5ADC640028AF0B /* Cursor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB851E1C5ADC640028AF0B /* Cursor.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -124,6 +125,8 @@
 		FAAB85181C56F7EF0028AF0B /* AnimationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationObject.h; sourceTree = "<group>"; };
 		FAAB851A1C598F8F0028AF0B /* Slot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Slot.h; sourceTree = "<group>"; };
 		FAAB851B1C5993090028AF0B /* Slot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Slot.cpp; sourceTree = "<group>"; };
+		FAAB851D1C5ADC4B0028AF0B /* Cursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cursor.h; sourceTree = "<group>"; };
+		FAAB851E1C5ADC640028AF0B /* Cursor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cursor.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +241,8 @@
 				FAAB85101C56F7530028AF0B /* TextBox.h */,
 				FAAB851A1C598F8F0028AF0B /* Slot.h */,
 				FAAB851B1C5993090028AF0B /* Slot.cpp */,
+				FAAB851D1C5ADC4B0028AF0B /* Cursor.h */,
+				FAAB851E1C5ADC640028AF0B /* Cursor.cpp */,
 			);
 			name = Interface;
 			path = ../src/Interface;
@@ -337,6 +342,7 @@
 				FAAB85131C56F7530028AF0B /* Bound.cpp in Sources */,
 				FAAB85161C56F7530028AF0B /* TextBox.cpp in Sources */,
 				FA0497631C4A2F5800AC7816 /* MapLoaderPublic.cpp in Sources */,
+				FAAB851F1C5ADC640028AF0B /* Cursor.cpp in Sources */,
 				FAAB85151C56F7530028AF0B /* DragBound.cpp in Sources */,
 				FAAB85141C56F7530028AF0B /* Button.cpp in Sources */,
 				FA0497601C4A2F5800AC7816 /* DebugShape.cpp in Sources */,

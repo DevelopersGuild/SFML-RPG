@@ -3,6 +3,8 @@
 
 #include "Bound.h"
 #include "InterfaceEvent.h"
+#include "Cursor.h"
+
 /*
 A boundary that is able to be dragged by mouse.
 */

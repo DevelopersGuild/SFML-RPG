@@ -26,7 +26,12 @@ int main()
 	//textbox.setText("hmf\tgwertya\nha\t lol\0 NULL lol!");		//sample text to be fixed...
 
 	DragBound drag(sf::Vector2f(80, 80));
-
+    
+    sf::Texture texture;
+    texture.loadFromFile(resourcePath() + "Texture/cursor_test.png");
+    Cursor cursor(window);
+    cursor.loadTexture(texture);
+    window.setMouseCursorVisible(false);
 
 	//set MapLoader to open the "map" folder
 	//we will add a resource manager later
@@ -55,6 +60,7 @@ int main()
 				
 			}
 			drag.processEvent(window,event);
+            cursor.processEvent(window, event);
 		}
 		
 		//textbox.animateUpdate();
@@ -64,6 +70,7 @@ int main()
 		window.draw(map);		//draw the map here
 		window.draw(bound);
 		window.draw(drag);
+        window.draw(cursor);
 		//window.draw(textbox);
 		window.display();
 	}
