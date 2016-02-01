@@ -75,6 +75,9 @@
     <ClCompile Include="..\..\src\Interface\Cursor.cpp">
       <Filter>Source Files\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Team.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\ResourcePath.h">
@@ -109,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\Interface\Cursor.h">
       <Filter>Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Team.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

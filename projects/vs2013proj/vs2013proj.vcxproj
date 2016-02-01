@@ -89,6 +89,7 @@
     <ClCompile Include="..\..\src\Interface\TextBox.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\ResourcePathWindows.cpp" />
+    <ClCompile Include="..\..\src\Team.cpp" />
     <ClCompile Include="..\..\src\tmx\DebugShape.cpp" />
     <ClCompile Include="..\..\src\tmx\MapLayer.cpp" />
     <ClCompile Include="..\..\src\tmx\MapLoaderPrivate.cpp" />
@@ -109,6 +110,7 @@
     <ClInclude Include="..\..\src\Interface\Slot.h" />
     <ClInclude Include="..\..\src\Interface\TextBox.h" />
     <ClInclude Include="..\..\src\ResourcePath.h" />
+    <ClInclude Include="..\..\src\Team.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
