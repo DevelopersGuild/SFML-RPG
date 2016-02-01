@@ -83,6 +83,7 @@
     <ClCompile Include="..\..\src\Interface\Bar.cpp" />
     <ClCompile Include="..\..\src\Interface\Bound.cpp" />
     <ClCompile Include="..\..\src\Interface\Button.cpp" />
+    <ClCompile Include="..\..\src\Interface\Cursor.cpp" />
     <ClCompile Include="..\..\src\Interface\DragBound.cpp" />
     <ClCompile Include="..\..\src\Interface\Slot.cpp" />
     <ClCompile Include="..\..\src\Interface\TextBox.cpp" />

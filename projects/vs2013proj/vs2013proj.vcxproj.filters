@@ -72,6 +72,9 @@
     <ClCompile Include="..\..\src\Interface\Slot.cpp">
       <Filter>Source Files\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Interface\Cursor.cpp">
+      <Filter>Source Files\Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\ResourcePath.h">

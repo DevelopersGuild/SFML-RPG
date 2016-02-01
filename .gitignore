@@ -11,6 +11,8 @@
 *.userprefs
 
 # Build results
+[Dd]ebug/
+projects/vs2013proj/Debug/
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
