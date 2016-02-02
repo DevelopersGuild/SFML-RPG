@@ -95,9 +95,6 @@
     <ClInclude Include="..\..\src\Interface\InterfaceEvent.h">
       <Filter>Header Files\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Interface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Interface\Button.h">
       <Filter>Header Files\Interface</Filter>
     </ClInclude>
@@ -116,16 +113,19 @@
     <ClInclude Include="..\..\src\Team.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
+    <ClInclude Include="..\..\src\Character.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
+    <ClInclude Include="..\..\src\Interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Status.h">
+    <ClInclude Include="..\..\src\Item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Skill.h">
+    <ClInclude Include="..\..\src\Skill.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Status.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
