@@ -111,6 +111,8 @@
     <ClInclude Include="..\..\src\Interface\TextBox.h" />
     <ClInclude Include="..\..\src\ResourcePath.h" />
     <ClInclude Include="..\..\src\Team.h" />
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="Item.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
