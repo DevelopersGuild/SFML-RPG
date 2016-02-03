@@ -111,8 +111,12 @@
     <ClInclude Include="..\..\src\Interface\TextBox.h" />
     <ClInclude Include="..\..\src\ResourcePath.h" />
     <ClInclude Include="..\..\src\Team.h" />
+    <ClInclude Include="Achievement.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="MagicType.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Quest.h" />
     <ClInclude Include="Skill.h" />
     <ClInclude Include="Status.h" />
   </ItemGroup>
