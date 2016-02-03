@@ -99,6 +99,8 @@
     <ClCompile Include="..\..\src\tmx\QuadTreeNode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\Achievement.h" />
+    <ClInclude Include="..\..\src\Character.h" />
     <ClInclude Include="..\..\src\Interface.h" />
     <ClInclude Include="..\..\src\Interface\AnimationObject.h" />
     <ClInclude Include="..\..\src\Interface\Bar.h" />
@@ -109,16 +111,14 @@
     <ClInclude Include="..\..\src\Interface\InterfaceEvent.h" />
     <ClInclude Include="..\..\src\Interface\Slot.h" />
     <ClInclude Include="..\..\src\Interface\TextBox.h" />
+    <ClInclude Include="..\..\src\Item.h" />
+    <ClInclude Include="..\..\src\MagicType.h" />
+    <ClInclude Include="..\..\src\Player.h" />
+    <ClInclude Include="..\..\src\Quest.h" />
     <ClInclude Include="..\..\src\ResourcePath.h" />
+    <ClInclude Include="..\..\src\Skill.h" />
+    <ClInclude Include="..\..\src\Status.h" />
     <ClInclude Include="..\..\src\Team.h" />
-    <ClInclude Include="Achievement.h" />
-    <ClInclude Include="Character.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="MagicType.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Quest.h" />
-    <ClInclude Include="Skill.h" />
-    <ClInclude Include="Status.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
