@@ -45,6 +45,7 @@
 		FA0497671C4A2F6500AC7816 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA0497661C4A2F6500AC7816 /* pugixml.cpp */; };
 		FA0497691C4A2F9000AC7816 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FA0497681C4A2F9000AC7816 /* libz.tbd */; };
 		FA04976B1C4A309500AC7816 /* maps in Resources */ = {isa = PBXBuildFile; fileRef = FA04976A1C4A309400AC7816 /* maps */; };
+		FAAA799B1C7E8C6C00683E22 /* ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAA799A1C7E8C6C00683E22 /* ResourceManager.cpp */; };
 		FAAB85121C56F7530028AF0B /* Bar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB85061C56F7530028AF0B /* Bar.cpp */; };
 		FAAB85131C56F7530028AF0B /* Bound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB85081C56F7530028AF0B /* Bound.cpp */; };
 		FAAB85141C56F7530028AF0B /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB850A1C56F7530028AF0B /* Button.cpp */; };
@@ -109,6 +110,8 @@
 		FA0497661C4A2F6500AC7816 /* pugixml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pugixml.cpp; path = ../src/tmx/pugixml/pugixml.cpp; sourceTree = "<group>"; };
 		FA0497681C4A2F9000AC7816 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		FA04976A1C4A309400AC7816 /* maps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = maps; path = ../../maps; sourceTree = "<group>"; };
+		FAAA79991C7E8BA300683E22 /* ResourceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ResourceManager.h; path = ../src/ResourceManager.h; sourceTree = SOURCE_ROOT; };
+		FAAA799A1C7E8C6C00683E22 /* ResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResourceManager.cpp; path = ../src/ResourceManager.cpp; sourceTree = SOURCE_ROOT; };
 		FAAB85021C56F6EF0028AF0B /* Interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Interface.h; path = ../src/Interface.h; sourceTree = SOURCE_ROOT; };
 		FAAB85061C56F7530028AF0B /* Bar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Bar.cpp; path = ../../src/Interface/Bar.cpp; sourceTree = "<group>"; };
 		FAAB85071C56F7530028AF0B /* Bar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bar.h; path = ../../src/Interface/Bar.h; sourceTree = "<group>"; };
@@ -202,11 +205,13 @@
 		5FF4FE9A1BB33EE60079FC4C /* SampleGame */ = {
 			isa = PBXGroup;
 			children = (
-				FAAB85031C56F7400028AF0B /* Interface */,
+				FAAA79991C7E8BA300683E22 /* ResourceManager.h */,
+				FAAA799A1C7E8C6C00683E22 /* ResourceManager.cpp */,
 				FAAB85021C56F6EF0028AF0B /* Interface.h */,
 				5F35EB531BC84F3800FCF070 /* main.cpp */,
 				5F35EB551BC84F4300FCF070 /* ResourcePath.h */,
 				5F35EB561BC84F4300FCF070 /* ResourcePathMac.mm */,
+				FAAB85031C56F7400028AF0B /* Interface */,
 				5FF4FE9B1BB33EE60079FC4C /* Supporting Files */,
 				5FD0A8261BB354C2003B9327 /* Mac Frameworks */,
 			);
@@ -351,6 +356,7 @@
 				FAAB85121C56F7530028AF0B /* Bar.cpp in Sources */,
 				FAAB85191C56F7EF0028AF0B /* AnimationObject.cpp in Sources */,
 				FA0497651C4A2F5800AC7816 /* QuadTreeNode.cpp in Sources */,
+				FAAA799B1C7E8C6C00683E22 /* ResourceManager.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

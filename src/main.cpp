@@ -2,6 +2,7 @@
 #include <tmx/MapLoader.h>
 #include "ResourcePath.h"
 #include "Interface.h"
+#include "ResourceManager.h"
 #include <iostream>
 
 int main()
@@ -9,28 +10,10 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(640, 640), "DGProject");
 	window.setFramerateLimit(60);
     
-	Bar bound;
-	bound.setSize(sf::Vector2f(600, 50));
-	bound.setBarAnimation(0.2);
-	bound.animateOpacityTo(100, sf::seconds(5));
-	bound.animateTo(sf::Vector2f(0, 500), sf::seconds(5), AnimationObject::Style::Regularly);
-    bound.setColor(sf::Color(255,102,102,255), sf::Color(255,102,102,255), sf::Color(255,51,51,255), sf::Color(255,51,51,255));
-	//sf::Font font;
-	//font.loadFromFile("..\\..\\Texture/arial.ttf");
-    
-	//TextBox textbox(font);
-	//textbox.animateTo(sf::Vector2f(600, 600), sf::seconds(4), AnimationObject::Style::Decelerating);
-    //textbox.setText("thisStringhasmorethantwentywordsohmygodthisisawesome!!");
-    //textbox.setText("Test");
-    //textbox.setText("this String has morrrre than twenty words!");
-	//textbox.setText("hmf\tgwertya\nha\t lol\0 NULL lol!");		//sample text to be fixed...
-
-	DragBound drag(sf::Vector2f(80, 80));
-    
-    sf::Texture texture;
-    texture.loadFromFile(resourcePath() + "Texture/cursor_test.png");
+    ResourceManager resMan;
+    resMan.add("Texture/cursor_test.png");
     Cursor cursor(window);
-    cursor.loadTexture(texture);
+    cursor.loadTexture(resMan.get("Texture/cursor_test.png"));
     window.setMouseCursorVisible(false);
 
 	//set MapLoader to open the "map" folder
@@ -51,25 +34,11 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			if (event.type == sf::Event::MouseButtonPressed)
-			{
-				bound.animateOpacityTo(255, sf::seconds(0.5));
-				bound.setBarAnimation(1);
-				//textbox.animateOpacityTo(180, sf::seconds(5));
-				//textbox.animateTo(sf::Vector2f(20, 20), sf::seconds(5), AnimationObject::Style::Accelerating);
-				
-			}
-			drag.processEvent(window,event);
             cursor.processEvent(window, event);
 		}
 		
-		//textbox.animateUpdate();
-		bound.animateUpdate();
-		bound.barAnimationUpdate();
 		window.clear(sf::Color::White);
 		window.draw(map);		//draw the map here
-		window.draw(bound);
-		window.draw(drag);
         window.draw(cursor);
 		//window.draw(textbox);
 		window.display();
