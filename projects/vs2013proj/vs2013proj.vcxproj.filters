@@ -22,6 +22,12 @@
     <Filter Include="Source Files\Interface">
       <UniqueIdentifier>{bddc00e8-3bbe-4d20-8eb5-1be5de46bef4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{da733194-a499-422c-b91b-9d42e26efeb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{1213ecfb-7451-4de8-b122-a1552d88a3cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cpp">
@@ -76,6 +82,15 @@
       <Filter>Source Files\Interface</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Team.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Configuration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,22 +125,31 @@
     <ClInclude Include="..\..\src\Interface\Cursor.h">
       <Filter>Header Files\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Team.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Character.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Item.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\src\Character.h">
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Skill.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="..\..\src\Item.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Team.h">
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Status.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Skill.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Configuration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

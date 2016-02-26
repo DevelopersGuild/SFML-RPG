@@ -79,6 +79,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Configuration.cpp" />
+    <ClCompile Include="..\..\src\Game.cpp" />
     <ClCompile Include="..\..\src\Interface\AnimationObject.cpp" />
     <ClCompile Include="..\..\src\Interface\Bar.cpp" />
     <ClCompile Include="..\..\src\Interface\Bound.cpp" />
@@ -88,6 +90,7 @@
     <ClCompile Include="..\..\src\Interface\Slot.cpp" />
     <ClCompile Include="..\..\src\Interface\TextBox.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\ResourceManager.cpp" />
     <ClCompile Include="..\..\src\ResourcePathWindows.cpp" />
     <ClCompile Include="..\..\src\Team.cpp" />
     <ClCompile Include="..\..\src\tmx\DebugShape.cpp" />
@@ -100,6 +103,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Character.h" />
+    <ClInclude Include="..\..\src\Configuration.h" />
+    <ClInclude Include="..\..\src\Game.h" />
     <ClInclude Include="..\..\src\Interface.h" />
     <ClInclude Include="..\..\src\Interface\AnimationObject.h" />
     <ClInclude Include="..\..\src\Interface\Bar.h" />
@@ -111,6 +116,7 @@
     <ClInclude Include="..\..\src\Interface\Slot.h" />
     <ClInclude Include="..\..\src\Interface\TextBox.h" />
     <ClInclude Include="..\..\src\Item.h" />
+    <ClInclude Include="..\..\src\ResourceManager.h" />
     <ClInclude Include="..\..\src\ResourcePath.h" />
     <ClInclude Include="..\..\src\Skill.h" />
     <ClInclude Include="..\..\src\Status.h" />

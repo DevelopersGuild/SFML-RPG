@@ -8,6 +8,7 @@
 
 #include "ResourceManager.h"
 #include "ResourcePath.h"
+
 ResourceManager::ResourceManager()
 {
     
@@ -16,12 +17,9 @@ ResourceManager::ResourceManager()
 void ResourceManager::add(const std::string& str)
 {
     std::unique_ptr<sf::Texture> ptr(new sf::Texture);
-#ifdef __MACH__	//if Mac
-    ptr->loadFromFile(resourcePath() + str);
-#endif
-#ifdef _MSC_VER	//if Visual Studio
-    ptr->loadFromFile(str);
-#endif
+
+	ptr->loadFromFile(resourcePath() + str);
+
     _textureMap.emplace(str, std::move(ptr));
 }
 
