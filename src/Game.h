@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Configuration.h"
-
+#include "Interface.h"
 /*
 The Game class
 Handle the major game states and provides configuration
@@ -27,6 +27,7 @@ private:
 
 	//configuration
 	Configuration config;
+    
 public:
 	Game();
 

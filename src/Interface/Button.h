@@ -15,8 +15,8 @@ class Button :
 	public sf::Drawable
 {
 private:
-	//the rectangle that holds the button
-	sf::RectangleShape rect;
+    //the rectangle that holds the button
+    sf::RectangleShape rect;
 
 	//the pointers to texture
 	sf::Texture *texture;
@@ -77,5 +77,6 @@ public:
 
 	//get the position of the button
 	sf::Vector2f getPosition(){ return rect.getPosition(); }
+    
 };
 #endif
