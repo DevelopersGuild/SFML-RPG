@@ -23,10 +23,6 @@ private:
 	sf::Texture *texture_focus;
 
 	//functions
-	//change texture to normal
-	void setNormal();
-	//change texture to focus
-	void setFocus();
 	//the function when clicked
 	std::function<void()> onClickFunc;
     //the function when release
@@ -77,6 +73,11 @@ public:
 
 	//get the position of the button
 	sf::Vector2f getPosition(){ return rect.getPosition(); }
+
+	//change texture to normal
+	void setNormal();
+	//change texture to focus
+	void setFocus();
     
 };
 #endif

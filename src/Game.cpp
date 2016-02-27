@@ -15,14 +15,14 @@ void Game::start()
 	rect.setSize(sf::Vector2f(1440, 900));
 	rect.setTexture(&config.resMan.get("Texture/Tower1.png"));
     
-    config.resMan.add("Texture/Start.png");
-    config.resMan.add("Texture/Start_2.png");
+    config.resMan.add("Texture/Start1.png");
+    config.resMan.add("Texture/Start2.png");
     
-    sf::RectangleShape testing;
-    testing.setSize(sf::Vector2f(260,90));
-    testing.setPosition(sf::Vector2f(1000,200));
-    testing.setTexture(&config.resMan.get("Texture/Start.png"));
-    
+	Button testing(&config.resMan.get("Texture/Start1.png"), &config.resMan.get("Texture/Start2.png"));
+	testing.setSize(sf::Vector2f(260, 90));
+	testing.setPosition(sf::Vector2f(1000, 200));
+	testing.animateOpacityTo(0, sf::seconds(0));
+
 	//debug
     
 	while (window.isOpen())
@@ -32,19 +32,12 @@ void Game::start()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-            
-            if(sf::Mouse::getPosition(window).x > 1000 && sf::Mouse::getPosition(window).x < 1260
-               && sf::Mouse::getPosition(window).y > 200 && sf::Mouse::getPosition(window).y < 290)
-                testing.setTexture(&config.resMan.get("Texture/Start_2.png"));
-            else
-            {
-                testing.setTexture(&config.resMan.get("Texture/Start.png"));
-            }
 		}
-        
+		testing.animateUpdate();
+		testing.processEvent(window, event);
 		window.clear();
         window.draw(rect);
-        window.draw(testing);
+		window.draw(testing);
 		window.display();
 	}
 }
