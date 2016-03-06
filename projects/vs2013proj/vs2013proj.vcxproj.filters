@@ -16,12 +16,6 @@
     <Filter Include="Source Files\tmxloader">
       <UniqueIdentifier>{ccbf2dc5-1263-40f1-a985-d501b178b838}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Interface">
-      <UniqueIdentifier>{3fb01b83-10aa-4048-bc70-4cb1c1d7cc16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Interface">
-      <UniqueIdentifier>{bddc00e8-3bbe-4d20-8eb5-1be5de46bef4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game">
       <UniqueIdentifier>{da733194-a499-422c-b91b-9d42e26efeb3}</UniqueIdentifier>
     </Filter>
@@ -57,30 +51,6 @@
     <ClCompile Include="..\..\src\tmx\QuadTreeNode.cpp">
       <Filter>Source Files\tmxloader</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Interface\AnimationObject.cpp">
-      <Filter>Source Files\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Interface\Bound.cpp">
-      <Filter>Source Files\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Interface\DragBound.cpp">
-      <Filter>Source Files\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Interface\Button.cpp">
-      <Filter>Source Files\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Interface\Bar.cpp">
-      <Filter>Source Files\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Interface\TextBox.cpp">
-      <Filter>Source Files\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Interface\Slot.cpp">
-      <Filter>Source Files\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Interface\Cursor.cpp">
-      <Filter>Source Files\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Team.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
@@ -96,36 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\ResourcePath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Interface\AnimationObject.h">
-      <Filter>Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Interface\Bound.h">
-      <Filter>Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Interface\DragBound.h">
-      <Filter>Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Interface\InterfaceEvent.h">
-      <Filter>Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Interface\Button.h">
-      <Filter>Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Interface\Bar.h">
-      <Filter>Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Interface\TextBox.h">
-      <Filter>Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Interface\Slot.h">
-      <Filter>Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Interface\Cursor.h">
-      <Filter>Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Character.h">

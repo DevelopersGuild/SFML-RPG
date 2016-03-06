@@ -23,7 +23,7 @@ private:
 	preGame: multiplayer connection lobby, game settings
 	inGame: inside the Game
 	*/
-	enum GAME_STATES{ preMenu, Menu, settings, preGame, inGame} states;
+	enum GAME_STATES{ preMenu, Menu, inGame} states;
 
 	//configuration
 	Configuration config;
