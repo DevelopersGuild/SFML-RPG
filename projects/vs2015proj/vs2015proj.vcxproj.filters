@@ -13,24 +13,86 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\tmxloader">
+      <UniqueIdentifier>{69dd9ff3-456b-49d8-ac99-fc50ec8d96bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Overlap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\ResourcePathWindows.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\tmx\DebugShape.cpp">
+      <Filter>Source Files\tmxloader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tmx\MapLayer.cpp">
+      <Filter>Source Files\tmxloader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tmx\MapLoaderPublic.cpp">
+      <Filter>Source Files\tmxloader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tmx\MapObject.cpp">
+      <Filter>Source Files\tmxloader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tmx\QuadTreeNode.cpp">
+      <Filter>Source Files\tmxloader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Configuration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ResourceManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Team.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tmx\pugixml\pugixml.cpp">
+      <Filter>Source Files\tmxloader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\tmx\MapLoaderPrivate.cpp">
+      <Filter>Source Files\tmxloader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Overlap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\ResourcePath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Character.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Configuration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Skill.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Status.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Team.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\ResourcePathMac.mm">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
