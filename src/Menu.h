@@ -19,12 +19,5 @@ public:
 	Menu(Configuration&);
 
 	void run();
-
-	void exit()
-	{
-		config.window.close();
-	}
-
-	bool done;
 };
 #endif

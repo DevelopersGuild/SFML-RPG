@@ -1,8 +1,7 @@
 #include "Menu.h"
 
 Menu::Menu(Configuration & newConfig) :
-	config(newConfig),
-	done(false)
+	config(newConfig)
 {
 
 }
@@ -25,7 +24,7 @@ void Menu::run()
 	exitButton->setPosition(800, 700);
 	exitButton->setFont(tgui::Font(config.fontMan.get("Texture/arial.ttf")));
 	exitButton->setText(sf::String("Exit"));
-	exitButton->connect("pressed", &Menu::exit, this);
+	exitButton->connect("pressed", [&]() {window.close(); });
 	gui.add(exitButton);
 
 	while (window.isOpen())
@@ -35,6 +34,8 @@ void Menu::run()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+
+			gui.handleEvent(event);
 		}
 
 		window.clear();
