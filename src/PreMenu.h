@@ -13,6 +13,9 @@ class PreMenu
 {
 private:
 	Configuration& config;
+
+	bool finished;		//after initializing, finished is true
+
 public:
 	PreMenu() = delete;
 	PreMenu(const PreMenu&) = delete;
@@ -23,7 +26,7 @@ public:
 
 	//initialize the resources, return true is success
 	//false otherwise
-	bool initialize();
+	void initialize();
 	
 	/*
 	run the preMenu:

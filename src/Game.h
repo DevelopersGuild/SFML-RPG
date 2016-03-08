@@ -3,6 +3,7 @@
 
 #include "Configuration.h"
 #include "PreMenu.h"
+#include "Menu.h"
 
 /*
 The Game class
@@ -18,7 +19,7 @@ private:
 	Menu: Menu.
 	inGame: inside the Game
 	*/
-	enum GAME_STATES{ preMenu, Menu, inGame} states;
+	enum GAME_STATES{ preMenu, inMenu, inGame} states;
 
 	//configuration
 	Configuration config;

@@ -13,8 +13,14 @@ public:
 	Configuration(const Configuration&) = delete;
 	Configuration operator=(const Configuration&) = delete;
 
-	//resource Manager for texture
-	tgui::TextureManager texMan;
+	//resource Manager for sf::Texture
+	ResourceManager<sf::Texture> texMan;
+
+	//resource Manager for sf::Font
+	ResourceManager<sf::Font> fontMan;
+
+	//resource Manager for sf::Music
+	ResourceManager<sf::Music> musMan;
 
 	//the game window
 	sf::RenderWindow window;

@@ -152,8 +152,8 @@
     <ClCompile Include="..\..\src\Configuration.cpp" />
     <ClCompile Include="..\..\src\Game.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
+    <ClCompile Include="..\..\src\Menu.cpp" />
     <ClCompile Include="..\..\src\PreMenu.cpp" />
-    <ClCompile Include="..\..\src\ResourceManager.cpp" />
     <ClCompile Include="..\..\src\ResourcePathWindows.cpp" />
     <ClCompile Include="..\..\src\Team.cpp" />
     <ClCompile Include="..\..\src\tmx\DebugShape.cpp" />
@@ -169,6 +169,7 @@
     <ClInclude Include="..\..\src\Configuration.h" />
     <ClInclude Include="..\..\src\Game.h" />
     <ClInclude Include="..\..\src\Item.h" />
+    <ClInclude Include="..\..\src\Menu.h" />
     <ClInclude Include="..\..\src\PreMenu.h" />
     <ClInclude Include="..\..\src\ResourceManager.h" />
     <ClInclude Include="..\..\src\ResourcePath.h" />
