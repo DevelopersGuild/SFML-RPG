@@ -19,6 +19,9 @@ private:
     std::map<std::string, std::unique_ptr<sf::Texture>> _textureMap;
 public:
     ResourceManager();
+	ResourceManager(const ResourceManager&) = delete;
+	ResourceManager operator=(const ResourceManager&) = delete;
+
     void add(const std::string&);
     sf::Texture& get(const std::string&);
 };

@@ -1,23 +1,13 @@
 #include "Game.h"
 
-Game::Game() : 
-window(sf::VideoMode(1440, 900), "Game")
+Game::Game()
 {
-	states = GAME_STATES::Menu;
-	window.setFramerateLimit(60);
+	//when the game starts, the state is preMenu.
+	states = GAME_STATES::preMenu;
 }
 
 void Game::start() 
 {
-	while (window.isOpen())
-	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
-		window.clear();
-		window.display();
-	}
+	std::unique_ptr<PreMenu> preMenu(new PreMenu(config));
+	preMenu->run();
 }
