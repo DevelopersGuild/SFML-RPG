@@ -27,5 +27,11 @@ public:
 
 	//the cursor of the game
 	//Cursor cursor
+
+	//the volume of music
+	int musicVolume;
+
+	//the volume of sound effect
+	int soundVolume;
 };
 #endif

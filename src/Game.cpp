@@ -12,7 +12,17 @@ void Game::start()
 	preMenu->run();
 	preMenu.release();
 
-	std::unique_ptr<Menu> menu(new Menu(config));
-	menu->run();
-	menu.release();
+	bool result;
+	do
+	{
+		std::unique_ptr<Menu> menu(new Menu(config));
+		result = menu->run();
+		menu.release();
+		if (result)
+		{
+			//std::unique_ptr<inGame> inGame<new inGame(config));
+			//result = inGame->run();
+			//inGame.release();
+		}
+	} while (result);
 }
