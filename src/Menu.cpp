@@ -67,14 +67,28 @@ Menu::Menu(Configuration & newConfig) :
 	setting_MusVol->connect("valuechanged",
 		[&]() {
 		float value = setting_MusVol->getValue() * 10.f;
-		config.musicVolume = value;
-		bgMusic->setVolume(value);
+		config.musMan.setVolume(value);
 	});
 
 	setting_text_musVol = std::make_shared<tgui::Label>();
 	setting_text_musVol->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
 	setting_text_musVol->setText("Music Volume");
 	setting_text_musVol->setPosition(500, 470);
+
+	setting_sonVol = std::make_shared<tgui::Slider>();
+	setting_sonVol->setPosition(500, 600);
+	setting_sonVol->setSize(200, 18);
+	setting_sonVol->setValue(10);
+	setting_sonVol->connect("valuechanged", 
+		[&]() {
+		float value = setting_sonVol->getValue() * 10.f;
+		config.soundMan.setVolume(value);
+	});
+
+	setting_text_sonVol = std::make_shared<tgui::Label>();
+	setting_text_sonVol->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	setting_text_sonVol->setText("Sound Volume");
+	setting_text_sonVol->setPosition(500, 570);
 
 	/*
 	initialize connect gui
@@ -101,7 +115,12 @@ Menu::Menu(Configuration & newConfig) :
 	connect_IPBox->setSize(300, 25);
 	connect_IPBox->setTextSize(18);
 	connect_IPBox->setPosition(400, 450);
-	connect_IPBox->setDefaultText("Input your IP");
+	connect_IPBox->setInputValidator("[0-9]*\\.?[0-9]*\\.?[0-9]*\\.?[0-9]*");
+
+	connect_text_prompt = std::make_shared<tgui::Label>();
+	connect_text_prompt->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	connect_text_prompt->setText("Enter the IP:");
+	connect_text_prompt->setPosition(400, 420);
 }
 
 bool Menu::run()
@@ -111,7 +130,6 @@ bool Menu::run()
 	toMainMenu();
 
 	bgMusic = &config.musMan.get("Theme1.ogg");
-	bgMusic->setVolume(config.musicVolume);
 	bgMusic->setLoop(true);
 	bgMusic->play();
 
@@ -149,6 +167,9 @@ void Menu::toSetting()
 	gui.add(setting_backButton);
 	gui.add(setting_MusVol);
 	gui.add(setting_text_musVol);
+	gui.add(setting_sonVol);
+	gui.add(setting_text_sonVol);
+	
 }
 
 void Menu::toConnect()
@@ -158,6 +179,7 @@ void Menu::toConnect()
 	gui.add(connect_backButton);
 	gui.add(connect_connectButton);
 	gui.add(connect_IPBox);
+	gui.add(connect_text_prompt);
 }
 
 void Menu::draw()

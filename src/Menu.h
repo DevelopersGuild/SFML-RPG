@@ -57,6 +57,8 @@ private:
 	tgui::Button::Ptr setting_backButton;
 	tgui::Slider::Ptr setting_MusVol;
 	tgui::Label::Ptr setting_text_musVol;
+	tgui::Slider::Ptr setting_sonVol;
+	tgui::Label::Ptr setting_text_sonVol;
 
 	/*
 	The gui stuff that only shown in connection
@@ -65,6 +67,7 @@ private:
 	tgui::Button::Ptr connect_backButton;
 	tgui::Button::Ptr connect_connectButton;
 	tgui::EditBox::Ptr connect_IPBox;
+	tgui::Label::Ptr connect_text_prompt;
 	/*
 	The drawing function
 	*/

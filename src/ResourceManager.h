@@ -62,8 +62,9 @@ class ResourceManager<sf::Music>
 {
 private:
 	std::map<std::string, std::unique_ptr<sf::Music>> _Map;
+	float musicVolume;
 public:
-	ResourceManager(){;}
+	ResourceManager(){musicVolume = 100.f;}
 	ResourceManager(const ResourceManager&) = delete;
 	ResourceManager operator=(const ResourceManager&) = delete;
 
@@ -88,6 +89,22 @@ public:
 			return *_Map[str];
 		}
 	}
+
+	//set the global music volume
+	void setVolume(float num)
+	{
+		if (num >= 0 && num <= 100)
+		{
+			musicVolume = num;
+			for (auto it = _Map.begin(); it != _Map.end(); it++)
+			{
+				it->second->setVolume(num);
+			}
+		}
+	}
+
+	//get the global music volume
+	float getVolume() { return musicVolume; }
 };
 
 template<>
@@ -96,8 +113,9 @@ class ResourceManager<sf::Sound>
 private:
 	std::map<std::string, std::unique_ptr<sf::Sound>> _Map;
 	std::map<std::string, sf::SoundBuffer> _bufMap;
+	float soundVolume;
 public:
-	ResourceManager() { ; }
+	ResourceManager() { soundVolume = 100.f; }
 	ResourceManager(const ResourceManager&) = delete;
 	ResourceManager operator=(const ResourceManager&) = delete;
 
@@ -124,5 +142,21 @@ public:
 			return *_Map[str];
 		}
 	}
+
+	//set the global volume of sounds
+	void setVolume(float num)
+	{
+		if (num >= 0 && num <= 100)
+		{
+			soundVolume = num;
+			for (auto it = _Map.begin(); it != _Map.end(); it++)
+			{
+				it->second->setVolume(num);
+			}
+		}
+	}
+
+	//get the global volume of sounds
+	float getVolume() { return soundVolume; }
 };
 #endif /* ResourceManager_h */

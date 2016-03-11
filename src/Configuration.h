@@ -30,13 +30,6 @@ public:
 
 	//the cursor of the game
 	//Cursor cursor
-
-	//the volume of music
-	float musicVolume;
-
-	//the volume of sound effect
-	float soundVolume;
-
 	
 };
 #endif
