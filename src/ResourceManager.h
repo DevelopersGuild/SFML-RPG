@@ -46,7 +46,7 @@ T& ResourceManager<T>::get(const std::string& str)
 	{
 		std::unique_ptr<T> ptr(new T);
 
-		if (!ptr->loadFromFile(resourcePath() + str))
+		if (!ptr->loadFromFile(resourcePath() + "Texture/" + str))
 		{
 			throw "Not found!";	//handle exception...to be changed
 		}
@@ -63,14 +63,11 @@ class ResourceManager<sf::Music>
 private:
 	std::map<std::string, std::unique_ptr<sf::Music>> _Map;
 public:
-	ResourceManager()
-	{
-		;
-	}
+	ResourceManager(){;}
 	ResourceManager(const ResourceManager&) = delete;
 	ResourceManager operator=(const ResourceManager&) = delete;
 
-	sf::Music& ResourceManager<sf::Music>::get(const std::string& str)
+	sf::Music& get(const std::string& str)
 	{
 		auto it = _Map.find(str);
 		if (it != _Map.end())
@@ -81,7 +78,7 @@ public:
 		{
 			std::unique_ptr<sf::Music> ptr(new sf::Music);
 
-			if (!ptr->openFromFile(resourcePath() + str))
+			if (!ptr->openFromFile(resourcePath() + "Music/" + str))
 			{
 				throw "Not found!";	//handle exception...to be changed
 			}
@@ -93,4 +90,39 @@ public:
 	}
 };
 
+template<>
+class ResourceManager<sf::Sound>
+{
+private:
+	std::map<std::string, std::unique_ptr<sf::Sound>> _Map;
+	std::map<std::string, sf::SoundBuffer> _bufMap;
+public:
+	ResourceManager() { ; }
+	ResourceManager(const ResourceManager&) = delete;
+	ResourceManager operator=(const ResourceManager&) = delete;
+
+	sf::Sound& get(const std::string& str)
+	{
+		auto it = _Map.find(str);
+		if (it != _Map.end())
+		{
+			return *it->second;
+		}
+		else
+		{
+			sf::SoundBuffer sbuf;
+			if (!sbuf.loadFromFile(resourcePath() + "sounds/" + str))
+			{
+				throw "Not found!";	//handle exception...to be changed
+			}
+
+			_bufMap.emplace(str, std::move(sbuf));
+			std::unique_ptr<sf::Sound> ptr(new sf::Sound);
+			ptr->setBuffer(_bufMap[str]);
+			_Map.emplace(str, std::move(ptr));
+
+			return *_Map[str];
+		}
+	}
+};
 #endif /* ResourceManager_h */

@@ -22,6 +22,9 @@ public:
 	//resource Manager for sf::Music
 	ResourceManager<sf::Music> musMan;
 
+	//resource Manager for sf::sound
+	ResourceManager<sf::Sound> soundMan;
+
 	//the game window
 	sf::RenderWindow window;
 
@@ -29,9 +32,11 @@ public:
 	//Cursor cursor
 
 	//the volume of music
-	int musicVolume;
+	float musicVolume;
 
 	//the volume of sound effect
-	int soundVolume;
+	float soundVolume;
+
+	
 };
 #endif

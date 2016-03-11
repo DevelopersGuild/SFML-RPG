@@ -12,25 +12,33 @@ Menu::Menu(Configuration & newConfig) :
 	initialize the background
 	*/
 	backgrd.setSize(sf::Vector2f(config.window.getSize()));
-	backgrd.setTexture(&config.texMan.get("Texture/Tower1.png"));
+	backgrd.setTexture(&config.texMan.get("Tower1.png"));
 
 	/*
 	initialize the mainMenu gui
 	*/	
 	startButton = std::make_shared<tgui::Button>();
-	startButton->setFont(tgui::Font(config.fontMan.get("Texture/arial.ttf")));
+	startButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
 	startButton->setText("Start");
-	//startButton->connect(
+	startButton->connect("mousereleased", [&]()
+	{
+		config.soundMan.get("Decision2.ogg").play();
+		toConnect();
+	});
 	startButton->setPosition(800, 200);
 
 	settingButton = std::make_shared<tgui::Button>();
-	settingButton->setFont(tgui::Font(config.fontMan.get("Texture/arial.ttf")));
+	settingButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
 	settingButton->setText("Setting");
-	settingButton->connect("mousereleased", [&]() {toSetting(); });
+	settingButton->connect("mousereleased", [&]() 
+	{
+		config.soundMan.get("Decision2.ogg").play();
+		toSetting(); 
+	});
 	settingButton->setPosition(800, 300);
 
 	exitButton = std::make_shared<tgui::Button>();
-	exitButton->setFont(tgui::Font(config.fontMan.get("Texture/arial.ttf")));
+	exitButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
 	exitButton->setText("Exit");
 	exitButton->connect("mousereleased", [&]() {config.window.close(); });
 	exitButton->setPosition(800, 400);
@@ -43,20 +51,57 @@ Menu::Menu(Configuration & newConfig) :
 	setRect.setPosition(sf::Vector2f(200, 200));
 
 	setting_backButton = std::make_shared<tgui::Button>();
-	setting_backButton->setFont(tgui::Font(config.fontMan.get("Texture/arial.ttf")));
+	setting_backButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
 	setting_backButton->setText("Back");
-	setting_backButton->connect("mousereleased", [&]() {toMainMenu(); });
+	setting_backButton->connect("mousereleased", [&]() 
+	{
+		config.soundMan.get("Decision2.ogg").play();
+		toMainMenu(); 
+	});
 	setting_backButton->setPosition(200, 700);
 
 	setting_MusVol = std::make_shared<tgui::Slider>();
 	setting_MusVol->setPosition(500, 500);
 	setting_MusVol->setSize(200, 18);
 	setting_MusVol->setValue(10);
+	setting_MusVol->connect("valuechanged",
+		[&]() {
+		float value = setting_MusVol->getValue() * 10.f;
+		config.musicVolume = value;
+		bgMusic->setVolume(value);
+	});
 
 	setting_text_musVol = std::make_shared<tgui::Label>();
-	setting_text_musVol->setFont(tgui::Font(config.fontMan.get("Texture/arial.ttf")));
+	setting_text_musVol->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
 	setting_text_musVol->setText("Music Volume");
 	setting_text_musVol->setPosition(500, 470);
+
+	/*
+	initialize connect gui
+	*/
+	conRect.setSize(sf::Vector2f(700, 500));
+	conRect.setPosition(sf::Vector2f(200, 200));
+	conRect.setFillColor(sf::Color(255, 255, 255, 180));
+
+	connect_backButton = std::make_shared<tgui::Button>();
+	connect_backButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	connect_backButton->setText("Back");
+	connect_backButton->setPosition(400, 500);
+	connect_backButton->connect("mousereleased", [&]() {
+		config.soundMan.get("Decision2.ogg").play();
+		toMainMenu();
+	});
+
+	connect_connectButton = std::make_shared<tgui::Button>();
+	connect_connectButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	connect_connectButton->setText("Connect");
+	connect_connectButton->setPosition(600, 500);
+
+	connect_IPBox = std::make_shared<tgui::EditBox>();
+	connect_IPBox->setSize(300, 25);
+	connect_IPBox->setTextSize(18);
+	connect_IPBox->setPosition(400, 450);
+	connect_IPBox->setDefaultText("Input your IP");
 }
 
 bool Menu::run()
@@ -65,8 +110,10 @@ bool Menu::run()
 
 	toMainMenu();
 
-	sf::Music& bgMusic = config.musMan.get("Music/Theme1.ogg");
-	bgMusic.play();
+	bgMusic = &config.musMan.get("Theme1.ogg");
+	bgMusic->setVolume(config.musicVolume);
+	bgMusic->setLoop(true);
+	bgMusic->play();
 
 	while (window.isOpen())
 	{
@@ -104,6 +151,15 @@ void Menu::toSetting()
 	gui.add(setting_text_musVol);
 }
 
+void Menu::toConnect()
+{
+	gui.removeAllWidgets();
+	state = STATE::connect;
+	gui.add(connect_backButton);
+	gui.add(connect_connectButton);
+	gui.add(connect_IPBox);
+}
+
 void Menu::draw()
 {
 	config.window.draw(backgrd);
@@ -116,6 +172,7 @@ void Menu::draw()
 		config.window.draw(setRect);
 		break;
 	case Menu::connect:
+		config.window.draw(conRect);
 		break;
 	case Menu::lobby:
 		break;
@@ -125,3 +182,4 @@ void Menu::draw()
 
 	gui.draw();
 }
+

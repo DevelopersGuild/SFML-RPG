@@ -16,6 +16,11 @@ private:
 	Configuration& config;
 
 	/*
+	background music
+	*/
+	sf::Music *bgMusic;
+
+	/*
 	the states of menu
 	mainMenu : show "start", "settings", "exit" button
 	settings : allow player to adjust configurations
@@ -30,6 +35,7 @@ private:
 	*/
 	void toMainMenu();
 	void toSetting();
+	void toConnect();
 
 	//the background of the menu
 	sf::RectangleShape backgrd;
@@ -52,6 +58,13 @@ private:
 	tgui::Slider::Ptr setting_MusVol;
 	tgui::Label::Ptr setting_text_musVol;
 
+	/*
+	The gui stuff that only shown in connection
+	*/
+	sf::RectangleShape conRect;
+	tgui::Button::Ptr connect_backButton;
+	tgui::Button::Ptr connect_connectButton;
+	tgui::EditBox::Ptr connect_IPBox;
 	/*
 	The drawing function
 	*/

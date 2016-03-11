@@ -16,14 +16,14 @@ void PreMenu::run()
 	//the background when loading
 	sf::RectangleShape backgrd;
 	backgrd.setSize(sf::Vector2f(1024, 768));
-	backgrd.setTexture(&config.texMan.get("Texture/Tower1.png"));
+	backgrd.setTexture(&config.texMan.get("Tower1.png"));
 
 	//the gui in loading
 	tgui::Gui gui(window);
 	tgui::Label::Ptr label = std::make_shared<tgui::Label>();
 	
 	//the "loading" label in loading
-	label->setFont(tgui::Font(config.fontMan.get("Texture/arial.ttf")));
+	label->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
 	label->setText("Loading...");
 	label->setTextColor(tgui::Color(0, 0, 0, 255));
 	label->setPosition(900, 700);
@@ -54,7 +54,7 @@ void PreMenu::run()
 
 void PreMenu::initialize()
 {
-	sf::Music& test = config.musMan.get("Music/Theme1.ogg");	
+	sf::Music& test = config.musMan.get("Theme1.ogg");	
 	std::this_thread::sleep_for(std::chrono::seconds(2));	//TBC, test only
 
 	finished = true;
