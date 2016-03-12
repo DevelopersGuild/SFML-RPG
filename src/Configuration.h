@@ -2,6 +2,7 @@
 #define CONFIGURATION_H
 
 #include "ResourceManager.h"
+#include "Cursor.h"
 #include <TGUI/TGUI.hpp>
 
 class Configuration
@@ -29,7 +30,7 @@ public:
 	sf::RenderWindow window;
 
 	//the cursor of the game
-	//Cursor cursor
+	Cursor cursor;
 	
 };
 #endif

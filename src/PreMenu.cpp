@@ -29,6 +29,10 @@ void PreMenu::run()
 	label->setPosition(900, 700);
 	gui.add(label);
 
+	//initialize the cursor
+	config.cursor.setLogo(config.texMan.get("cursor_test.png"),
+		sf::IntRect(0, 0, 31, 31));
+
 	//start the initialze thread
 	std::thread init(&PreMenu::initialize, this);
 	
@@ -42,11 +46,14 @@ void PreMenu::run()
 			{
 				window.close();	//to be changed, the init thread still running
 			}
+
+			config.cursor.update();
 		}
 
 		window.clear();
 		window.draw(backgrd);
 		gui.draw();
+		window.draw(config.cursor);
 		window.display();
 	}
 	init.join();

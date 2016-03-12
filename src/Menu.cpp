@@ -115,6 +115,7 @@ Menu::Menu(Configuration & newConfig) :
 	connect_IPBox->setSize(300, 25);
 	connect_IPBox->setTextSize(18);
 	connect_IPBox->setPosition(400, 450);
+	connect_IPBox->setMaximumCharacters(15);
 	connect_IPBox->setInputValidator("[0-9]*\\.?[0-9]*\\.?[0-9]*\\.?[0-9]*");
 
 	connect_text_prompt = std::make_shared<tgui::Label>();
@@ -142,6 +143,7 @@ bool Menu::run()
 				window.close();
 
 			gui.handleEvent(event);
+			config.cursor.update();
 		}
 
 		window.clear();
@@ -169,7 +171,6 @@ void Menu::toSetting()
 	gui.add(setting_text_musVol);
 	gui.add(setting_sonVol);
 	gui.add(setting_text_sonVol);
-	
 }
 
 void Menu::toConnect()
@@ -203,5 +204,6 @@ void Menu::draw()
 	}
 
 	gui.draw();
+	config.window.draw(config.cursor);
 }
 
