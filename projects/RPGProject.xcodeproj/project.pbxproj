@@ -47,15 +47,13 @@
 		FA04976B1C4A309500AC7816 /* maps in Resources */ = {isa = PBXBuildFile; fileRef = FA04976A1C4A309400AC7816 /* maps */; };
 		FA4F4FD51C80FF15007C2936 /* Configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA4F4FD11C80FF15007C2936 /* Configuration.cpp */; };
 		FA4F4FD61C80FF15007C2936 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA4F4FD31C80FF15007C2936 /* Game.cpp */; };
-		FAAA799B1C7E8C6C00683E22 /* ResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAA799A1C7E8C6C00683E22 /* ResourceManager.cpp */; };
-		FAAB85121C56F7530028AF0B /* Bar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB85061C56F7530028AF0B /* Bar.cpp */; };
-		FAAB85131C56F7530028AF0B /* Bound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB85081C56F7530028AF0B /* Bound.cpp */; };
-		FAAB85141C56F7530028AF0B /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB850A1C56F7530028AF0B /* Button.cpp */; };
-		FAAB85151C56F7530028AF0B /* DragBound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB850C1C56F7530028AF0B /* DragBound.cpp */; };
-		FAAB85161C56F7530028AF0B /* TextBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB850F1C56F7530028AF0B /* TextBox.cpp */; };
-		FAAB85191C56F7EF0028AF0B /* AnimationObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB85171C56F7EF0028AF0B /* AnimationObject.cpp */; };
-		FAAB851C1C5993090028AF0B /* Slot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB851B1C5993090028AF0B /* Slot.cpp */; };
-		FAAB851F1C5ADC640028AF0B /* Cursor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAAB851E1C5ADC640028AF0B /* Cursor.cpp */; };
+		FAFB1C001CBC51090012F144 /* Cursor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFB1BFA1CBC51090012F144 /* Cursor.cpp */; };
+		FAFB1C011CBC51090012F144 /* Menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFB1BFC1CBC51090012F144 /* Menu.cpp */; };
+		FAFB1C021CBC51090012F144 /* PreMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFB1BFE1CBC51090012F144 /* PreMenu.cpp */; };
+		FAFB1C041CBC5E440012F144 /* TGUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFB1C031CBC5E440012F144 /* TGUI.framework */; };
+		FAFB1C081CBC5F780012F144 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = FAFB1C051CBC5F780012F144 /* Music */; };
+		FAFB1C091CBC5F780012F144 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = FAFB1C061CBC5F780012F144 /* sounds */; };
+		FAFB1C0A1CBC5F780012F144 /* Texture in Resources */ = {isa = PBXBuildFile; fileRef = FAFB1C071CBC5F780012F144 /* Texture */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -117,25 +115,17 @@
 		FA4F4FD31C80FF15007C2936 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../src/Game.cpp; sourceTree = SOURCE_ROOT; };
 		FA4F4FD41C80FF15007C2936 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../src/Game.h; sourceTree = SOURCE_ROOT; };
 		FAAA79991C7E8BA300683E22 /* ResourceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ResourceManager.h; path = ../src/ResourceManager.h; sourceTree = SOURCE_ROOT; };
-		FAAA799A1C7E8C6C00683E22 /* ResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResourceManager.cpp; path = ../src/ResourceManager.cpp; sourceTree = SOURCE_ROOT; };
 		FAAB85021C56F6EF0028AF0B /* Interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Interface.h; path = ../src/Interface.h; sourceTree = SOURCE_ROOT; };
-		FAAB85061C56F7530028AF0B /* Bar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Bar.cpp; path = ../../src/Interface/Bar.cpp; sourceTree = "<group>"; };
-		FAAB85071C56F7530028AF0B /* Bar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bar.h; path = ../../src/Interface/Bar.h; sourceTree = "<group>"; };
-		FAAB85081C56F7530028AF0B /* Bound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Bound.cpp; path = ../../src/Interface/Bound.cpp; sourceTree = "<group>"; };
-		FAAB85091C56F7530028AF0B /* Bound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bound.h; path = ../../src/Interface/Bound.h; sourceTree = "<group>"; };
-		FAAB850A1C56F7530028AF0B /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Button.cpp; path = ../../src/Interface/Button.cpp; sourceTree = "<group>"; };
-		FAAB850B1C56F7530028AF0B /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Button.h; path = ../../src/Interface/Button.h; sourceTree = "<group>"; };
-		FAAB850C1C56F7530028AF0B /* DragBound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DragBound.cpp; path = ../../src/Interface/DragBound.cpp; sourceTree = "<group>"; };
-		FAAB850D1C56F7530028AF0B /* DragBound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DragBound.h; path = ../../src/Interface/DragBound.h; sourceTree = "<group>"; };
-		FAAB850E1C56F7530028AF0B /* InterfaceEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InterfaceEvent.h; path = ../../src/Interface/InterfaceEvent.h; sourceTree = "<group>"; };
-		FAAB850F1C56F7530028AF0B /* TextBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextBox.cpp; path = ../../src/Interface/TextBox.cpp; sourceTree = "<group>"; };
-		FAAB85101C56F7530028AF0B /* TextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextBox.h; path = ../../src/Interface/TextBox.h; sourceTree = "<group>"; };
-		FAAB85171C56F7EF0028AF0B /* AnimationObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimationObject.cpp; sourceTree = "<group>"; };
-		FAAB85181C56F7EF0028AF0B /* AnimationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimationObject.h; sourceTree = "<group>"; };
-		FAAB851A1C598F8F0028AF0B /* Slot.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Slot.h; sourceTree = "<group>"; };
-		FAAB851B1C5993090028AF0B /* Slot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Slot.cpp; sourceTree = "<group>"; };
-		FAAB851D1C5ADC4B0028AF0B /* Cursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cursor.h; sourceTree = "<group>"; };
-		FAAB851E1C5ADC640028AF0B /* Cursor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cursor.cpp; sourceTree = "<group>"; };
+		FAFB1BFA1CBC51090012F144 /* Cursor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cursor.cpp; path = ../src/Cursor.cpp; sourceTree = SOURCE_ROOT; };
+		FAFB1BFB1CBC51090012F144 /* Cursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cursor.h; path = ../src/Cursor.h; sourceTree = SOURCE_ROOT; };
+		FAFB1BFC1CBC51090012F144 /* Menu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Menu.cpp; path = ../src/Menu.cpp; sourceTree = SOURCE_ROOT; };
+		FAFB1BFD1CBC51090012F144 /* Menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Menu.h; path = ../src/Menu.h; sourceTree = SOURCE_ROOT; };
+		FAFB1BFE1CBC51090012F144 /* PreMenu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PreMenu.cpp; path = ../src/PreMenu.cpp; sourceTree = SOURCE_ROOT; };
+		FAFB1BFF1CBC51090012F144 /* PreMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreMenu.h; path = ../src/PreMenu.h; sourceTree = SOURCE_ROOT; };
+		FAFB1C031CBC5E440012F144 /* TGUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TGUI.framework; path = frameworks/TGUI.framework; sourceTree = "<group>"; };
+		FAFB1C051CBC5F780012F144 /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Music; path = ../Music; sourceTree = "<group>"; };
+		FAFB1C061CBC5F780012F144 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = ../sounds; sourceTree = "<group>"; };
+		FAFB1C071CBC5F780012F144 /* Texture */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Texture; path = ../Texture; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +145,7 @@
 				5F35EB751BC84F5D00FCF070 /* sfml-window.framework in Frameworks */,
 				5F35EB731BC84F5D00FCF070 /* sfml-system.framework in Frameworks */,
 				5F35EB6F1BC84F5D00FCF070 /* sfml-graphics.framework in Frameworks */,
+				FAFB1C041CBC5E440012F144 /* TGUI.framework in Frameworks */,
 				5F35EB771BC84F5D00FCF070 /* SFML.framework in Frameworks */,
 				5F35EB711BC84F5D00FCF070 /* sfml-network.framework in Frameworks */,
 			);
@@ -187,16 +178,13 @@
 		5FF4FE8E1BB33EE60079FC4C = {
 			isa = PBXGroup;
 			children = (
+				FAFB1C031CBC5E440012F144 /* TGUI.framework */,
 				FA0497681C4A2F9000AC7816 /* libz.tbd */,
-				FA04975A1C4A2F5800AC7816 /* DebugShape.cpp */,
-				FA04975B1C4A2F5800AC7816 /* MapLayer.cpp */,
-				FA04975C1C4A2F5800AC7816 /* MapLoaderPrivate.cpp */,
-				FA04975D1C4A2F5800AC7816 /* MapLoaderPublic.cpp */,
-				FA04975E1C4A2F5800AC7816 /* MapObject.cpp */,
-				FA0497661C4A2F6500AC7816 /* pugixml.cpp */,
-				FA04975F1C4A2F5800AC7816 /* QuadTreeNode.cpp */,
 				5FF4FE9A1BB33EE60079FC4C /* SampleGame */,
 				5FF4FE991BB33EE60079FC4C /* Products */,
+				FAFB1C051CBC5F780012F144 /* Music */,
+				FAFB1C061CBC5F780012F144 /* sounds */,
+				FAFB1C071CBC5F780012F144 /* Texture */,
 			);
 			sourceTree = "<group>";
 		};
@@ -211,8 +199,13 @@
 		5FF4FE9A1BB33EE60079FC4C /* SampleGame */ = {
 			isa = PBXGroup;
 			children = (
+				FAFB1BFA1CBC51090012F144 /* Cursor.cpp */,
+				FAFB1BFB1CBC51090012F144 /* Cursor.h */,
+				FAFB1BFC1CBC51090012F144 /* Menu.cpp */,
+				FAFB1BFD1CBC51090012F144 /* Menu.h */,
+				FAFB1BFE1CBC51090012F144 /* PreMenu.cpp */,
+				FAFB1BFF1CBC51090012F144 /* PreMenu.h */,
 				FAAA79991C7E8BA300683E22 /* ResourceManager.h */,
-				FAAA799A1C7E8C6C00683E22 /* ResourceManager.cpp */,
 				FAAB85021C56F6EF0028AF0B /* Interface.h */,
 				5F35EB531BC84F3800FCF070 /* main.cpp */,
 				5F35EB551BC84F4300FCF070 /* ResourcePath.h */,
@@ -221,7 +214,7 @@
 				FA4F4FD21C80FF15007C2936 /* Configuration.h */,
 				FA4F4FD31C80FF15007C2936 /* Game.cpp */,
 				FA4F4FD41C80FF15007C2936 /* Game.h */,
-				FAAB85031C56F7400028AF0B /* Interface */,
+				FAFB1BF91CBC50600012F144 /* tmx */,
 				5FF4FE9B1BB33EE60079FC4C /* Supporting Files */,
 				5FD0A8261BB354C2003B9327 /* Mac Frameworks */,
 			);
@@ -238,29 +231,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		FAAB85031C56F7400028AF0B /* Interface */ = {
+		FAFB1BF91CBC50600012F144 /* tmx */ = {
 			isa = PBXGroup;
 			children = (
-				FAAB85171C56F7EF0028AF0B /* AnimationObject.cpp */,
-				FAAB85181C56F7EF0028AF0B /* AnimationObject.h */,
-				FAAB85061C56F7530028AF0B /* Bar.cpp */,
-				FAAB85071C56F7530028AF0B /* Bar.h */,
-				FAAB85081C56F7530028AF0B /* Bound.cpp */,
-				FAAB85091C56F7530028AF0B /* Bound.h */,
-				FAAB850A1C56F7530028AF0B /* Button.cpp */,
-				FAAB850B1C56F7530028AF0B /* Button.h */,
-				FAAB850C1C56F7530028AF0B /* DragBound.cpp */,
-				FAAB850D1C56F7530028AF0B /* DragBound.h */,
-				FAAB850E1C56F7530028AF0B /* InterfaceEvent.h */,
-				FAAB850F1C56F7530028AF0B /* TextBox.cpp */,
-				FAAB85101C56F7530028AF0B /* TextBox.h */,
-				FAAB851A1C598F8F0028AF0B /* Slot.h */,
-				FAAB851B1C5993090028AF0B /* Slot.cpp */,
-				FAAB851D1C5ADC4B0028AF0B /* Cursor.h */,
-				FAAB851E1C5ADC640028AF0B /* Cursor.cpp */,
+				FA04975A1C4A2F5800AC7816 /* DebugShape.cpp */,
+				FA04975B1C4A2F5800AC7816 /* MapLayer.cpp */,
+				FA04975C1C4A2F5800AC7816 /* MapLoaderPrivate.cpp */,
+				FA04975D1C4A2F5800AC7816 /* MapLoaderPublic.cpp */,
+				FA04975E1C4A2F5800AC7816 /* MapObject.cpp */,
+				FA0497661C4A2F6500AC7816 /* pugixml.cpp */,
+				FA04975F1C4A2F5800AC7816 /* QuadTreeNode.cpp */,
 			);
-			name = Interface;
-			path = ../src/Interface;
+			name = tmx;
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
@@ -321,7 +303,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAFB1C081CBC5F780012F144 /* Music in Resources */,
 				FA0497571C4A2F1F00AC7816 /* Texture in Resources */,
+				FAFB1C0A1CBC5F780012F144 /* Texture in Resources */,
+				FAFB1C091CBC5F780012F144 /* sounds in Resources */,
 				FA04976B1C4A309500AC7816 /* maps in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,24 +335,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA0497671C4A2F6500AC7816 /* pugixml.cpp in Sources */,
+				FAFB1C011CBC51090012F144 /* Menu.cpp in Sources */,
+				FAFB1C021CBC51090012F144 /* PreMenu.cpp in Sources */,
+				FAFB1C001CBC51090012F144 /* Cursor.cpp in Sources */,
 				5F3A1B3C1BC8519100726EBF /* main.cpp in Sources */,
 				5F35EB571BC84F4300FCF070 /* ResourcePathMac.mm in Sources */,
 				FA0497641C4A2F5800AC7816 /* MapObject.cpp in Sources */,
 				FA0497611C4A2F5800AC7816 /* MapLayer.cpp in Sources */,
 				FA4F4FD51C80FF15007C2936 /* Configuration.cpp in Sources */,
-				FAAB85131C56F7530028AF0B /* Bound.cpp in Sources */,
-				FAAB85161C56F7530028AF0B /* TextBox.cpp in Sources */,
 				FA0497631C4A2F5800AC7816 /* MapLoaderPublic.cpp in Sources */,
-				FAAB851F1C5ADC640028AF0B /* Cursor.cpp in Sources */,
-				FAAB85151C56F7530028AF0B /* DragBound.cpp in Sources */,
-				FAAB85141C56F7530028AF0B /* Button.cpp in Sources */,
 				FA0497601C4A2F5800AC7816 /* DebugShape.cpp in Sources */,
-				FAAB851C1C5993090028AF0B /* Slot.cpp in Sources */,
 				FA0497621C4A2F5800AC7816 /* MapLoaderPrivate.cpp in Sources */,
-				FAAB85121C56F7530028AF0B /* Bar.cpp in Sources */,
-				FAAB85191C56F7EF0028AF0B /* AnimationObject.cpp in Sources */,
 				FA0497651C4A2F5800AC7816 /* QuadTreeNode.cpp in Sources */,
-				FAAA799B1C7E8C6C00683E22 /* ResourceManager.cpp in Sources */,
 				FA4F4FD61C80FF15007C2936 /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
