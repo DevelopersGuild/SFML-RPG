@@ -150,8 +150,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\Configuration.cpp" />
+    <ClCompile Include="..\..\src\Connection.cpp" />
     <ClCompile Include="..\..\src\Cursor.cpp" />
     <ClCompile Include="..\..\src\Game.cpp" />
+    <ClCompile Include="..\..\src\Lobby.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\Menu.cpp" />
     <ClCompile Include="..\..\src\PreMenu.cpp" />
@@ -168,9 +170,11 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\Character.h" />
     <ClInclude Include="..\..\src\Configuration.h" />
+    <ClInclude Include="..\..\src\Connection.h" />
     <ClInclude Include="..\..\src\Cursor.h" />
     <ClInclude Include="..\..\src\Game.h" />
     <ClInclude Include="..\..\src\Item.h" />
+    <ClInclude Include="..\..\src\Lobby.h" />
     <ClInclude Include="..\..\src\Menu.h" />
     <ClInclude Include="..\..\src\PreMenu.h" />
     <ClInclude Include="..\..\src\ResourceManager.h" />

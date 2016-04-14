@@ -62,7 +62,7 @@ void PreMenu::run()
 void PreMenu::initialize()
 {
 	sf::Music& test = config.musMan.get("Theme1.ogg");	
-	std::this_thread::sleep_for(std::chrono::seconds(2));	//TBC, test only
+	//std::this_thread::sleep_for(std::chrono::seconds(2));	//TBC, test only
 
 	finished = true;
 }

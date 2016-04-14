@@ -23,7 +23,7 @@ Menu::Menu(Configuration & newConfig) :
 	startButton->connect("mousereleased", [&]()
 	{
 		config.soundMan.get("Decision2.ogg").play();
-		toConnect();
+		tomodeChoice();
 	});
 	startButton->setPosition(800, 200);
 
@@ -91,37 +91,70 @@ Menu::Menu(Configuration & newConfig) :
 	setting_text_sonVol->setPosition(500, 570);
 
 	/*
+	initialize modeChoice gui
+	*/
+	modeChoice_client = std::make_shared<tgui::Button>();
+	modeChoice_client->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	modeChoice_client->setText("Join gmae");
+	modeChoice_client->setPosition(800, 200);
+	modeChoice_client->connect("mousereleased", [&]() {
+		config.soundMan.get("Decision2.ogg").play();
+		toConnect();
+	});
+
+	modeChoice_server = std::make_shared<tgui::Button>();
+	modeChoice_server->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	modeChoice_server->setText("Host game");
+	modeChoice_server->setPosition(800, 300);
+	modeChoice_server->connect("mousereleased", [&]() {
+		config.soundMan.get("Decision2.ogg").play();
+		//toServerLobby?
+	});
+
+	modeChoice_back = std::make_shared<tgui::Button>();
+	modeChoice_back->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	modeChoice_back->setText("Back");
+	modeChoice_back->setPosition(800, 400);
+	modeChoice_back->connect("mousereleased", [&]() {
+		config.soundMan.get("Decision2.ogg").play();
+		toMainMenu();
+	});
+
+	/*
 	initialize connect gui
 	*/
-	conRect.setSize(sf::Vector2f(700, 500));
-	conRect.setPosition(sf::Vector2f(200, 200));
-	conRect.setFillColor(sf::Color(255, 255, 255, 180));
+	sf::Vector2f size = sf::Vector2f(410, 192);
+	conRect.setSize(size);
+	conRect.setOrigin(size.x / 2, size.y / 2);
+	sf::Vector2f windowSize = sf::Vector2f(config.window.getSize());
+	conRect.setPosition(windowSize.x / 2, windowSize.y / 2);
+	conRect.setFillColor(sf::Color(0, 0, 0, 60));
 
 	connect_backButton = std::make_shared<tgui::Button>();
 	connect_backButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
 	connect_backButton->setText("Back");
-	connect_backButton->setPosition(400, 500);
+	connect_backButton->setPosition(360, 400);
 	connect_backButton->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
-		toMainMenu();
+		tomodeChoice();
 	});
 
 	connect_connectButton = std::make_shared<tgui::Button>();
 	connect_connectButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
 	connect_connectButton->setText("Connect");
-	connect_connectButton->setPosition(600, 500);
+	connect_connectButton->setPosition(540, 400);
 
 	connect_IPBox = std::make_shared<tgui::EditBox>();
 	connect_IPBox->setSize(300, 25);
 	connect_IPBox->setTextSize(18);
-	connect_IPBox->setPosition(400, 450);
+	connect_IPBox->setPosition(360, 350);
 	connect_IPBox->setMaximumCharacters(15);
 	connect_IPBox->setInputValidator("[0-9]*\\.?[0-9]*\\.?[0-9]*\\.?[0-9]*");
 
 	connect_text_prompt = std::make_shared<tgui::Label>();
 	connect_text_prompt->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
 	connect_text_prompt->setText("Enter the IP:");
-	connect_text_prompt->setPosition(400, 420);
+	connect_text_prompt->setPosition(360, 320);
 }
 
 bool Menu::run()
@@ -160,6 +193,15 @@ void Menu::toMainMenu()
 	gui.add(startButton);
 	gui.add(settingButton);
 	gui.add(exitButton);
+}
+
+void Menu::tomodeChoice()
+{
+	gui.removeAllWidgets();
+	state = STATE::modeChoice;
+	gui.add(modeChoice_client);
+	gui.add(modeChoice_server);
+	gui.add(modeChoice_back);
 }
 
 void Menu::toSetting()
