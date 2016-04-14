@@ -2,6 +2,9 @@
 #include <SFML/Network.hpp>
 #include <thread>
 #include <queue>
+#include <vector>
+
+#define PORT 41420
 
 /*
 Connection class
@@ -14,31 +17,16 @@ private:
 	sf::UdpSocket receive;
 
 	//the thread of listening packets (check the socket and enqueue packet only, nothing else)
-	//std::thread listen;
+	//true at anytime until this class is about to be deleted;
+	bool isListening;
 	
 	//the queue of packets (the Connection class 'USE' queue)
-	std::queue<sf::Packet> queue;
-
-	//is this a server? (server boardcasts packets to all client, while client sends packets to server only)
-	bool isServer;
+	std::queue<sf::Packet> packetQueue;
 
 	//a 'check' packet must be sent for a certain of time in order to make sure there is no disconnection
-	//sf::Clock sec_sinceLastCheck;
-
-	//the thread to perform checking
-	//std::thread handShakeThread;
-
-
+	sf::Clock sec_sinceLastCheck;
 public:
-	Connection() = delete;
+	Connection();
 	Connection(const Connection&) = delete;
 	Connection operator=(const Connection&) = delete;
-
-	//the constructor must decide whether this computer is server or client
-	//Connection(bool isServer);
-
-	//the STATE of the connection
-	enum STATE{not_ready, inGame};
-
-
 };

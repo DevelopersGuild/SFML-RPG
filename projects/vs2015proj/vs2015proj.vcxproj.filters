@@ -28,6 +28,12 @@
     <Filter Include="Source Files\Menu">
       <UniqueIdentifier>{3cce3eb7-e2d5-4702-a228-81a2995d3e9b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Network">
+      <UniqueIdentifier>{442e45b9-d365-4f4b-a7cb-c9a728a1c665}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Network">
+      <UniqueIdentifier>{7de90608-d59c-4f2b-9e0f-31accf58538e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cpp">
@@ -75,11 +81,11 @@
     <ClCompile Include="..\..\src\Menu.cpp">
       <Filter>Source Files\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Connection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Lobby.cpp">
       <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Connection.cpp">
+      <Filter>Source Files\Network</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -123,7 +129,7 @@
       <Filter>Header Files\Menu</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Connection.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
