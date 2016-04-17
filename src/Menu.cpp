@@ -6,13 +6,44 @@ Menu::Menu(Configuration & newConfig) :
 	/*
 	initialize the menu state
 	*/
-	state = STATE::mainMenu;
+	state = STATE::getUserName;
 
 	/*
 	initialize the background
 	*/
 	backgrd.setSize(sf::Vector2f(config.window.getSize()));
 	backgrd.setTexture(&config.texMan.get("Tower1.png"));
+
+	/*
+	initialize the getUserName gui
+	*/
+	getUserName_panel = std::make_shared<tgui::Panel>();
+	gui.add(getUserName_panel);
+	getUserName_panel->setSize(410, 192);
+	getUserName_panel->setPosition(307, 288);
+	getUserName_panel->setBackgroundColor(tgui::Color(0, 0, 0, 60));
+
+	getUserName_confirm = std::make_shared<tgui::Button>();
+	getUserName_panel->add(getUserName_confirm);
+	getUserName_confirm->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	getUserName_confirm->setText("Confirm");
+	getUserName_confirm->setPosition(135, 152);
+	getUserName_confirm->connect("mousereleased", [&]() {
+		config.soundMan.get("Decision2.ogg").play();
+		toMainMenu();
+	});
+
+	getUserName_textBox = std::make_shared<tgui::EditBox>();
+	getUserName_panel->add(getUserName_textBox);
+	getUserName_textBox->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	getUserName_textBox->setText("Your Name");
+	getUserName_textBox->setPosition(85, 102);
+
+	getUserName_prompt = std::make_shared<tgui::Label>();
+	getUserName_panel->add(getUserName_prompt);
+	getUserName_prompt->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	getUserName_prompt->setText("Input your name:");
+	getUserName_prompt->setPosition(85, 72);
 
 	/*
 	initialize the mainMenu gui
@@ -205,26 +236,25 @@ Menu::Menu(Configuration & newConfig) :
 	lobby_send->setPosition(357, 473);
 	lobby_send->setText("send");
 	lobby_send->connect("mousereleased", [&]() {
-		lobby_chatBox->addLine(lobby_textBox->getText());
+		std::string str = lobby_textBox->getText();
+		if (str != "")
+		{
+			lobby_chatBox->addLine(str);
+		}
 		lobby_textBox->setText("");
 	});
 
-	lobby_mapPicture = std::make_shared<tgui::Picture>();
-	lobby_panel->add(lobby_mapPicture);
-	lobby_mapPicture->setSize(234, 210);
-	lobby_mapPicture->setPosition(535, 50);
-	lobby_mapPicture->setTexture(config.texMan.get("Tower1.png"));
 }
 
 bool Menu::run()
 {
 	sf::RenderWindow& window(config.window);
 
-	toMainMenu();
+	//toMainMenu();
 
 	bgMusic = &config.musMan.get("Theme1.ogg");
 	bgMusic->setLoop(true);
-	bgMusic->play();
+	//bgMusic->play();
 
 	while (window.isOpen())
 	{

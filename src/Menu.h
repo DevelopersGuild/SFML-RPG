@@ -22,6 +22,7 @@ private:
 
 	/*
 	the states of menu
+	getUserName: prompt user to input his/her name
 	mainMenu   : show "start", "settings", "exit" button
 	settings   : allow player to adjust configurations
 	modeChoice : allow player to choose to be client or host
@@ -29,13 +30,21 @@ private:
 	multiplayer_lobby      : the lobby after connection success
 	when started, the state is mainMenu.
 	*/
-	enum STATE{mainMenu, setting, modeChoice, connect, multiplayer_lobby} state;
+	enum STATE{getUserName, mainMenu, setting, modeChoice, connect, multiplayer_lobby} state;
 
 	//the background of the menu
 	sf::RectangleShape backgrd;
 
 	//the gui interface of the menu
 	tgui::Gui gui;
+
+	/*
+	The gui stuff that only shown in getUserName
+	*/
+	tgui::Panel::Ptr getUserName_panel;
+	tgui::Button::Ptr getUserName_confirm;
+	tgui::EditBox::Ptr getUserName_textBox;
+	tgui::Label::Ptr getUserName_prompt;
 
 	/*
 	The gui stuff that only shown in the mainMenu
