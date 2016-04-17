@@ -108,7 +108,7 @@ Menu::Menu(Configuration & newConfig) :
 	modeChoice_server->setPosition(800, 300);
 	modeChoice_server->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
-		//toServerLobby?
+		toLobby();
 	});
 
 	modeChoice_back = std::make_shared<tgui::Button>();
@@ -155,6 +155,65 @@ Menu::Menu(Configuration & newConfig) :
 	connect_text_prompt->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
 	connect_text_prompt->setText("Enter the IP:");
 	connect_text_prompt->setPosition(360, 320);
+
+	/*
+	initialize multiplayer lobby gui
+	*/
+	lobby_panel = std::make_shared<tgui::Panel>();
+	lobby_panel->setSize(822, 614);
+	lobby_panel->setPosition(102, 77);
+	lobby_panel->setBackgroundColor(tgui::Color(0, 0, 0, 60));
+	lobby_panel->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+
+	lobby_back = std::make_shared<tgui::Button>();
+	lobby_panel->add(lobby_back);
+	lobby_back->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	lobby_back->setText("Back");
+	lobby_back->setPosition(65, 542);
+	lobby_back->connect("mousereleased", [&]() {
+		config.soundMan.get("Decision2.ogg").play();
+		//reset lobby...
+		tomodeChoice();
+	});
+
+	lobby_start = std::make_shared<tgui::Button>();
+	lobby_panel->add(lobby_start);
+	lobby_start->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	lobby_start->setText("Start");
+	lobby_start->setPosition(571, 546);
+	lobby_start->connect("mousereleased", [&]() {
+		config.soundMan.get("Decision2.ogg").play();
+		//start game...
+	});
+
+	lobby_chatBox = std::make_shared<tgui::ChatBox>();
+	lobby_panel->add(lobby_chatBox);
+	lobby_chatBox->setSize(340, 150);
+	lobby_chatBox->setPosition(51, 323);
+	lobby_chatBox->addLine("Test");
+
+	lobby_textBox = std::make_shared<tgui::TextBox>();
+	lobby_panel->add(lobby_textBox);
+	lobby_textBox->setSize(340, 22);
+	lobby_textBox->setPosition(51, 473);
+	lobby_textBox->setMaximumCharacters(33);
+
+	lobby_send = std::make_shared<tgui::Button>();
+	lobby_panel->add(lobby_send);
+	lobby_send->setSize(34, 22);
+	lobby_send->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	lobby_send->setPosition(357, 473);
+	lobby_send->setText("send");
+	lobby_send->connect("mousereleased", [&]() {
+		lobby_chatBox->addLine(lobby_textBox->getText());
+		lobby_textBox->setText("");
+	});
+
+	lobby_mapPicture = std::make_shared<tgui::Picture>();
+	lobby_panel->add(lobby_mapPicture);
+	lobby_mapPicture->setSize(234, 210);
+	lobby_mapPicture->setPosition(535, 50);
+	lobby_mapPicture->setTexture(config.texMan.get("Tower1.png"));
 }
 
 bool Menu::run()
@@ -225,6 +284,13 @@ void Menu::toConnect()
 	gui.add(connect_text_prompt);
 }
 
+void Menu::toLobby()
+{
+	gui.removeAllWidgets();
+	state = STATE::multiplayer_lobby;
+	gui.add(lobby_panel);
+}
+
 void Menu::draw()
 {
 	config.window.draw(backgrd);
@@ -239,7 +305,7 @@ void Menu::draw()
 	case Menu::connect:
 		config.window.draw(conRect);
 		break;
-	case Menu::lobby:
+	case Menu::multiplayer_lobby:
 		break;
 	default:
 		break;

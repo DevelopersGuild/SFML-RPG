@@ -1,3 +1,4 @@
+/*
 #include "Connection.h"
 
 Connection::Connection()
@@ -5,3 +6,4 @@ Connection::Connection()
 	isListening = true;
 	receive.bind(PORT);
 }
+*/

@@ -10,6 +10,7 @@
 Connection class
 Handles the internet connection of the game.
 */
+/*
 class Connection
 {
 private:
@@ -30,3 +31,4 @@ public:
 	Connection(const Connection&) = delete;
 	Connection operator=(const Connection&) = delete;
 };
+*/

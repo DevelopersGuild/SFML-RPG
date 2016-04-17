@@ -81,9 +81,6 @@
     <ClCompile Include="..\..\src\Menu.cpp">
       <Filter>Source Files\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Lobby.cpp">
-      <Filter>Source Files\Menu</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Connection.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
@@ -123,9 +120,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Menu.h">
-      <Filter>Header Files\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Lobby.h">
       <Filter>Header Files\Menu</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Connection.h">

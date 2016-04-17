@@ -26,18 +26,10 @@ private:
 	settings   : allow player to adjust configurations
 	modeChoice : allow player to choose to be client or host
 	connect    : prompt the player to input server's ip
-	lobby      : the lobby after connection success
+	multiplayer_lobby      : the lobby after connection success
 	when started, the state is mainMenu.
 	*/
-	enum STATE{mainMenu, setting, modeChoice, connect, lobby} state;
-
-	/*
-	the functions of changing state
-	*/
-	void toMainMenu();
-	void tomodeChoice();
-	void toSetting();
-	void toConnect();
+	enum STATE{mainMenu, setting, modeChoice, connect, multiplayer_lobby} state;
 
 	//the background of the menu
 	sf::RectangleShape backgrd;
@@ -81,12 +73,27 @@ private:
 	/*
 	The gui stuff that only shown in server Lobby
 	*/
+	tgui::Panel::Ptr lobby_panel;
+	tgui::Button::Ptr lobby_back;
+	tgui::Button::Ptr lobby_start;
+	tgui::ChatBox::Ptr lobby_chatBox;
+	tgui::TextBox::Ptr lobby_textBox;
+	tgui::Button::Ptr lobby_send;
+	tgui::Picture::Ptr lobby_mapPicture;
+
+	/*
+	the functions of changing state
+	*/
+	void toMainMenu();
+	void tomodeChoice();
+	void toSetting();
+	void toConnect();
+	void toLobby();
 
 	/*
 	The drawing function
 	*/
 	void draw();
-
 public:
 	Menu() = delete;
 	Menu(const Menu&) = delete;
