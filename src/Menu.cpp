@@ -25,7 +25,7 @@ Menu::Menu(Configuration & newConfig) :
 
 	getUserName_confirm = std::make_shared<tgui::Button>();
 	getUserName_panel->add(getUserName_confirm);
-	getUserName_confirm->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	getUserName_confirm->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	getUserName_confirm->setText("Confirm");
 	getUserName_confirm->setPosition(135, 152);
 	getUserName_confirm->connect("mousereleased", [&]() {
@@ -35,13 +35,13 @@ Menu::Menu(Configuration & newConfig) :
 
 	getUserName_textBox = std::make_shared<tgui::EditBox>();
 	getUserName_panel->add(getUserName_textBox);
-	getUserName_textBox->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	getUserName_textBox->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	getUserName_textBox->setText("Your Name");
 	getUserName_textBox->setPosition(85, 102);
 
 	getUserName_prompt = std::make_shared<tgui::Label>();
 	getUserName_panel->add(getUserName_prompt);
-	getUserName_prompt->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	getUserName_prompt->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	getUserName_prompt->setText("Input your name:");
 	getUserName_prompt->setPosition(85, 72);
 
@@ -49,7 +49,7 @@ Menu::Menu(Configuration & newConfig) :
 	initialize the mainMenu gui
 	*/	
 	startButton = std::make_shared<tgui::Button>();
-	startButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	startButton->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	startButton->setText("Start");
 	startButton->connect("mousereleased", [&]()
 	{
@@ -59,7 +59,7 @@ Menu::Menu(Configuration & newConfig) :
 	startButton->setPosition(800, 200);
 
 	settingButton = std::make_shared<tgui::Button>();
-	settingButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	settingButton->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	settingButton->setText("Setting");
 	settingButton->connect("mousereleased", [&]() 
 	{
@@ -69,7 +69,7 @@ Menu::Menu(Configuration & newConfig) :
 	settingButton->setPosition(800, 300);
 
 	exitButton = std::make_shared<tgui::Button>();
-	exitButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	exitButton->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	exitButton->setText("Exit");
 	exitButton->connect("mousereleased", [&]() {config.window.close(); });
 	exitButton->setPosition(800, 400);
@@ -82,7 +82,7 @@ Menu::Menu(Configuration & newConfig) :
 	setRect.setPosition(sf::Vector2f(200, 200));
 
 	setting_backButton = std::make_shared<tgui::Button>();
-	setting_backButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	setting_backButton->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	setting_backButton->setText("Back");
 	setting_backButton->connect("mousereleased", [&]() 
 	{
@@ -102,7 +102,7 @@ Menu::Menu(Configuration & newConfig) :
 	});
 
 	setting_text_musVol = std::make_shared<tgui::Label>();
-	setting_text_musVol->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	setting_text_musVol->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	setting_text_musVol->setText("Music Volume");
 	setting_text_musVol->setPosition(500, 470);
 
@@ -117,7 +117,7 @@ Menu::Menu(Configuration & newConfig) :
 	});
 
 	setting_text_sonVol = std::make_shared<tgui::Label>();
-	setting_text_sonVol->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	setting_text_sonVol->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	setting_text_sonVol->setText("Sound Volume");
 	setting_text_sonVol->setPosition(500, 570);
 
@@ -125,7 +125,7 @@ Menu::Menu(Configuration & newConfig) :
 	initialize modeChoice gui
 	*/
 	modeChoice_client = std::make_shared<tgui::Button>();
-	modeChoice_client->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	modeChoice_client->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	modeChoice_client->setText("Join gmae");
 	modeChoice_client->setPosition(800, 200);
 	modeChoice_client->connect("mousereleased", [&]() {
@@ -134,7 +134,7 @@ Menu::Menu(Configuration & newConfig) :
 	});
 
 	modeChoice_server = std::make_shared<tgui::Button>();
-	modeChoice_server->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	modeChoice_server->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	modeChoice_server->setText("Host game");
 	modeChoice_server->setPosition(800, 300);
 	modeChoice_server->connect("mousereleased", [&]() {
@@ -143,7 +143,7 @@ Menu::Menu(Configuration & newConfig) :
 	});
 
 	modeChoice_back = std::make_shared<tgui::Button>();
-	modeChoice_back->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	modeChoice_back->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	modeChoice_back->setText("Back");
 	modeChoice_back->setPosition(800, 400);
 	modeChoice_back->connect("mousereleased", [&]() {
@@ -162,7 +162,7 @@ Menu::Menu(Configuration & newConfig) :
 	conRect.setFillColor(sf::Color(0, 0, 0, 60));
 
 	connect_backButton = std::make_shared<tgui::Button>();
-	connect_backButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	connect_backButton->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	connect_backButton->setText("Back");
 	connect_backButton->setPosition(360, 400);
 	connect_backButton->connect("mousereleased", [&]() {
@@ -171,7 +171,7 @@ Menu::Menu(Configuration & newConfig) :
 	});
 
 	connect_connectButton = std::make_shared<tgui::Button>();
-	connect_connectButton->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	connect_connectButton->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	connect_connectButton->setText("Connect");
 	connect_connectButton->setPosition(540, 400);
 
@@ -183,7 +183,7 @@ Menu::Menu(Configuration & newConfig) :
 	connect_IPBox->setInputValidator("[0-9]*\\.?[0-9]*\\.?[0-9]*\\.?[0-9]*");
 
 	connect_text_prompt = std::make_shared<tgui::Label>();
-	connect_text_prompt->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	connect_text_prompt->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	connect_text_prompt->setText("Enter the IP:");
 	connect_text_prompt->setPosition(360, 320);
 
@@ -194,11 +194,11 @@ Menu::Menu(Configuration & newConfig) :
 	lobby_panel->setSize(822, 614);
 	lobby_panel->setPosition(102, 77);
 	lobby_panel->setBackgroundColor(tgui::Color(0, 0, 0, 60));
-	lobby_panel->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	lobby_panel->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 
 	lobby_back = std::make_shared<tgui::Button>();
 	lobby_panel->add(lobby_back);
-	lobby_back->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	lobby_back->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	lobby_back->setText("Back");
 	lobby_back->setPosition(65, 542);
 	lobby_back->connect("mousereleased", [&]() {
@@ -209,7 +209,7 @@ Menu::Menu(Configuration & newConfig) :
 
 	lobby_start = std::make_shared<tgui::Button>();
 	lobby_panel->add(lobby_start);
-	lobby_start->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	lobby_start->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	lobby_start->setText("Start");
 	lobby_start->setPosition(571, 546);
 	lobby_start->connect("mousereleased", [&]() {
@@ -232,7 +232,7 @@ Menu::Menu(Configuration & newConfig) :
 	lobby_send = std::make_shared<tgui::Button>();
 	lobby_panel->add(lobby_send);
 	lobby_send->setSize(34, 22);
-	lobby_send->setFont(tgui::Font(config.fontMan.get("arial.ttf")));
+	lobby_send->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
 	lobby_send->setPosition(357, 473);
 	lobby_send->setText("send");
 	lobby_send->connect("mousereleased", [&]() {
@@ -244,6 +244,11 @@ Menu::Menu(Configuration & newConfig) :
 		lobby_textBox->setText("");
 	});
 
+	lobby_mapPicture = std::make_shared<tgui::Picture>();
+	lobby_panel->add(lobby_mapPicture);
+	lobby_mapPicture->setSize(234, 210);
+	lobby_mapPicture->setPosition(535, 50);
+	lobby_mapPicture->setTexture(config.texMan.get("shadow_kingdom_map.png"));
 }
 
 bool Menu::run()
