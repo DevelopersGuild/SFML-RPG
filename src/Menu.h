@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include "Configuration.h"
+#include "Lobby.h"
 
 /*
 Menu class
@@ -40,48 +41,71 @@ private:
 
 	/*
 	The gui stuff that only shown in getUserName
+	NOTE: Since other widgets are already in panel,
+	so only panel is needed to be added to gui!
 	*/
-	tgui::Panel::Ptr getUserName_panel;
-	tgui::Button::Ptr getUserName_confirm;
-	tgui::EditBox::Ptr getUserName_textBox;
-	tgui::Label::Ptr getUserName_prompt;
+	struct GetUserName {
+		tgui::Panel::Ptr panel;
+		tgui::Button::Ptr confirm;
+		tgui::EditBox::Ptr textBox;
+		tgui::Label::Ptr prompt;
+
+		void initialize(Configuration& config);
+	} state_getUserName;
 
 	/*
 	The gui stuff that only shown in the mainMenu
 	*/
-	tgui::Button::Ptr exitButton;
-	tgui::Button::Ptr startButton;
-	tgui::Button::Ptr settingButton;
+	struct MainMenu {
+		tgui::Panel::Ptr panel;
+		tgui::Button::Ptr exitButton;
+		tgui::Button::Ptr startButton;
+		tgui::Button::Ptr settingButton;
+		void initialize(Configuration& config);
+	} state_mainMenu;
 
 	/*
 	The gui stuff that only shown in the settings
 	*/
-	sf::RectangleShape setRect;
-	tgui::Button::Ptr setting_backButton;
-	tgui::Slider::Ptr setting_MusVol;
-	tgui::Label::Ptr setting_text_musVol;
-	tgui::Slider::Ptr setting_sonVol;
-	tgui::Label::Ptr setting_text_sonVol;
+	struct Settings {
+		tgui::Panel::Ptr panel;
+		tgui::Button::Ptr backButton;
+		tgui::Slider::Ptr MusVol;
+		tgui::Label::Ptr text_musVol;
+		tgui::Slider::Ptr sonVol;
+		tgui::Label::Ptr text_sonVol;
+		void initialize(Configuration& config);
+	} state_settings;
 
 	/*
 	The gui stuff that only shown in modeChoice
 	*/
-	tgui::Button::Ptr modeChoice_client;
-	tgui::Button::Ptr modeChoice_server;
-	tgui::Button::Ptr modeChoice_back;
+	struct ModeChoice {
+		tgui::Panel::Ptr panel;
+		tgui::Button::Ptr client;
+		tgui::Button::Ptr server;
+		tgui::Button::Ptr back;
+		void initialize(Configuration& config);
+	} state_modeChoice;
 
 	/*
 	The gui stuff that only shown in connection
 	*/
-	sf::RectangleShape conRect;
-	tgui::Button::Ptr connect_backButton;
-	tgui::Button::Ptr connect_connectButton;
-	tgui::EditBox::Ptr connect_IPBox;
-	tgui::Label::Ptr connect_text_prompt;
+	struct Connect
+	{
+		tgui::Panel::Ptr panel;
+		tgui::Button::Ptr backButton;
+		tgui::Button::Ptr connectButton;
+		tgui::EditBox::Ptr IPBox;
+		tgui::Label::Ptr text_prompt;
+		void initialize(Configuration& config);
+	} state_connect;
+
 
 	/*
 	The gui stuff that only shown in server Lobby
 	*/
+	/*
 	tgui::Panel::Ptr lobby_panel;
 	tgui::Button::Ptr lobby_back;
 	tgui::Button::Ptr lobby_start;
@@ -89,10 +113,13 @@ private:
 	tgui::TextBox::Ptr lobby_textBox;
 	tgui::Button::Ptr lobby_send;
 	tgui::Picture::Ptr lobby_mapPicture;
+	*/
+	std::unique_ptr<Lobby> lobbyPtr;
 
 	/*
 	the functions of changing state
 	*/
+	void toGetUserName();
 	void toMainMenu();
 	void tomodeChoice();
 	void toSetting();

@@ -7,6 +7,7 @@ Menu::Menu(Configuration & newConfig) :
 	initialize the menu state
 	*/
 	state = STATE::getUserName;
+	gui.setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));	//set the default font of gui
 
 	/*
 	initialize the background
@@ -17,136 +18,71 @@ Menu::Menu(Configuration & newConfig) :
 	/*
 	initialize the getUserName gui
 	*/
-	getUserName_panel = std::make_shared<tgui::Panel>();
-	gui.add(getUserName_panel);
-	getUserName_panel->setSize(410, 192);
-	getUserName_panel->setPosition(307, 288);
-	getUserName_panel->setBackgroundColor(tgui::Color(0, 0, 0, 60));
+	state_getUserName.initialize(config);
 
-	getUserName_confirm = std::make_shared<tgui::Button>();
-	getUserName_panel->add(getUserName_confirm);
-	getUserName_confirm->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	getUserName_confirm->setText("Confirm");
-	getUserName_confirm->setPosition(135, 152);
-	getUserName_confirm->connect("mousereleased", [&]() {
+	state_getUserName.confirm->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
 		toMainMenu();
 	});
 
-	getUserName_textBox = std::make_shared<tgui::EditBox>();
-	getUserName_panel->add(getUserName_textBox);
-	getUserName_textBox->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	getUserName_textBox->setText("Your Name");
-	getUserName_textBox->setPosition(85, 102);
-
-	getUserName_prompt = std::make_shared<tgui::Label>();
-	getUserName_panel->add(getUserName_prompt);
-	getUserName_prompt->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	getUserName_prompt->setText("Input your name:");
-	getUserName_prompt->setPosition(85, 72);
-
 	/*
 	initialize the mainMenu gui
 	*/	
-	startButton = std::make_shared<tgui::Button>();
-	startButton->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	startButton->setText("Start");
-	startButton->connect("mousereleased", [&]()
+	state_mainMenu.initialize(config);
+
+	state_mainMenu.startButton->connect("mousereleased", [&]()
 	{
 		config.soundMan.get("Decision2.ogg").play();
 		tomodeChoice();
 	});
-	startButton->setPosition(800, 200);
 
-	settingButton = std::make_shared<tgui::Button>();
-	settingButton->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	settingButton->setText("Setting");
-	settingButton->connect("mousereleased", [&]() 
+	state_mainMenu.settingButton->connect("mousereleased", [&]()
 	{
 		config.soundMan.get("Decision2.ogg").play();
-		toSetting(); 
+		toSetting();
 	});
-	settingButton->setPosition(800, 300);
 
-	exitButton = std::make_shared<tgui::Button>();
-	exitButton->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	exitButton->setText("Exit");
-	exitButton->connect("mousereleased", [&]() {config.window.close(); });
-	exitButton->setPosition(800, 400);
+	state_mainMenu.exitButton->connect("mousereleased", [&]() {config.window.close(); });
 
 	/*
 	initialize the setting gui
 	*/
-	setRect.setSize(sf::Vector2f(700, 500));
-	setRect.setFillColor(sf::Color(255, 255, 255, 180));
-	setRect.setPosition(sf::Vector2f(200, 200));
+	state_settings.initialize(config);
 
-	setting_backButton = std::make_shared<tgui::Button>();
-	setting_backButton->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	setting_backButton->setText("Back");
-	setting_backButton->connect("mousereleased", [&]() 
+	state_settings.backButton->connect("mousereleased", [&]()
 	{
 		config.soundMan.get("Decision2.ogg").play();
-		toMainMenu(); 
+		toMainMenu();
 	});
-	setting_backButton->setPosition(200, 700);
 
-	setting_MusVol = std::make_shared<tgui::Slider>();
-	setting_MusVol->setPosition(500, 500);
-	setting_MusVol->setSize(200, 18);
-	setting_MusVol->setValue(10);
-	setting_MusVol->connect("valuechanged",
+	state_settings.MusVol->connect("valuechanged",
 		[&]() {
-		float value = setting_MusVol->getValue() * 10.f;
+		float value = state_settings.MusVol->getValue() * 10.f;
 		config.musMan.setVolume(value);
 	});
 
-	setting_text_musVol = std::make_shared<tgui::Label>();
-	setting_text_musVol->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	setting_text_musVol->setText("Music Volume");
-	setting_text_musVol->setPosition(500, 470);
-
-	setting_sonVol = std::make_shared<tgui::Slider>();
-	setting_sonVol->setPosition(500, 600);
-	setting_sonVol->setSize(200, 18);
-	setting_sonVol->setValue(10);
-	setting_sonVol->connect("valuechanged", 
+	state_settings.sonVol->connect("valuechanged",
 		[&]() {
-		float value = setting_sonVol->getValue() * 10.f;
+		float value = state_settings.sonVol->getValue() * 10.f;
 		config.soundMan.setVolume(value);
 	});
-
-	setting_text_sonVol = std::make_shared<tgui::Label>();
-	setting_text_sonVol->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	setting_text_sonVol->setText("Sound Volume");
-	setting_text_sonVol->setPosition(500, 570);
 
 	/*
 	initialize modeChoice gui
 	*/
-	modeChoice_client = std::make_shared<tgui::Button>();
-	modeChoice_client->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	modeChoice_client->setText("Join gmae");
-	modeChoice_client->setPosition(800, 200);
-	modeChoice_client->connect("mousereleased", [&]() {
+	state_modeChoice.initialize(config);
+
+	state_modeChoice.client->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
 		toConnect();
 	});
 
-	modeChoice_server = std::make_shared<tgui::Button>();
-	modeChoice_server->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	modeChoice_server->setText("Host game");
-	modeChoice_server->setPosition(800, 300);
-	modeChoice_server->connect("mousereleased", [&]() {
+	state_modeChoice.server->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
 		toLobby();
 	});
 
-	modeChoice_back = std::make_shared<tgui::Button>();
-	modeChoice_back->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	modeChoice_back->setText("Back");
-	modeChoice_back->setPosition(800, 400);
-	modeChoice_back->connect("mousereleased", [&]() {
+	state_modeChoice.back->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
 		toMainMenu();
 	});
@@ -154,42 +90,17 @@ Menu::Menu(Configuration & newConfig) :
 	/*
 	initialize connect gui
 	*/
-	sf::Vector2f size = sf::Vector2f(410, 192);
-	conRect.setSize(size);
-	conRect.setOrigin(size.x / 2, size.y / 2);
-	sf::Vector2f windowSize = sf::Vector2f(config.window.getSize());
-	conRect.setPosition(windowSize.x / 2, windowSize.y / 2);
-	conRect.setFillColor(sf::Color(0, 0, 0, 60));
+	state_connect.initialize(config);
 
-	connect_backButton = std::make_shared<tgui::Button>();
-	connect_backButton->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	connect_backButton->setText("Back");
-	connect_backButton->setPosition(360, 400);
-	connect_backButton->connect("mousereleased", [&]() {
+	state_connect.backButton->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
 		tomodeChoice();
 	});
 
-	connect_connectButton = std::make_shared<tgui::Button>();
-	connect_connectButton->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	connect_connectButton->setText("Connect");
-	connect_connectButton->setPosition(540, 400);
-
-	connect_IPBox = std::make_shared<tgui::EditBox>();
-	connect_IPBox->setSize(300, 25);
-	connect_IPBox->setTextSize(18);
-	connect_IPBox->setPosition(360, 350);
-	connect_IPBox->setMaximumCharacters(15);
-	connect_IPBox->setInputValidator("[0-9]*\\.?[0-9]*\\.?[0-9]*\\.?[0-9]*");
-
-	connect_text_prompt = std::make_shared<tgui::Label>();
-	connect_text_prompt->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	connect_text_prompt->setText("Enter the IP:");
-	connect_text_prompt->setPosition(360, 320);
-
 	/*
 	initialize multiplayer lobby gui
 	*/
+	/*
 	lobby_panel = std::make_shared<tgui::Panel>();
 	lobby_panel->setSize(822, 614);
 	lobby_panel->setPosition(102, 77);
@@ -249,17 +160,18 @@ Menu::Menu(Configuration & newConfig) :
 	lobby_mapPicture->setSize(234, 210);
 	lobby_mapPicture->setPosition(535, 50);
 	lobby_mapPicture->setTexture(config.texMan.get("shadow_kingdom_map.png"));
+	*/
 }
 
 bool Menu::run()
 {
 	sf::RenderWindow& window(config.window);
 
-	//toMainMenu();
+	toGetUserName();
 
 	bgMusic = &config.musMan.get("Theme1.ogg");
 	bgMusic->setLoop(true);
-	//bgMusic->play();
+	bgMusic->play();
 
 	while (window.isOpen())
 	{
@@ -280,73 +192,197 @@ bool Menu::run()
 	return false;
 }
 
+void Menu::toGetUserName()
+{
+	gui.removeAllWidgets();
+	state = STATE::getUserName;
+	gui.add(state_getUserName.panel);
+}
+
 void Menu::toMainMenu()
 {
 	gui.removeAllWidgets();
 	state = STATE::mainMenu;
-	gui.add(startButton);
-	gui.add(settingButton);
-	gui.add(exitButton);
+	gui.add(state_mainMenu.panel);
 }
 
 void Menu::tomodeChoice()
 {
 	gui.removeAllWidgets();
 	state = STATE::modeChoice;
-	gui.add(modeChoice_client);
-	gui.add(modeChoice_server);
-	gui.add(modeChoice_back);
+	gui.add(state_modeChoice.panel);
 }
 
 void Menu::toSetting()
 {
 	gui.removeAllWidgets();
 	state = STATE::setting;
-	gui.add(setting_backButton);
-	gui.add(setting_MusVol);
-	gui.add(setting_text_musVol);
-	gui.add(setting_sonVol);
-	gui.add(setting_text_sonVol);
+	gui.add(state_settings.panel);
 }
 
 void Menu::toConnect()
 {
 	gui.removeAllWidgets();
 	state = STATE::connect;
-	gui.add(connect_backButton);
-	gui.add(connect_connectButton);
-	gui.add(connect_IPBox);
-	gui.add(connect_text_prompt);
+	gui.add(state_connect.panel);
+	state_connect.panel->hide();
+	state_connect.panel->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds(0.2));
 }
 
 void Menu::toLobby()
 {
 	gui.removeAllWidgets();
 	state = STATE::multiplayer_lobby;
-	gui.add(lobby_panel);
+	lobbyPtr.reset(new Lobby(config));
+	lobbyPtr->addTgui(gui);
+	lobbyPtr->hide();
+	lobbyPtr->showWithEffect();
+
+	lobbyPtr->connectBackButton("mousereleased", [&]() {
+		config.soundMan.get("Decision2.ogg").play();
+		lobbyPtr.release();
+		tomodeChoice();
+	});
 }
 
 void Menu::draw()
 {
 	config.window.draw(backgrd);
-
-	switch (state)
-	{
-	case Menu::mainMenu:
-		break;
-	case Menu::setting:
-		config.window.draw(setRect);
-		break;
-	case Menu::connect:
-		config.window.draw(conRect);
-		break;
-	case Menu::multiplayer_lobby:
-		break;
-	default:
-		break;
-	}
-
 	gui.draw();
 	config.window.draw(config.cursor);
 }
 
+void Menu::GetUserName::initialize(Configuration& config)
+{
+	panel = std::make_shared<tgui::Panel>();
+	panel->setSize(410, 192);
+	panel->setPosition(307, 288);
+	panel->setBackgroundColor(tgui::Color(0, 0, 0, 60));
+
+	confirm = std::make_shared<tgui::Button>();
+	panel->add(confirm);
+	confirm->setText("Confirm");
+	confirm->setPosition(135, 152);
+
+	textBox = std::make_shared<tgui::EditBox>();
+	panel->add(textBox);
+	textBox->setText("Your Name");
+	textBox->setPosition(85, 102);
+
+	prompt = std::make_shared<tgui::Label>();
+	panel->add(prompt);
+	prompt->setText("Input your name:");
+	prompt->setPosition(85, 72);
+}
+
+void Menu::MainMenu::initialize(Configuration & config)
+{
+	panel = std::make_shared<tgui::Panel>();
+	panel->setPosition(800, 200);
+	panel->setSize(200, 400);
+	panel->setBackgroundColor(tgui::Color(0, 0, 0, 0));
+
+	startButton = std::make_shared<tgui::Button>();
+	panel->add(startButton);
+	startButton->setText("Start");
+	startButton->setPosition(10, 10);
+
+	settingButton = std::make_shared<tgui::Button>();
+	panel->add(settingButton);
+	settingButton->setText("Setting");
+	settingButton->setPosition(10, 110);
+
+	exitButton = std::make_shared<tgui::Button>();
+	panel->add(exitButton);
+	exitButton->setText("Exit");
+	exitButton->setPosition(10, 210);
+}
+
+void Menu::Settings::initialize(Configuration & config)
+{
+	panel = std::make_shared<tgui::Panel>();
+	panel->setSize(sf::Vector2f(700, 500));
+	panel->setBackgroundColor(tgui::Color(0, 0, 0, 60));
+	panel->setPosition(200, 200);
+
+	backButton = std::make_shared<tgui::Button>();
+	panel->add(backButton);
+	backButton->setText("Back");
+	backButton->setPosition(65, 420);
+
+	MusVol = std::make_shared<tgui::Slider>();
+	panel->add(MusVol);
+	MusVol->setPosition(150, 160);
+	MusVol->setSize(200, 18);
+	MusVol->setValue(10);
+
+	text_musVol = std::make_shared<tgui::Label>();
+	panel->add(text_musVol);
+	text_musVol->setText("Music Volume");
+	text_musVol->setPosition(150, 130);
+
+	sonVol = std::make_shared<tgui::Slider>();
+	panel->add(sonVol);
+	sonVol->setPosition(150, 230);
+	sonVol->setSize(200, 18);
+	sonVol->setValue(10);
+
+	text_sonVol = std::make_shared<tgui::Label>();
+	panel->add(text_sonVol);
+	text_sonVol->setText("Sound Volume");
+	text_sonVol->setPosition(150, 200);
+}
+
+void Menu::ModeChoice::initialize(Configuration & config)
+{
+	panel = std::make_shared<tgui::Panel>();
+	panel->setPosition(800, 200);
+	panel->setSize(200, 400);
+	panel->setBackgroundColor(tgui::Color(0, 0, 0, 0));
+
+	client = std::make_shared<tgui::Button>();
+	panel->add(client);
+	client->setText("Join gmae");
+	client->setPosition(10, 10);
+
+	server = std::make_shared<tgui::Button>();
+	panel->add(server);
+	server->setText("Host game");
+	server->setPosition(10, 110);
+
+	back = std::make_shared<tgui::Button>();
+	panel->add(back);
+	back->setText("Back");
+	back->setPosition(10, 210);
+}
+
+void Menu::Connect::initialize(Configuration & config)
+{
+	panel = std::make_shared<tgui::Panel>();
+	panel->setSize(410, 192);
+	panel->setPosition(307, 288);
+	panel->setBackgroundColor(tgui::Color(0, 0, 0, 60));
+
+	backButton = std::make_shared<tgui::Button>();
+	panel->add(backButton);
+	backButton->setText("Back");
+	backButton->setPosition(50, 130);
+
+	connectButton = std::make_shared<tgui::Button>();
+	panel->add(connectButton);
+	connectButton->setText("Connect");
+	connectButton->setPosition(230, 130);
+
+	IPBox = std::make_shared<tgui::EditBox>();
+	panel->add(IPBox);
+	IPBox->setSize(300, 25);
+	IPBox->setTextSize(18);
+	IPBox->setPosition(50, 80);
+	IPBox->setMaximumCharacters(15);
+	IPBox->setInputValidator("[0-9]*\\.?[0-9]*\\.?[0-9]*\\.?[0-9]*");
+
+	text_prompt = std::make_shared<tgui::Label>();
+	panel->add(text_prompt);
+	text_prompt->setText("Enter the IP:");
+	text_prompt->setPosition(50, 50);
+}

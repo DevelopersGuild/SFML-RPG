@@ -84,6 +84,9 @@
     <ClCompile Include="..\..\src\Connection.cpp">
       <Filter>Source Files\Network</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Lobby.cpp">
+      <Filter>Header Files\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\ResourcePath.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\Connection.h">
       <Filter>Header Files\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Lobby.h">
+      <Filter>Source Files\Menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
