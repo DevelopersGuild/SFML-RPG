@@ -4,13 +4,13 @@
 #include <queue>
 #include <vector>
 
-#define PORT 41420
+//the default port
+#define DEFAULT_PORT 41420
 
 /*
 Connection class
 Handles the internet connection of the game.
 */
-/*
 class Connection
 {
 private:
@@ -31,4 +31,3 @@ public:
 	Connection(const Connection&) = delete;
 	Connection operator=(const Connection&) = delete;
 };
-*/

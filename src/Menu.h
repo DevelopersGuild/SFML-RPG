@@ -124,7 +124,7 @@ private:
 	void tomodeChoice();
 	void toSetting();
 	void toConnect();
-	void toLobby();
+	void toLobby(Lobby::TYPE);
 
 	/*
 	The drawing function

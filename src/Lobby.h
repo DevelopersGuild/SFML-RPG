@@ -12,7 +12,7 @@ Note: Since other widgets are already in panel, so only panel is needed to be ad
 class Lobby
 {
 private:
-	Configuration& config;
+	Configuration& config;		//reference to configuration
 
 	tgui::Panel::Ptr panel;
 	tgui::Button::Ptr backButton;
@@ -26,7 +26,11 @@ public:
 	Lobby(const Lobby&) = delete;
 	Lobby operator=(const Lobby&) = delete;
 
-	Lobby(Configuration& config);
+	//the type of Lobby: client or server?
+	enum TYPE { client, server } type;
+
+	//constructor
+	Lobby(Configuration& config, TYPE type);
 
 	//add the panel to gui
 	void addTgui(tgui::Gui& gui);

@@ -1,7 +1,8 @@
 #include "Lobby.h"
 
-Lobby::Lobby(Configuration & newConfig) :
-	config(newConfig)
+Lobby::Lobby(Configuration & newConfig, TYPE newType) :
+	config(newConfig),
+	type(newType)
 {
 	panel = std::make_shared<tgui::Panel>();
 	panel->setSize(822, 614);

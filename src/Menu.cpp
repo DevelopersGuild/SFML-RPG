@@ -79,7 +79,7 @@ Menu::Menu(Configuration & newConfig) :
 
 	state_modeChoice.server->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
-		toLobby();
+		toLobby(Lobby::TYPE::server);
 	});
 
 	state_modeChoice.back->connect("mousereleased", [&]() {
@@ -96,71 +96,6 @@ Menu::Menu(Configuration & newConfig) :
 		config.soundMan.get("Decision2.ogg").play();
 		tomodeChoice();
 	});
-
-	/*
-	initialize multiplayer lobby gui
-	*/
-	/*
-	lobby_panel = std::make_shared<tgui::Panel>();
-	lobby_panel->setSize(822, 614);
-	lobby_panel->setPosition(102, 77);
-	lobby_panel->setBackgroundColor(tgui::Color(0, 0, 0, 60));
-	lobby_panel->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-
-	lobby_back = std::make_shared<tgui::Button>();
-	lobby_panel->add(lobby_back);
-	lobby_back->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	lobby_back->setText("Back");
-	lobby_back->setPosition(65, 542);
-	lobby_back->connect("mousereleased", [&]() {
-		config.soundMan.get("Decision2.ogg").play();
-		//reset lobby...
-		tomodeChoice();
-	});
-
-	lobby_start = std::make_shared<tgui::Button>();
-	lobby_panel->add(lobby_start);
-	lobby_start->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	lobby_start->setText("Start");
-	lobby_start->setPosition(571, 546);
-	lobby_start->connect("mousereleased", [&]() {
-		config.soundMan.get("Decision2.ogg").play();
-		//start game...
-	});
-
-	lobby_chatBox = std::make_shared<tgui::ChatBox>();
-	lobby_panel->add(lobby_chatBox);
-	lobby_chatBox->setSize(340, 150);
-	lobby_chatBox->setPosition(51, 323);
-	lobby_chatBox->addLine("Test");
-
-	lobby_textBox = std::make_shared<tgui::TextBox>();
-	lobby_panel->add(lobby_textBox);
-	lobby_textBox->setSize(340, 22);
-	lobby_textBox->setPosition(51, 473);
-	lobby_textBox->setMaximumCharacters(33);
-
-	lobby_send = std::make_shared<tgui::Button>();
-	lobby_panel->add(lobby_send);
-	lobby_send->setSize(34, 22);
-	lobby_send->setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));
-	lobby_send->setPosition(357, 473);
-	lobby_send->setText("send");
-	lobby_send->connect("mousereleased", [&]() {
-		std::string str = lobby_textBox->getText();
-		if (str != "")
-		{
-			lobby_chatBox->addLine(str);
-		}
-		lobby_textBox->setText("");
-	});
-
-	lobby_mapPicture = std::make_shared<tgui::Picture>();
-	lobby_panel->add(lobby_mapPicture);
-	lobby_mapPicture->setSize(234, 210);
-	lobby_mapPicture->setPosition(535, 50);
-	lobby_mapPicture->setTexture(config.texMan.get("shadow_kingdom_map.png"));
-	*/
 }
 
 bool Menu::run()
@@ -229,11 +164,11 @@ void Menu::toConnect()
 	state_connect.panel->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds(0.2));
 }
 
-void Menu::toLobby()
+void Menu::toLobby(Lobby::TYPE type)
 {
 	gui.removeAllWidgets();
 	state = STATE::multiplayer_lobby;
-	lobbyPtr.reset(new Lobby(config));
+	lobbyPtr.reset(new Lobby(config, type));
 	lobbyPtr->addTgui(gui);
 	lobbyPtr->hide();
 	lobbyPtr->showWithEffect();
