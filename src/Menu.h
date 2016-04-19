@@ -3,6 +3,7 @@
 
 #include "Configuration.h"
 #include "Lobby.h"
+#include "Connection.h"
 
 /*
 Menu class
@@ -28,10 +29,11 @@ private:
 	settings   : allow player to adjust configurations
 	modeChoice : allow player to choose to be client or host
 	connect    : prompt the player to input server's ip
+	connecting : try to connect to server
 	multiplayer_lobby      : the lobby after connection success
 	when started, the state is mainMenu.
 	*/
-	enum STATE{getUserName, mainMenu, setting, modeChoice, connect, multiplayer_lobby} state;
+	enum STATE{getUserName, mainMenu, setting, modeChoice, connect, connecting, multiplayer_lobby} state;
 
 	//the background of the menu
 	sf::RectangleShape backgrd;
@@ -89,7 +91,7 @@ private:
 	} state_modeChoice;
 
 	/*
-	The gui stuff that only shown in connection
+	The gui stuff that only shown in connect
 	*/
 	struct Connect
 	{
@@ -97,22 +99,24 @@ private:
 		tgui::Button::Ptr backButton;
 		tgui::Button::Ptr connectButton;
 		tgui::EditBox::Ptr IPBox;
-		tgui::Label::Ptr text_prompt;
+		tgui::Label::Ptr text;
 		void initialize(Configuration& config);
+
 	} state_connect;
 
+	/*
+	The gui stuff that only shown in connecting
+	*/
+	struct Connecting
+	{
+		tgui::Panel::Ptr panel;
+		tgui::Label::Ptr text;
+		tgui::Button::Ptr backButton;
+		void initialize(Configuration& config);
+	} state_connecting;
 
 	/*
 	The gui stuff that only shown in server Lobby
-	*/
-	/*
-	tgui::Panel::Ptr lobby_panel;
-	tgui::Button::Ptr lobby_back;
-	tgui::Button::Ptr lobby_start;
-	tgui::ChatBox::Ptr lobby_chatBox;
-	tgui::TextBox::Ptr lobby_textBox;
-	tgui::Button::Ptr lobby_send;
-	tgui::Picture::Ptr lobby_mapPicture;
 	*/
 	std::unique_ptr<Lobby> lobbyPtr;
 
@@ -124,8 +128,13 @@ private:
 	void tomodeChoice();
 	void toSetting();
 	void toConnect();
-	void toLobby(Lobby::TYPE);
+	void toConnecting();
+	void toLobby(sf::IpAddress& serverIp);	//if IP is valid, it is client. If Ip is invalid, it is server.
 
+	/*
+	Try to connect to server
+	*/
+	bool tryConnect(sf::IpAddress& ip);
 	/*
 	The drawing function
 	*/

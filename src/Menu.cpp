@@ -79,7 +79,7 @@ Menu::Menu(Configuration & newConfig) :
 
 	state_modeChoice.server->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
-		toLobby(Lobby::TYPE::server);
+		toLobby(sf::IpAddress());
 	});
 
 	state_modeChoice.back->connect("mousereleased", [&]() {
@@ -95,6 +95,31 @@ Menu::Menu(Configuration & newConfig) :
 	state_connect.backButton->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
 		tomodeChoice();
+	});
+
+	state_connect.connectButton->connect("mousereleased", [&]() {
+		config.soundMan.get("Decision2.ogg").play();
+		toConnecting();
+		std::thread connectThread([&]() {
+			if (!tryConnect(sf::IpAddress(state_connect.IPBox->getText())))
+			{
+				state_connecting.text->setText("Failed to connect the server.");
+				state_connecting.backButton->show();
+			}
+		});
+		connectThread.detach();
+	});
+
+	/*
+	initialize connecting gui
+	*/
+	state_connecting.initialize(config);
+
+	state_connecting.backButton->connect("mousereleased", [&](){
+		config.soundMan.get("Decision2.ogg").play();
+		toConnect();
+		state_connecting.text->setText("Connecting...");
+		state_connecting.backButton->hide();
 	});
 }
 
@@ -118,6 +143,12 @@ bool Menu::run()
 
 			gui.handleEvent(event);
 			config.cursor.update();
+		}
+
+		//if the state is lobby, update the lobby
+		if (state == Menu::STATE::multiplayer_lobby)
+		{
+			lobbyPtr->update();
 		}
 
 		window.clear();
@@ -164,20 +195,64 @@ void Menu::toConnect()
 	state_connect.panel->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds(0.2));
 }
 
-void Menu::toLobby(Lobby::TYPE type)
+void Menu::toConnecting()
+{
+	gui.removeAllWidgets();
+	state = STATE::connecting;
+	gui.add(state_connecting.panel);
+}
+
+void Menu::toLobby(sf::IpAddress& ip)
 {
 	gui.removeAllWidgets();
 	state = STATE::multiplayer_lobby;
-	lobbyPtr.reset(new Lobby(config, type));
+	if (ip == sf::IpAddress::None)	//if the ip is invalid, that means it is a server
+	{
+		lobbyPtr.reset(new Lobby(config));
+	}
+	else
+	{
+		lobbyPtr.reset(new Lobby(config, ip));	//else, that means it is client
+	}
+
+	if (!lobbyPtr)
+	{
+		std::cout << "Failed to allocated lobby!" << std::endl;
+	}
+
 	lobbyPtr->addTgui(gui);
 	lobbyPtr->hide();
 	lobbyPtr->showWithEffect();
 
 	lobbyPtr->connectBackButton("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
-		lobbyPtr.release();
+		lobbyPtr.reset();
 		tomodeChoice();
 	});
+}
+
+bool Menu::tryConnect(sf::IpAddress & ip)
+{
+	Connection network;
+	sf::Clock clock;
+	sf::Packet packet;
+	packet << "new";
+	packet << sf::IpAddress::getLocalAddress().toString();
+	network.send(ip, packet);
+	packet.clear();
+	while (clock.getElapsedTime() < sf::seconds(5))
+	{
+		if (!network.empty())
+		{
+			packet = network.front();
+			std::string signal;
+			packet >> signal;
+			if (signal == "OK")
+				return true;
+		}
+		std::this_thread::sleep_for(std::chrono::seconds(1));	//wait for 1 second
+	}
+	return false;
 }
 
 void Menu::draw()
@@ -316,8 +391,27 @@ void Menu::Connect::initialize(Configuration & config)
 	IPBox->setMaximumCharacters(15);
 	IPBox->setInputValidator("[0-9]*\\.?[0-9]*\\.?[0-9]*\\.?[0-9]*");
 
-	text_prompt = std::make_shared<tgui::Label>();
-	panel->add(text_prompt);
-	text_prompt->setText("Enter the IP:");
-	text_prompt->setPosition(50, 50);
+	text = std::make_shared<tgui::Label>();
+	panel->add(text);
+	text->setText("Enter the IP:");
+	text->setPosition(50, 50);
+}
+
+void Menu::Connecting::initialize(Configuration & config)
+{
+	panel = std::make_shared<tgui::Panel>();
+	panel->setSize(410, 192);
+	panel->setPosition(307, 288);
+	panel->setBackgroundColor(tgui::Color(0, 0, 0, 60));
+
+	text = std::make_shared<tgui::Label>();
+	panel->add(text);
+	text->setText("Connecting...");
+	text->setPosition(50, 50);
+
+	backButton = std::make_shared<tgui::Button>();
+	panel->add(backButton);
+	backButton->setText("Back");
+	backButton->setPosition(50, 130);
+	backButton->hide();
 }

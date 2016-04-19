@@ -12,6 +12,9 @@ Note: Since other widgets are already in panel, so only panel is needed to be ad
 
 class Lobby
 {
+public:
+	//the type of Lobby: client or server?
+	enum TYPE { client, server };
 private:
 	Configuration& config;		//reference to configuration
 
@@ -25,16 +28,25 @@ private:
     
     //the lobby needs connection
     Connection connection;
+
+	//type of lobby
+	TYPE type;
+
+	//function to initialize the gui
+	void initialize();
+
+	//handles the incoming packet
+	void handlePacket(sf::Packet& packet);
+
 public:
 	Lobby() = delete;
 	Lobby(const Lobby&) = delete;
 	Lobby operator=(const Lobby&) = delete;
 
-	//the type of Lobby: client or server?
-	enum TYPE { client, server } type;
-
-	//constructor
-	Lobby(Configuration& config, TYPE type);
+	//constructor for client
+	Lobby(Configuration& config, sf::IpAddress serverIp);
+	//constructor for server
+	Lobby(Configuration& config);
 
 	//add the panel to gui
 	void addTgui(tgui::Gui& gui);
@@ -61,4 +73,7 @@ public:
 
 	//show the panel with effect
 	void showWithEffect();
+
+	//update the lobby's data
+	void update();
 };

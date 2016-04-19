@@ -35,6 +35,7 @@ Connection::~Connection()
         listenThreadPtr->join();
     }
     listenThreadPtr.release();
+	socket.unbind();
 }
 
 sf::Socket::Status Connection::send(const sf::IpAddress& ip, sf::Packet& packet)

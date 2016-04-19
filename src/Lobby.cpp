@@ -1,8 +1,20 @@
 #include "Lobby.h"
 
-Lobby::Lobby(Configuration & newConfig, TYPE newType) :
+Lobby::Lobby(Configuration & newConfig) :
 	config(newConfig),
-	type(newType)
+	type(Lobby::TYPE::server)
+{
+	initialize();
+}
+
+Lobby::Lobby(Configuration& newConfig, sf::IpAddress serverIp) :
+	config(newConfig),
+	type(Lobby::TYPE::client)
+{
+	initialize();
+}
+
+void Lobby::initialize()
 {
 	panel = std::make_shared<tgui::Panel>();
 	panel->setSize(822, 614);
@@ -43,7 +55,7 @@ Lobby::Lobby(Configuration & newConfig, TYPE newType) :
 			chatBox->addLine(str);
 			chatInput->setText("");
 		}
-			
+
 	});
 
 	mapPicture = std::make_shared<tgui::Picture>();
@@ -71,4 +83,30 @@ void Lobby::show()
 void Lobby::showWithEffect()
 {
 	panel->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds(0.2));
+}
+
+void Lobby::update()
+{
+	if (!connection.empty())	//if the queue is not empty
+	{
+		sf::Packet packet = connection.front();
+		handlePacket(packet);
+		connection.pop();
+	}
+}
+
+void Lobby::handlePacket(sf::Packet& packet)
+{
+	std::string signal;
+	packet >> signal;
+	if (signal == "new")
+	{
+		std::string IP;
+		packet >> IP;
+		std::cout << "new connection from " << IP << std::endl;
+		sf::Packet reply;
+		reply << "OK";
+		sf::IpAddress targetIP(IP);
+		connection.send(targetIP, reply);
+	}
 }
