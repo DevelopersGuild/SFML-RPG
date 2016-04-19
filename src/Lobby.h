@@ -2,6 +2,7 @@
 
 #include <TGUI/TGUI.hpp>
 #include "Configuration.h"
+#include "Connection.h"
 
 /*
 Lobby class
@@ -21,6 +22,9 @@ private:
 	tgui::TextBox::Ptr chatInput;
 	tgui::Button::Ptr chatInputButton;
 	tgui::Picture::Ptr mapPicture;
+    
+    //the lobby needs connection
+    Connection connection;
 public:
 	Lobby() = delete;
 	Lobby(const Lobby&) = delete;

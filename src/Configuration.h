@@ -31,6 +31,5 @@ public:
 
 	//the cursor of the game
 	Cursor cursor;
-	
 };
 #endif
