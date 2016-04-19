@@ -79,7 +79,8 @@ Menu::Menu(Configuration & newConfig) :
 
 	state_modeChoice.server->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
-		toLobby(sf::IpAddress());
+        sf::IpAddress ip;
+		toLobby(ip);
 	});
 
 	state_modeChoice.back->connect("mousereleased", [&]() {
@@ -101,11 +102,16 @@ Menu::Menu(Configuration & newConfig) :
 		config.soundMan.get("Decision2.ogg").play();
 		toConnecting();
 		std::thread connectThread([&]() {
-			if (!tryConnect(sf::IpAddress(state_connect.IPBox->getText())))
+            sf::IpAddress ip(state_connect.IPBox->getText());
+			if (!tryConnect(ip))
 			{
 				state_connecting.text->setText("Failed to connect the server.");
 				state_connecting.backButton->show();
 			}
+            else
+            {
+                toLobby(ip);
+            }
 		});
 		connectThread.detach();
 	});
