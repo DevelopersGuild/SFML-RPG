@@ -101,19 +101,16 @@ Menu::Menu(Configuration & newConfig) :
 	state_connect.connectButton->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
 		toConnecting();
-		std::thread connectThread([&]() {
-            sf::IpAddress ip(state_connect.IPBox->getText());
-			if (!tryConnect(ip))
-			{
-				state_connecting.text->setText("Failed to connect the server.");
-				state_connecting.backButton->show();
-			}
-            else
-            {
-                toLobby(ip);
-            }
-		});
-		connectThread.detach();
+        sf::IpAddress ip(state_connect.IPBox->getText());
+		if (!tryConnect(ip))
+		{
+			state_connecting.text->setText("Failed to connect the server.");
+			state_connecting.backButton->show();
+		}
+        else
+        {
+            toLobby(ip);
+        }
 	});
 
 	/*

@@ -34,7 +34,7 @@ Connection::~Connection()
     {
         listenThreadPtr->join();
     }
-    listenThreadPtr.release();
+    listenThreadPtr.reset();
 	socket.unbind();
 }
 
