@@ -131,14 +131,14 @@ private:
 	void toConnecting();
 	void toLobby(sf::IpAddress& serverIp);	//if IP is valid, it is client. If Ip is invalid, it is server.
 
-	/*
-	Try to connect to server
-	*/
+	//Try to connect to server
 	bool tryConnect(sf::IpAddress& ip);
-	/*
-	The drawing function
-	*/
+
+	//The drawing function
 	void draw();
+
+	//the mutex for threads
+	std::mutex mutex;
 public:
 	Menu() = delete;
 	Menu(const Menu&) = delete;
@@ -147,6 +147,6 @@ public:
 	Menu(Configuration&);
 
 	//if game start, return true. If exit, return false
-	bool run();
+	StartInfo run();
 };
 #endif

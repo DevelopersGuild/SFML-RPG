@@ -12,17 +12,13 @@ void Game::start()
 	preMenu->run();
 	preMenu.reset();
 
-	bool result;
-	do
-	{
-		std::unique_ptr<Menu> menu(new Menu(config));
-		result = menu->run();
-		menu.reset();
-		if (result)
-		{
-			//std::unique_ptr<inGame> inGame<new inGame(config));
-			//result = inGame->run();
-			//inGame.reset();
-		}
-	} while (result);
+	//do
+	//{
+	std::unique_ptr<Menu> menu(new Menu(config));
+	StartInfo startInfo = menu->run();
+	menu.reset();
+	//std::unique_ptr<inGame> inGame<new inGame(config));
+	//result = inGame->run();
+	//inGame.reset();
+	//} while (result);
 }

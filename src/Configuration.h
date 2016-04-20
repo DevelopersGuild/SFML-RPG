@@ -5,6 +5,11 @@
 #include "Cursor.h"
 #include <TGUI/TGUI.hpp>
 
+/*
+Configuration class
+stores game resources and basic info.
+known issue: do not create std::string here!
+*/
 class Configuration
 {
 private:
@@ -31,5 +36,8 @@ public:
 
 	//the cursor of the game
 	Cursor cursor;
+
+	//Account's name(player's name)
+	sf::String player_name;
 };
 #endif

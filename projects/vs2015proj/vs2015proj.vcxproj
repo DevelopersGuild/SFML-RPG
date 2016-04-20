@@ -158,6 +158,7 @@
     <ClCompile Include="..\..\src\Menu.cpp" />
     <ClCompile Include="..\..\src\PreMenu.cpp" />
     <ClCompile Include="..\..\src\ResourcePathWindows.cpp" />
+    <ClCompile Include="..\..\src\StartInfo.cpp" />
     <ClCompile Include="..\..\src\Team.cpp" />
     <ClCompile Include="..\..\src\tmx\DebugShape.cpp" />
     <ClCompile Include="..\..\src\tmx\MapLayer.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="..\..\src\ResourceManager.h" />
     <ClInclude Include="..\..\src\ResourcePath.h" />
     <ClInclude Include="..\..\src\Skill.h" />
+    <ClInclude Include="..\..\src\StartInfo.h" />
     <ClInclude Include="..\..\src\Status.h" />
     <ClInclude Include="..\..\src\Team.h" />
   </ItemGroup>

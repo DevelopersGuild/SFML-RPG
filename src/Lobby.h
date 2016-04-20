@@ -3,6 +3,7 @@
 #include <TGUI/TGUI.hpp>
 #include "Configuration.h"
 #include "Connection.h"
+#include "StartInfo.h"
 
 /*
 Lobby class
@@ -36,7 +37,7 @@ private:
 	void initialize();
 
 	//handles the incoming packet
-	void handlePacket(sf::Packet& packet);
+	void handlePacket(Package& package);
 
 public:
 	Lobby() = delete;
@@ -76,4 +77,7 @@ public:
 
 	//update the lobby's data
 	void update();
+
+	//get the game data
+	StartInfo getStartInfo();
 };

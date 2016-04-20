@@ -22,6 +22,7 @@ Menu::Menu(Configuration & newConfig) :
 
 	state_getUserName.confirm->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
+		config.player_name = state_getUserName.textBox->getText();
 		toMainMenu();
 	});
 
@@ -102,15 +103,20 @@ Menu::Menu(Configuration & newConfig) :
 		config.soundMan.get("Decision2.ogg").play();
 		toConnecting();
         sf::IpAddress ip(state_connect.IPBox->getText());
-		if (!tryConnect(ip))
-		{
-			state_connecting.text->setText("Failed to connect the server.");
-			state_connecting.backButton->show();
-		}
-        else
-        {
-            toLobby(ip);
-        }
+		std::thread connectThread([&]() {
+			if (!tryConnect(ip))
+			{
+				state_connecting.text->setText("Failed to connect the server.");
+				state_connecting.backButton->show();
+			}
+			else
+			{
+				mutex.lock();
+				toLobby(ip);
+				mutex.unlock();
+			}
+		});
+		connectThread.detach();
 	});
 
 	/*
@@ -126,7 +132,7 @@ Menu::Menu(Configuration & newConfig) :
 	});
 }
 
-bool Menu::run()
+StartInfo Menu::run()
 {
 	sf::RenderWindow& window(config.window);
 
@@ -151,14 +157,18 @@ bool Menu::run()
 		//if the state is lobby, update the lobby
 		if (state == Menu::STATE::multiplayer_lobby)
 		{
+			mutex.lock();
 			lobbyPtr->update();
+			mutex.unlock();
 		}
 
 		window.clear();
 		draw();
 		window.display();
 	}
-	return false;
+	
+	StartInfo startInfo = lobbyPtr->getStartInfo();
+	return startInfo;
 }
 
 void Menu::toGetUserName()
@@ -247,9 +257,10 @@ bool Menu::tryConnect(sf::IpAddress & ip)
 	{
 		if (!network.empty())
 		{
-			packet = network.front();
+			Package package;
+			package = network.front();
 			std::string signal;
-			packet >> signal;
+			package.packet >> signal;
 			if (signal == "OK")
 				return true;
 		}

@@ -7,6 +7,15 @@
 
 //the default port
 #define DEFAULT_PORT 41420
+/*
+Package struct
+Contains packet and source IP address
+*/
+struct Package
+{
+	sf::Packet packet;
+	sf::IpAddress ip;
+};
 
 /*
 Connection class
@@ -28,7 +37,7 @@ private:
 	bool isListening;
 	
 	//the queue of packets (the Connection class 'USE' queue)
-	std::queue<sf::Packet> packetQueue;
+	std::queue<Package> packetQueue;
 
 	//a 'check' packet must be sent for a certain of time in order to make sure there is no disconnection
 	sf::Clock sec_sinceLastCheck;
@@ -52,7 +61,6 @@ public:
     void pop(){packetQueue.pop();}
     
     //get the first packet
-    sf::Packet& front(){return packetQueue.front();}
-    
+	Package& front(){return packetQueue.front();}
 };
  

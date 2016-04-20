@@ -89,24 +89,27 @@ void Lobby::update()
 {
 	if (!connection.empty())	//if the queue is not empty
 	{
-		sf::Packet packet = connection.front();
-		handlePacket(packet);
+		Package package;
+		package = connection.front();
+		handlePacket(package);
 		connection.pop();
 	}
 }
 
-void Lobby::handlePacket(sf::Packet& packet)
+StartInfo Lobby::getStartInfo()
+{
+	return StartInfo();
+}
+
+void Lobby::handlePacket(Package& package)
 {
 	std::string signal;
-	packet >> signal;
+	package.packet >> signal;
 	if (signal == "new")
 	{
-		std::string IP;
-		packet >> IP;
-		std::cout << "new connection from " << IP << std::endl;
+		std::cout << "new connection from " << package.ip << std::endl;
 		sf::Packet reply;
 		reply << "OK";
-		sf::IpAddress targetIP(IP);
-		connection.send(targetIP, reply);
+		connection.send(package.ip, reply);
 	}
 }

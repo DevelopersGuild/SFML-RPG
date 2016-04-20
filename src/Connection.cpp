@@ -15,13 +15,12 @@ void Connection::listen()
 {
     while(isListening)
     {
-        sf::Packet packet;
-        sf::IpAddress ip;
+		Package package;
         unsigned short port;
-        if(socket.receive(packet, ip, port) == sf::Socket::Status::Done)
+        if(socket.receive(package.packet, package.ip, port) == sf::Socket::Status::Done)
         {
             mutex.lock();
-            packetQueue.push(std::move(packet));
+            packetQueue.push(std::move(package));
             mutex.unlock();
         }
     }
