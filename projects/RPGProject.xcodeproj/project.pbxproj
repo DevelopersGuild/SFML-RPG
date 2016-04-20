@@ -47,6 +47,7 @@
 		FA04976B1C4A309500AC7816 /* maps in Resources */ = {isa = PBXBuildFile; fileRef = FA04976A1C4A309400AC7816 /* maps */; };
 		FA12851C1CC599510066AF05 /* Connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA1285181CC599510066AF05 /* Connection.cpp */; };
 		FA12851D1CC599510066AF05 /* Lobby.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA12851A1CC599510066AF05 /* Lobby.cpp */; };
+		FA1285231CC78DC70066AF05 /* StartInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA1285211CC78DC70066AF05 /* StartInfo.cpp */; };
 		FA4F4FD51C80FF15007C2936 /* Configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA4F4FD11C80FF15007C2936 /* Configuration.cpp */; };
 		FA4F4FD61C80FF15007C2936 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA4F4FD31C80FF15007C2936 /* Game.cpp */; };
 		FAFB1C001CBC51090012F144 /* Cursor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFB1BFA1CBC51090012F144 /* Cursor.cpp */; };
@@ -116,6 +117,8 @@
 		FA1285191CC599510066AF05 /* Connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Connection.h; path = ../src/Connection.h; sourceTree = SOURCE_ROOT; };
 		FA12851A1CC599510066AF05 /* Lobby.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Lobby.cpp; path = ../src/Lobby.cpp; sourceTree = SOURCE_ROOT; };
 		FA12851B1CC599510066AF05 /* Lobby.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Lobby.h; path = ../src/Lobby.h; sourceTree = "<group>"; };
+		FA1285211CC78DC70066AF05 /* StartInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StartInfo.cpp; path = ../src/StartInfo.cpp; sourceTree = SOURCE_ROOT; };
+		FA1285221CC78DC70066AF05 /* StartInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StartInfo.h; path = ../src/StartInfo.h; sourceTree = SOURCE_ROOT; };
 		FA4F4FD11C80FF15007C2936 /* Configuration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Configuration.cpp; path = ../src/Configuration.cpp; sourceTree = SOURCE_ROOT; };
 		FA4F4FD21C80FF15007C2936 /* Configuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Configuration.h; path = ../src/Configuration.h; sourceTree = SOURCE_ROOT; };
 		FA4F4FD31C80FF15007C2936 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../src/Game.cpp; sourceTree = SOURCE_ROOT; };
@@ -206,6 +209,8 @@
 			isa = PBXGroup;
 			children = (
 				FA1285181CC599510066AF05 /* Connection.cpp */,
+				FA1285211CC78DC70066AF05 /* StartInfo.cpp */,
+				FA1285221CC78DC70066AF05 /* StartInfo.h */,
 				FA1285191CC599510066AF05 /* Connection.h */,
 				FA12851A1CC599510066AF05 /* Lobby.cpp */,
 				FA12851B1CC599510066AF05 /* Lobby.h */,
@@ -348,6 +353,7 @@
 				FAFB1C011CBC51090012F144 /* Menu.cpp in Sources */,
 				FA12851D1CC599510066AF05 /* Lobby.cpp in Sources */,
 				FAFB1C021CBC51090012F144 /* PreMenu.cpp in Sources */,
+				FA1285231CC78DC70066AF05 /* StartInfo.cpp in Sources */,
 				FAFB1C001CBC51090012F144 /* Cursor.cpp in Sources */,
 				5F3A1B3C1BC8519100726EBF /* main.cpp in Sources */,
 				5F35EB571BC84F4300FCF070 /* ResourcePathMac.mm in Sources */,

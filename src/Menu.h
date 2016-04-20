@@ -136,9 +136,6 @@ private:
 
 	//The drawing function
 	void draw();
-
-	//the mutex for threads
-	std::mutex mutex;
 public:
 	Menu() = delete;
 	Menu(const Menu&) = delete;

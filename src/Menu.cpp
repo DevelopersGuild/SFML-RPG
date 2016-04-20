@@ -103,20 +103,15 @@ Menu::Menu(Configuration & newConfig) :
 		config.soundMan.get("Decision2.ogg").play();
 		toConnecting();
         sf::IpAddress ip(state_connect.IPBox->getText());
-		std::thread connectThread([&]() {
-			if (!tryConnect(ip))
-			{
-				state_connecting.text->setText("Failed to connect the server.");
-				state_connecting.backButton->show();
-			}
-			else
-			{
-				mutex.lock();
-				toLobby(ip);
-				mutex.unlock();
-			}
-		});
-		connectThread.detach();
+        if (!tryConnect(ip))
+        {
+            state_connecting.text->setText("Failed to connect the server.");
+            state_connecting.backButton->show();
+        }
+        else
+        {
+            toLobby(ip);
+        }
 	});
 
 	/*
@@ -157,9 +152,7 @@ StartInfo Menu::run()
 		//if the state is lobby, update the lobby
 		if (state == Menu::STATE::multiplayer_lobby)
 		{
-			mutex.lock();
 			lobbyPtr->update();
-			mutex.unlock();
 		}
 
 		window.clear();
