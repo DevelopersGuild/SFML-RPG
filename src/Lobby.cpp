@@ -63,6 +63,12 @@ void Lobby::initialize()
 	mapPicture->setSize(234, 210);
 	mapPicture->setPosition(535, 50);
 	mapPicture->setTexture(config.texMan.get("shadow_kingdom_map.png"));
+
+	//debug only
+	playerPtr.reset(new lobby::Player("hello", sf::IpAddress("123.456.789.10"), lobby::Character::GoldGuy));
+	auto hold = playerPtr->getPanel();
+	panel->add(hold);
+	hold->setPosition(50, 50);
 }
 
 void Lobby::addTgui(tgui::Gui & gui)
@@ -114,4 +120,52 @@ void Lobby::handlePacket(Package& package)
 		reply << "OK";
 		connection.send(package.ip, reply);
 	}
+}
+
+lobby::Player::Player(std::string newName, sf::IpAddress newIP, Character newChar) :
+	name(newName),
+	ip(newIP),
+	character(newChar)
+{
+	panel = std::make_shared<tgui::Panel>();
+	panel->setSize(350, 40);
+
+	nameText = std::make_shared<tgui::Label>();
+	panel->add(nameText);
+	nameText->setText(name);
+	nameText->setPosition(80, 12);
+	nameText->setTextColor(tgui::Color(0, 0, 0, 255));	//to be done - every player has different color
+
+	charPic = std::make_shared<tgui::Picture>();
+	panel->add(charPic);
+	charPic->setSize(30, 30);
+	charPic->setPosition(10, 5);
+	character.setPic(charPic);
+}
+
+void lobby::Character::setPic(tgui::Picture::Ptr ptr)
+{
+	//create a temporary texture
+	sf::Texture texture;
+	//the filename to be access
+	std::string filename = resourcePath() + "Texture/Actor4.png";
+
+	switch (name)
+	{
+	case Name::SilverGuy :
+		texture.loadFromFile(filename, sf::IntRect(0, 0, 32, 32));
+		break;
+	case Name::GoldGuy :
+		texture.loadFromFile(filename, sf::IntRect(0, 128, 32, 32));
+		break;
+	case Name::RedGirl :
+		texture.loadFromFile(filename, sf::IntRect(96, 0, 32, 32));
+		break;
+	case Name::BrownGirl :
+		texture.loadFromFile(filename, sf::IntRect(96, 128, 32, 32));
+		break;
+	default:
+		texture.loadFromFile(filename, sf::IntRect(0, 0, 32, 32));
+	}
+	ptr->setTexture(texture);
 }

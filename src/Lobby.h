@@ -1,16 +1,71 @@
 #pragma once
 
 #include <TGUI/TGUI.hpp>
+#include <SFML/Network.hpp>
 #include "Configuration.h"
 #include "Connection.h"
 #include "StartInfo.h"
+
+/*
+lobby namespace
+the class/struct in this namespace are for supporting lobby only.
+*/
+namespace lobby
+{
+	/*
+	Character class for Lobby
+	contains the character's texture and name of the character
+	*/
+	class Character
+	{
+	public:
+		enum Name{SilverGuy, GoldGuy, RedGirl, BrownGirl};	//we will discuss their name later.
+	private:
+		Name name;
+	public:
+		Character(Name newName = SilverGuy) : name(newName) { ; }
+		void setName(Name newName) { name = newName; }
+		void setPic(tgui::Picture::Ptr ptr);	//set the incoming picture to character's picture.
+	};
+	/*
+	Player class for Lobby
+	contains the name of player, his/her character and IP. Also included GUI representation.
+	*/
+	class Player
+	{
+	private:
+		std::string name;	//player's name, not character's name
+		sf::IpAddress ip;
+		Character character;
+
+		//GUI for player
+		tgui::Panel::Ptr panel;
+		tgui::Label::Ptr nameText;
+		tgui::Picture::Ptr charPic;
+	public:
+		Player() = delete;
+		Player(const Player&) = delete;
+		Player operator=(const Player&) = delete;
+		Player(std::string newName, sf::IpAddress newIP, Character newChar);
+
+		//getters
+		std::string getName() { return name; }
+		sf::IpAddress getIP() { return ip; }
+		Character getCharacter() { return character; }
+
+		//setters
+		void setCharacter(Character::Name name) { character.setName(name); }
+		
+		//get Panel
+		tgui::Panel::Ptr getPanel() { return panel; }
+	};
+}
 
 /*
 Lobby class
 Handles the system and the API of multiplayer lobby before the game starts.
 Note: Since other widgets are already in panel, so only panel is needed to be added to gui!
 */
-
 class Lobby
 {
 public:
@@ -39,6 +94,8 @@ private:
 	//handles the incoming packet
 	void handlePacket(Package& package);
 
+	//debug only
+	std::unique_ptr<lobby::Player> playerPtr;
 public:
 	Lobby() = delete;
 	Lobby(const Lobby&) = delete;
