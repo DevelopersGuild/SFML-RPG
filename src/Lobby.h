@@ -73,11 +73,11 @@ public:
 	void show();
 
 	//show the panel with effect
-	void showWithEffect();
+	void showWithEffect(const tgui::ShowAnimationType& type, const sf::Time& duration);
 
 	//update the lobby's data
 	void update();
 
 	//get the game data
-	StartInfo getStartInfo();
+	std::unique_ptr<StartInfo> getStartInfo();
 };

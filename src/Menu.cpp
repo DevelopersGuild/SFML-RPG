@@ -102,16 +102,21 @@ Menu::Menu(Configuration & newConfig) :
 	state_connect.connectButton->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
 		toConnecting();
-        sf::IpAddress ip(state_connect.IPBox->getText());
-        if (!tryConnect(ip))
-        {
-            state_connecting.text->setText("Failed to connect the server.");
-            state_connecting.backButton->show();
-        }
-        else
-        {
-            toLobby(ip);
-        }
+		//unpdate window immediately
+		config.window.clear();
+		draw();
+		config.window.display();
+		//try to connect to server
+		sf::IpAddress ip(state_connect.IPBox->getText());
+		if (!tryConnect(ip))
+		{
+			state_connecting.text->setText("Failed to connect the server.");
+			state_connecting.backButton->show();
+		}
+		else
+		{
+			toLobby(ip);
+		}
 	});
 
 	/*
@@ -127,7 +132,7 @@ Menu::Menu(Configuration & newConfig) :
 	});
 }
 
-StartInfo Menu::run()
+std::unique_ptr<StartInfo> Menu::run()
 {
 	sf::RenderWindow& window(config.window);
 
@@ -160,7 +165,7 @@ StartInfo Menu::run()
 		window.display();
 	}
 	
-	StartInfo startInfo = lobbyPtr->getStartInfo();
+	std::unique_ptr<StartInfo> startInfo = lobbyPtr->getStartInfo();
 	return startInfo;
 }
 
@@ -228,7 +233,7 @@ void Menu::toLobby(sf::IpAddress& ip)
 
 	lobbyPtr->addTgui(gui);
 	lobbyPtr->hide();
-	lobbyPtr->showWithEffect();
+	lobbyPtr->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds(0.2));
 
 	lobbyPtr->connectBackButton("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();

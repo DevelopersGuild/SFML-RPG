@@ -80,9 +80,9 @@ void Lobby::show()
 	panel->show();
 }
 
-void Lobby::showWithEffect()
+void Lobby::showWithEffect(const tgui::ShowAnimationType& effect, const sf::Time& time)
 {
-	panel->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds(0.2));
+	panel->showWithEffect(effect, time);
 }
 
 void Lobby::update()
@@ -96,9 +96,11 @@ void Lobby::update()
 	}
 }
 
-StartInfo Lobby::getStartInfo()
+std::unique_ptr<StartInfo> Lobby::getStartInfo()
 {
-	return StartInfo();
+	std::unique_ptr<StartInfo> info(new StartInfo);
+	//do something in here
+	return info;
 }
 
 void Lobby::handlePacket(Package& package)

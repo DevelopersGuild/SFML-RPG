@@ -144,6 +144,6 @@ public:
 	Menu(Configuration&);
 
 	//if game start, return true. If exit, return false
-	StartInfo run();
+	std::unique_ptr<StartInfo> run();
 };
 #endif

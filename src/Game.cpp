@@ -15,7 +15,7 @@ void Game::start()
 	//do
 	//{
 	std::unique_ptr<Menu> menu(new Menu(config));
-	StartInfo startInfo = menu->run();
+	std::unique_ptr<StartInfo> startInfo = menu->run();
 	menu.reset();
 	//std::unique_ptr<inGame> inGame<new inGame(config));
 	//result = inGame->run();
