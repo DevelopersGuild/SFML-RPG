@@ -195,7 +195,11 @@ void Lobby::handlePacket(Package& package)
 		for (auto it = playerList.begin(); it != playerList.end(); it++)
 		{
 			if (package.ip == (*it)->getIP())
+			{
 				playerList.erase(it);
+				updatePlayerList();
+				return;
+			}			
 		}
 	}
 	else if (signal == "lobby_serverClosed")
