@@ -1,5 +1,7 @@
 #include "Lobby.h"
-
+/*
+constructor for server's version
+*/
 Lobby::Lobby(Configuration & newConfig) :
 	config(newConfig),
 	type(Lobby::TYPE::server)
@@ -11,9 +13,18 @@ Lobby::Lobby(Configuration & newConfig) :
 	addPlayer(std::move(you));
 }
 
-Lobby::Lobby(Configuration& newConfig, sf::IpAddress serverIp) :
+Lobby::~Lobby()
+{
+	//send leaving signal here
+}
+
+/*
+constructor for client's version
+*/
+Lobby::Lobby(Configuration& newConfig, sf::IpAddress newServerIP) :
 	config(newConfig),
-	type(Lobby::TYPE::client)
+	type(Lobby::TYPE::client),
+	serverIP(newServerIP)
 {
 	initialize();
 }
@@ -141,10 +152,21 @@ void Lobby::handlePacket(Package& package)
 	package.packet >> signal;
 	if (signal == "new")
 	{
-		std::cout << "new connection from " << package.ip << std::endl;
+		std::string name;
+		package.packet >> name;
+		std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, package.ip, lobby::Character::SilverGuy));
 		sf::Packet reply;
-		reply << "OK";
-		connection.send(package.ip, reply);
+		if (addPlayer(std::move(newPlayer)))
+		{
+			reply << "lobby_join_OK";
+			connection.send(package.ip, reply);
+			std::cout << "new connection from " << package.ip << std::endl;
+		}
+		else
+		{
+			reply << "lobby_join_NO";
+			connection.send(package.ip, reply);
+		}
 	}
 }
 

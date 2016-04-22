@@ -86,6 +86,7 @@ public:
 	enum TYPE { client, server };
 private:
 	Configuration& config;		//reference to configuration
+	sf::IpAddress serverIP;		//serverIP is valid for client, invalid for server
 
 	tgui::Panel::Ptr panel;
 	tgui::Button::Ptr backButton;
@@ -109,7 +110,7 @@ private:
 	//handles the incoming packet
 	void handlePacket(Package& package);
 
-	//debug only
+	//playerList collects players
     std::list<std::unique_ptr<lobby::Player>> playerList;
     //function to update the playerList's gui
     void updatePlayerList();
@@ -118,6 +119,7 @@ public:
 	Lobby() = delete;
 	Lobby(const Lobby&) = delete;
 	Lobby operator=(const Lobby&) = delete;
+	~Lobby();	//in destructor, send a "leave" signal to server/ clients
 
 	//constructor for client
 	Lobby(Configuration& config, sf::IpAddress serverIp);

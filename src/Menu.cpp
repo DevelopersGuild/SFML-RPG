@@ -247,8 +247,8 @@ bool Menu::tryConnect(sf::IpAddress & ip)
 	Connection network;
 	sf::Clock clock;
 	sf::Packet packet;
-	packet << "new";
-	packet << sf::IpAddress::getLocalAddress().toString();
+	packet << "lobby_join";
+	packet << config.player_name;
 	network.send(ip, packet);
 	packet.clear();
 	while (clock.getElapsedTime() < sf::seconds(5))
@@ -259,8 +259,10 @@ bool Menu::tryConnect(sf::IpAddress & ip)
 			package = network.front();
 			std::string signal;
 			package.packet >> signal;
-			if (signal == "OK")
+			if (signal == "lobby_join_OK")
 				return true;
+			else if(signal == "lobby_join_NO")
+				return false;
 		}
 		std::this_thread::sleep_for(std::chrono::seconds(1));	//wait for 1 second
 	}
