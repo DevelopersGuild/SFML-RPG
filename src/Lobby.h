@@ -48,6 +48,9 @@ namespace lobby
 		tgui::Panel::Ptr panel;
 		tgui::Label::Ptr nameText;
 		tgui::Picture::Ptr charPic;
+
+		//a clock to count how much time not receviving anything from that player, TBD
+		sf::Clock lastReceiveClock;
 	public:
         Player() : name("Player"), character(lobby::Character::SilverGuy){;}
         Player(const Player&) = delete;

@@ -13,11 +13,6 @@ Lobby::Lobby(Configuration & newConfig) :
 	addPlayer(std::move(you));
 }
 
-Lobby::~Lobby()
-{
-	//send leaving signal here
-}
-
 /*
 constructor for client's version
 */
@@ -28,7 +23,15 @@ Lobby::Lobby(Configuration& newConfig, sf::IpAddress newServerIP) :
 {
 	initialize();
 }
-
+/*
+Destructor for lobby
+Client: notify the server that this player is leaving
+Server: notigy every clinet that this server is closed
+*/
+Lobby::~Lobby()
+{
+	//send leaving signal here
+}
 void Lobby::initialize()
 {
 	panel = std::make_shared<tgui::Panel>();
@@ -86,10 +89,9 @@ void Lobby::initialize()
     panel->add(playerListPanel);
     playerListPanel->setPosition(40,40);
     playerListPanel->setSize(400,250);
-    playerListPanel->setBackgroundColor(tgui::Color(0,0,0,0));  //transparent
+    playerListPanel->setBackgroundColor(tgui::Color(0,0,0,0));  //the panel is transparent
     
     playerListPanel_scrollBar = std::make_shared<tgui::Scrollbar>();
-    playerListPanel->add(playerListPanel_scrollBar);
     playerListPanel_scrollBar->setSize(10,250);
     playerListPanel_scrollBar->setPosition(390, 0);
     playerListPanel_scrollBar->connect("valueChanged", [&](){
@@ -150,7 +152,7 @@ void Lobby::handlePacket(Package& package)
 {
 	std::string signal;
 	package.packet >> signal;
-	if (signal == "new")
+	if (signal == "lobby_join")
 	{
 		std::string name;
 		package.packet >> name;
@@ -161,6 +163,8 @@ void Lobby::handlePacket(Package& package)
 			reply << "lobby_join_OK";
 			connection.send(package.ip, reply);
 			std::cout << "new connection from " << package.ip << std::endl;
+
+			//boardcast update here
 		}
 		else
 		{
