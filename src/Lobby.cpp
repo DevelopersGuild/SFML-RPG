@@ -8,9 +8,7 @@ Lobby::Lobby(Configuration & newConfig) :
     
     //add server host into the lobby
     std::unique_ptr<lobby::Player> you(new lobby::Player(config.player_name, sf::IpAddress(), lobby::Character::SilverGuy));
-    playerList.push_back(std::move(you));
-    
-    updatePlayerList();
+	addPlayer(std::move(you));
 }
 
 Lobby::Lobby(Configuration& newConfig, sf::IpAddress serverIp) :
@@ -36,6 +34,9 @@ void Lobby::initialize()
 	panel->add(startButton);
 	startButton->setText("Start");
 	startButton->setPosition(571, 546);
+	startButton->connect("mousereleased", [&]() {
+
+	});
 
 	chatBox = std::make_shared<tgui::ChatBox>();
 	panel->add(chatBox);
@@ -81,14 +82,7 @@ void Lobby::initialize()
     playerListPanel_scrollBar->setSize(10,250);
     playerListPanel_scrollBar->setPosition(390, 0);
     playerListPanel_scrollBar->connect("valueChanged", [&](){
-        int i = 0;
-        for(auto it = playerList.begin(); it != playerList.end(); it++)
-        {
-            auto ptr = (*it)->getPanel();
-            ptr->setPosition(10, 10 + (i - playerListPanel_scrollBar->getValue()) * 50);
-            i++;
-            std::cout << playerListPanel_scrollBar->getValue() << std::endl;
-        }
+		updatePlayerList();
     });
 }
 
@@ -123,6 +117,17 @@ void Lobby::update()
 	}
 }
 
+bool Lobby::addPlayer(std::unique_ptr<lobby::Player> playerPtr)
+{
+	if (playerList.size() >= MAX_PLAYER)
+	{
+		return false;
+	}
+	playerList.push_back(std::move(playerPtr));
+	updatePlayerList();
+	return true;
+}
+
 std::unique_ptr<StartInfo> Lobby::getStartInfo()
 {
 	std::unique_ptr<StartInfo> info(new StartInfo);
@@ -146,20 +151,21 @@ void Lobby::handlePacket(Package& package)
 void Lobby::updatePlayerList()
 {
     playerListPanel->removeAllWidgets();
-    int num = 0;
-    for(auto it = playerList.begin(); it != playerList.end(); it++)
-    {
-        auto playerBar = (*it)->getPanel();
-        playerListPanel->add(playerBar);
-        playerBar->setPosition(10, 10 + num * 50);
-        num++;
-    }
-    
-    //only show scrollBar if there are more than 5 players
-    if(playerList.size() > 5)
-    {
-        playerListPanel->add(playerListPanel_scrollBar);
-    }
+
+	//only show scrollBar if there are more than 5 players
+	if (playerList.size() > 5)
+	{
+		playerListPanel->add(playerListPanel_scrollBar);
+	}
+
+	int i = 0;
+	for (auto it = playerList.begin(); it != playerList.end(); it++)
+	{
+		auto ptr = (*it)->getPanel();
+		ptr->setPosition(10, 10 + (i - playerListPanel_scrollBar->getValue()) * 50);
+		playerListPanel->add(ptr);
+		i++;
+	}
 }
 
 lobby::Player::Player(std::string newName, sf::IpAddress newIP, Character newChar) :

@@ -7,6 +7,9 @@
 #include "StartInfo.h"
 #include <list>
 
+//maximum number of player 
+#define MAX_PLAYER 8
+
 /*
 lobby namespace
 the class/struct in this namespace are for supporting lobby only.
@@ -27,6 +30,8 @@ namespace lobby
 		Character(Name newName = SilverGuy) : name(newName) { ; }
 		void setName(Name newName) { name = newName; }
 		void setPic(tgui::Picture::Ptr ptr);	//set the incoming picture to character's picture.
+
+		Name getName() { return name; }
 	};
 	/*
 	Player class for Lobby
@@ -36,7 +41,7 @@ namespace lobby
 	{
 	private:
 		std::string name;	//player's name, not character's name
-		sf::IpAddress ip;
+		sf::IpAddress ip;		
 		Character character;
 
 		//GUI for player
@@ -59,6 +64,13 @@ namespace lobby
 		
 		//get Panel
 		tgui::Panel::Ptr getPanel() { return panel; }
+
+		//insert into packet
+		//note : client need to know the server's ip only, so the server does not have to send ip.
+		friend sf::Packet& operator<<(sf::Packet& packet, lobby::Player& me)
+		{
+			return packet << me.name << me.character.getName();
+		}
 	};
 }
 
@@ -140,6 +152,11 @@ public:
 
 	//update the lobby's data
 	void update();
+
+	//add a player into the lobby
+	//true - success
+	//false - the lobby is full
+	bool addPlayer(std::unique_ptr<lobby::Player> playerPtr);
 
 	//get the game data
 	std::unique_ptr<StartInfo> getStartInfo();

@@ -38,6 +38,6 @@ public:
 	Cursor cursor;
 
 	//Account's name(player's name)
-	sf::String player_name;
+	std::string player_name;
 };
 #endif
