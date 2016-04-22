@@ -31,6 +31,23 @@ Server: notigy every clinet that this server is closed
 Lobby::~Lobby()
 {
 	//send leaving signal here
+	if (type == TYPE::client)
+	{
+		sf::Packet packet;
+		packet << "lobby_leave";
+		connection.send(serverIP, packet);
+	}
+	else
+	{
+		sf::Packet packet;
+		packet << "lobby_serverClosed";
+		for (auto it = playerList.begin(); it != playerList.end(); it++)
+		{
+			sf::IpAddress ip;
+			ip = (*it)->getIP();
+			connection.send(ip, packet);
+		}
+	}
 }
 void Lobby::initialize()
 {
@@ -152,6 +169,7 @@ void Lobby::handlePacket(Package& package)
 {
 	std::string signal;
 	package.packet >> signal;
+	//for server
 	if (signal == "lobby_join")
 	{
 		std::string name;
@@ -172,6 +190,19 @@ void Lobby::handlePacket(Package& package)
 			connection.send(package.ip, reply);
 		}
 	}
+	else if (signal == "lobby_leave")	//for server
+	{
+		for (auto it = playerList.begin(); it != playerList.end(); it++)
+		{
+			if (package.ip == (*it)->getIP())
+				playerList.erase(it);
+		}
+	}
+	else if (signal == "lobby_serverClosed")
+	{
+		//TBD, show server shut down message
+	}
+
 }
 
 void Lobby::updatePlayerList()
