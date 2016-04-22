@@ -5,6 +5,12 @@ Lobby::Lobby(Configuration & newConfig) :
 	type(Lobby::TYPE::server)
 {
 	initialize();
+    
+    //add server host into the lobby
+    std::unique_ptr<lobby::Player> you(new lobby::Player(config.player_name, sf::IpAddress(), lobby::Character::SilverGuy));
+    playerList.push_back(std::move(you));
+    
+    updatePlayerList();
 }
 
 Lobby::Lobby(Configuration& newConfig, sf::IpAddress serverIp) :
@@ -63,12 +69,27 @@ void Lobby::initialize()
 	mapPicture->setSize(234, 210);
 	mapPicture->setPosition(535, 50);
 	mapPicture->setTexture(config.texMan.get("shadow_kingdom_map.png"));
-
-	//debug only
-	playerPtr.reset(new lobby::Player("hello", sf::IpAddress("123.456.789.10"), lobby::Character::GoldGuy));
-	auto hold = playerPtr->getPanel();
-	panel->add(hold);
-	hold->setPosition(50, 50);
+    
+    playerListPanel = std::make_shared<tgui::Panel>();
+    panel->add(playerListPanel);
+    playerListPanel->setPosition(40,40);
+    playerListPanel->setSize(400,250);
+    playerListPanel->setBackgroundColor(tgui::Color(0,0,0,0));  //transparent
+    
+    playerListPanel_scrollBar = std::make_shared<tgui::Scrollbar>();
+    playerListPanel->add(playerListPanel_scrollBar);
+    playerListPanel_scrollBar->setSize(10,250);
+    playerListPanel_scrollBar->setPosition(390, 0);
+    playerListPanel_scrollBar->connect("valueChanged", [&](){
+        int i = 0;
+        for(auto it = playerList.begin(); it != playerList.end(); it++)
+        {
+            auto ptr = (*it)->getPanel();
+            ptr->setPosition(10, 10 + (i - playerListPanel_scrollBar->getValue()) * 50);
+            i++;
+            std::cout << playerListPanel_scrollBar->getValue() << std::endl;
+        }
+    });
 }
 
 void Lobby::addTgui(tgui::Gui & gui)
@@ -120,6 +141,25 @@ void Lobby::handlePacket(Package& package)
 		reply << "OK";
 		connection.send(package.ip, reply);
 	}
+}
+
+void Lobby::updatePlayerList()
+{
+    playerListPanel->removeAllWidgets();
+    int num = 0;
+    for(auto it = playerList.begin(); it != playerList.end(); it++)
+    {
+        auto playerBar = (*it)->getPanel();
+        playerListPanel->add(playerBar);
+        playerBar->setPosition(10, 10 + num * 50);
+        num++;
+    }
+    
+    //only show scrollBar if there are more than 5 players
+    if(playerList.size() > 5)
+    {
+        playerListPanel->add(playerListPanel_scrollBar);
+    }
 }
 
 lobby::Player::Player(std::string newName, sf::IpAddress newIP, Character newChar) :

@@ -5,6 +5,7 @@
 #include "Configuration.h"
 #include "Connection.h"
 #include "StartInfo.h"
+#include <list>
 
 /*
 lobby namespace
@@ -43,9 +44,9 @@ namespace lobby
 		tgui::Label::Ptr nameText;
 		tgui::Picture::Ptr charPic;
 	public:
-		Player() = delete;
-		Player(const Player&) = delete;
-		Player operator=(const Player&) = delete;
+        Player() : name("Player"), character(lobby::Character::SilverGuy){;}
+        Player(const Player&) = delete;
+        Player operator=(const Player&) = delete;
 		Player(std::string newName, sf::IpAddress newIP, Character newChar);
 
 		//getters
@@ -81,6 +82,8 @@ private:
 	tgui::TextBox::Ptr chatInput;
 	tgui::Button::Ptr chatInputButton;
 	tgui::Picture::Ptr mapPicture;
+    tgui::Panel::Ptr playerListPanel;
+    tgui::Scrollbar::Ptr playerListPanel_scrollBar;
     
     //the lobby needs connection
     Connection connection;
@@ -95,7 +98,10 @@ private:
 	void handlePacket(Package& package);
 
 	//debug only
-	std::unique_ptr<lobby::Player> playerPtr;
+    std::list<std::unique_ptr<lobby::Player>> playerList;
+    //function to update the playerList's gui
+    void updatePlayerList();
+    
 public:
 	Lobby() = delete;
 	Lobby(const Lobby&) = delete;
