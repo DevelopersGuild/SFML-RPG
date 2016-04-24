@@ -88,7 +88,7 @@ void Lobby::initialize()
 	chatInputButton->setPosition(357, 473);
 	chatInputButton->setText("send");
 	chatInputButton->connect("mousereleased", [&]() {
-		std::string str = chatInput->getText();
+		std::string str = config.player_name + " : " + chatInput->getText();
 		if (str != "")
 		{
 			chatBox->addLine(str);
@@ -113,7 +113,6 @@ void Lobby::initialize()
 				connection.send(serverIP, packet);
 			}
 		}
-
 	});
 
 	mapPicture = std::make_shared<tgui::Picture>();
@@ -273,18 +272,6 @@ void Lobby::handlePacket(Package& package)
 			std::string str;
 			package.packet >> str;
 
-			//find player, and show "Player : ..."
-			bool done = false;
-			for (auto it = playerList.begin(); it != playerList.end() && !done; it++)
-			{
-				if (package.ip == (*it)->getIP())
-				{
-					chatBox->addLine((*it)->getName() + " : " + str);
-					str = (*it)->getName() + " : " + str;		//update the str for boardcast later
-					done = true;
-				}
-			}
-
 			sf::Packet packet;
 			packet << "lobby_message";
 			packet << str;
@@ -302,17 +289,11 @@ void Lobby::handlePacket(Package& package)
 	}
 	else	//for client
 	{
-		/*
-		Client : server is closed.
-		*/
-		if (signal == "lobby_serverClosed")
-		{
-			//TBD, show server shut down message
-		}
+
 		/*
 		Client : received update from server
 		*/
-		else if (signal == "lobby_update")
+		if (signal == "lobby_update")
 		{
 			//clear the playerList
 			playerList.clear();
@@ -338,6 +319,23 @@ void Lobby::handlePacket(Package& package)
 			std::string str;
 			package.packet >> str;
 			chatBox->addLine(str);
+		}
+		/*
+		Client : server closed
+		*/
+		else if(signal == "lobby_serverClosed")
+		{
+			panel->removeAllWidgets();
+			panel->setSize(410, 192);
+			panel->setPosition(307, 288);
+
+			tgui::Label::Ptr disconnectMessage = std::make_shared<tgui::Label>();
+			panel->add(disconnectMessage);
+			disconnectMessage->setText("Server has been shutdown.");
+			disconnectMessage->setPosition(50, 50);
+
+			backButton->setPosition(50, 130);
+			panel->add(backButton);
 		}
 	}
 }
