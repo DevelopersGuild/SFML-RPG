@@ -170,43 +170,92 @@ void Lobby::handlePacket(Package& package)
 	std::string signal;
 	package.packet >> signal;
 	//for server
-	if (signal == "lobby_join")
+	if (type == TYPE::server)
 	{
-		std::string name;
-		package.packet >> name;
-		std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, package.ip, lobby::Character::SilverGuy));
-		sf::Packet reply;
-		if (addPlayer(std::move(newPlayer)))
+		/*
+		Server : handles new player join in
+		allocate a new player, call addPlayer(), and boardcast the update. 
+		*/
+		if (signal == "lobby_join")
 		{
-			reply << "lobby_join_OK";
-			connection.send(package.ip, reply);
-			std::cout << "new connection from " << package.ip << std::endl;
-
-			//boardcast update here
-		}
-		else
-		{
-			reply << "lobby_join_NO";
-			connection.send(package.ip, reply);
-		}
-	}
-	else if (signal == "lobby_leave")	//for server
-	{
-		for (auto it = playerList.begin(); it != playerList.end(); it++)
-		{
-			if (package.ip == (*it)->getIP())
+			std::string name;
+			package.packet >> name;
+			std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, package.ip, lobby::Character::SilverGuy));
+			sf::Packet reply;
+			if (addPlayer(std::move(newPlayer)))
 			{
-				playerList.erase(it);
-				updatePlayerList();
-				return;
-			}			
+				reply << "lobby_join_OK";
+				connection.send(package.ip, reply);
+				std::cout << "new connection from " << package.ip << std::endl;
+
+				//boardcast update here
+				//1.create update packet
+				sf::Packet update;
+				update << "lobby_update";		//marked it as update packet
+				update << playerList.size();	//insert the size
+				//2.insert each player into the packet
+				for (auto& playerPtr : playerList)
+				{
+					update << *playerPtr;
+				}
+				//3.send the packet to each player
+				for (auto& playerPtr : playerList)	
+				{
+					connection.send(playerPtr->getIP(), update);
+				}
+			}
+			else
+			{
+				reply << "lobby_join_NO";
+				connection.send(package.ip, reply);
+			}
+		}
+		/*
+		Server : handles player leaving server
+		*/
+		else if (signal == "lobby_leave")
+		{
+			for (auto& playerPtr : playerList)
+			{
+				if (package.ip == playerPtr->getIP())
+				{
+					playerList.remove(playerPtr);
+					updatePlayerList();
+					return;
+				}
+			}
 		}
 	}
-	else if (signal == "lobby_serverClosed")
+	else	//for client
 	{
-		//TBD, show server shut down message
+		/*
+		Client : server is closed.
+		*/
+		if (signal == "lobby_serverClosed")
+		{
+			//TBD, show server shut down message
+		}
+		/*
+		Client : received update from server
+		*/
+		else if (signal == "lobby_update")
+		{
+			//clear the playerList
+			playerList.clear();
+			//get the size of the new playerList
+			int size;
+			package.packet >> size;
+			for (int i = 0; i < size; i++)
+			{
+				std::string name;
+				int charName;
+				package.packet >> name;
+				package.packet >> charName;
+				std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, sf::IpAddress(), static_cast<lobby::Character::Name>(charName)));
+			}
+			updatePlayerList();
+		}
 	}
-
 }
 
 void Lobby::updatePlayerList()
