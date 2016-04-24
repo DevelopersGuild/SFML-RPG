@@ -129,10 +129,10 @@ private:
 	void toSetting();
 	void toConnect();
 	void toConnecting();
-	void toLobby(sf::IpAddress& serverIp);	//if IP is valid, it is client. If Ip is invalid, it is server.
+	void toLobby();
 
 	//Try to connect to server
-	bool tryConnect(sf::IpAddress& ip);
+	std::unique_ptr<Lobby> tryConnect(sf::IpAddress& ip);
 
 	//The drawing function
 	void draw();

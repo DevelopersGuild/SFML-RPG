@@ -80,8 +80,7 @@ Menu::Menu(Configuration & newConfig) :
 
 	state_modeChoice.server->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
-        sf::IpAddress ip;
-		toLobby(ip);
+		toLobby();
 	});
 
 	state_modeChoice.back->connect("mousereleased", [&]() {
@@ -108,14 +107,15 @@ Menu::Menu(Configuration & newConfig) :
 		config.window.display();
 		//try to connect to server
 		sf::IpAddress ip(state_connect.IPBox->getText());
-		if (!tryConnect(ip))
+		std::unique_ptr<Lobby> lobbyPtr = tryConnect(ip);
+		if (!lobbyPtr)
 		{
 			state_connecting.text->setText("Failed to connect the server.");
 			state_connecting.backButton->show();
 		}
 		else
 		{
-			toLobby(ip);
+			toLobby();
 		}
 	});
 
@@ -213,17 +213,17 @@ void Menu::toConnecting()
 	gui.add(state_connecting.panel);
 }
 
-void Menu::toLobby(sf::IpAddress& ip)
+void Menu::toLobby()
 {
 	gui.removeAllWidgets();
 	state = STATE::multiplayer_lobby;
-	if (ip == sf::IpAddress::None)	//if the ip is invalid, that means it is a server
+	if (!lobbyPtr)	//if the lobbyPre is invalid, that means it is a server
 	{
 		lobbyPtr.reset(new Lobby(config));
 	}
 	else
 	{
-		lobbyPtr.reset(new Lobby(config, ip));	//else, that means it is client
+		//else, do nothing, since the lobby is already initialized in tryconnect()
 	}
 
 	if (!lobbyPtr)
@@ -242,7 +242,7 @@ void Menu::toLobby(sf::IpAddress& ip)
 	});
 }
 
-bool Menu::tryConnect(sf::IpAddress & ip)
+std::unique_ptr<Lobby> Menu::tryConnect(sf::IpAddress & ip)
 {
 	Connection network;
 	sf::Clock clock;
@@ -259,14 +259,15 @@ bool Menu::tryConnect(sf::IpAddress & ip)
 			package = network.front();
 			std::string signal;
 			package.packet >> signal;
-			if (signal == "lobby_join_OK")
-				return true;
-			else if(signal == "lobby_join_NO")
-				return false;
+			if (signal == "lobby_update")
+			{
+				lobbyPtr.reset(new Lobby(config, ip, package.packet));
+			}
+			
 		}
 		std::this_thread::sleep_for(std::chrono::seconds(1));	//wait for 1 second
 	}
-	return false;
+	return NULL;
 }
 
 void Menu::draw()

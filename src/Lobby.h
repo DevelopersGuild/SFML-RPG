@@ -125,7 +125,7 @@ public:
 	~Lobby();	//in destructor, send a "leave" signal to server/ clients
 
 	//constructor for client
-	Lobby(Configuration& config, sf::IpAddress serverIp);
+	Lobby(Configuration& config, sf::IpAddress serverIp, sf::Packet& updatePacket);
 	//constructor for server
 	Lobby(Configuration& config);
 
