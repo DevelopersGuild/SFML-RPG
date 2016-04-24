@@ -254,18 +254,28 @@ void Lobby::handlePacket(Package& package)
 		*/
 		else if (signal == "lobby_leave")
 		{
+			std::string message;
+
+			auto it = std::find_if(playerList.begin(), playerList.end(), [&](std::unique_ptr<lobby::Player>& ptr) 
+			{
+				return package.ip == ptr->getIP();
+			});
+
+			message = (*it)->getName() + " left the game.";
+			chatBox->addLine(message);
+			playerList.erase(it);
+			updatePlayerList();
+
 			for (auto& playerPtr : playerList)
 			{
-				if (package.ip == playerPtr->getIP())
-				{
-					chatBox->addLine(playerPtr->getName() + " left the game.");
-					playerList.remove(playerPtr);
-					updatePlayerList();
-					return;
-				}
-				sf::Packet updatePacket = getUpdatePacket();
-				boardcast(updatePacket);
+				sf::IpAddress ip = playerPtr->getIP();
+				sf::Packet packet;
+				packet << "lobby_message";
+				packet << message;
+				connection.send(ip, packet);
 			}
+			sf::Packet updatePacket = getUpdatePacket();
+			boardcast(updatePacket);
 		}
 		/*
 		Server : put chatting message on chatBox

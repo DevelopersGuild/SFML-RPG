@@ -6,6 +6,7 @@
 #include "Connection.h"
 #include "StartInfo.h"
 #include <list>
+#include <algorithm>
 
 //maximum number of player 
 #define MAX_PLAYER 8
