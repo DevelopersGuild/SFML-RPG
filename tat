@@ -1,0 +1,309 @@
+[33mcommit 28573a66eeaea52c5bf6f6216cdd55c5830dc2c4[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Sun Apr 17 16:53:37 2016 -0700
+
+    add Font
+    
+    font form openFont
+
+[33mcommit bc0a799f5812218d06256367825dbbdfc4e5c306[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Sun Apr 17 16:36:05 2016 -0700
+
+    add getUserinput state for Menu
+    
+    Now the player has to enter his/her name before connecting to
+    multiplayer lobby so that the others can see that player's name.
+
+[33mcommit 29847fbe8ee22dcdcd82ac9ddedb2aeb639566ce[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Sun Apr 17 02:57:53 2016 -0700
+
+    Lobby in progress 1
+
+[33mcommit 9e54b98e419df57fb2ce46c7eda575477ada9826[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Thu Apr 14 16:05:45 2016 -0700
+
+    connection test 1
+
+[33mcommit 3656f4ece4df1eba4ab27c42a807bcaa9a704e47[m
+Merge: fcdc8a1 8331836
+Author: sith0726 <sith0726@gmail.com>
+Date:   Thu Apr 14 14:39:20 2016 -0700
+
+    Menu change
+    
+    add Connection class
+    add Lobby class for menu
+    add modeChoice for menu
+
+[33mcommit fcdc8a1bc6eb6e9fe29677505aa311201b20b33a[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Thu Apr 14 14:34:31 2016 -0700
+
+    Menu change
+    
+    add modeChoice state for menu
+    Create Connection class
+    Create Lobby class (interface for Menu)
+
+[33mcommit 8331836bc2d3559b65ec2e3705a9603edeb40592[m
+Author: sith0726 <macbook@macbooks-MacBook-Air.local>
+Date:   Mon Apr 11 15:44:26 2016 -0700
+
+    add support to Mac 1
+
+[33mcommit ed3f6918be4d9a266b9b35ad778fe27a59e89723[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Fri Mar 11 18:17:42 2016 -0800
+
+    add Cursor
+
+[33mcommit 39eca74191c31ce7269628b50d4ee9928799d4c0[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Fri Mar 11 15:52:24 2016 -0800
+
+    change resourceManager
+    
+    add set and get volume method for music and sounds
+
+[33mcommit 468a2fa84412f9e170f81907cd0969383299bb8e[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Fri Mar 11 09:17:52 2016 -0800
+
+    connect state, sound manager
+
+[33mcommit 1ee0bfd6887a84f43a1b0a0b06ef76b279ae9014[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Thu Mar 10 03:41:41 2016 -0800
+
+    setting state
+
+[33mcommit a7ed3d967cae87de2cc90aacc16e988a8ef82b63[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Tue Mar 8 03:20:55 2016 -0800
+
+    remove vs2013 lib
+    
+    cut spaces
+
+[33mcommit 11f7a01be45ab98dfe8685906dbdbdcffa8e517c[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Tue Mar 8 03:04:43 2016 -0800
+
+    add menu
+
+[33mcommit 96ad693bde08d13608a3f2b2e5f4ebe06fa726e4[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Mon Mar 7 22:17:28 2016 -0800
+
+    preMenu class
+
+[33mcommit 85f213394ed578db0e1007658aa3682b29647d5e[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Mon Mar 7 02:19:50 2016 -0800
+
+    remove vsproj2013
+    
+    move the project to vs2015
+    remove unnecessary big files(tgui-s-d.dll, tgui-s.dll)
+
+[33mcommit 535bddb8f416f30be8196d0a00b08becce591181[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Mon Mar 7 02:11:26 2016 -0800
+
+    Add Tgui
+
+[33mcommit 5fffafe4345ce7145242ba5d27ddf1b6b11d49cf[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Mon Mar 7 00:21:25 2016 -0800
+
+    add support to VS2015
+
+[33mcommit f20d5f68baa6bb9b46508c7cd0d0798a42c281a4[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Sat Mar 5 23:35:18 2016 -0800
+
+    reorganize the structure
+
+[33mcommit 36b8e0141c59455f85acf68a2570a7d6f6844777[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Sat Feb 27 01:59:26 2016 -0800
+
+    Start button testing
+
+[33mcommit 34bc7895229aafc261c8c23d86827038dc3d5930[m
+Author: sith0726 <macbook@macbooks-MacBook-Air.local>
+Date:   Fri Feb 26 15:37:13 2016 -0800
+
+    Menu Buttons
+
+[33mcommit e441893199e2eb5da6ea1e4f4c1734b93680161d[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Fri Feb 26 12:27:09 2016 -0800
+
+    Game class
+
+[33mcommit 4d39ef8931e246fdf3fbc282baf176482764af42[m
+Author: sith0726 <macbook@macbooks-MacBook-Air.local>
+Date:   Wed Feb 24 17:23:33 2016 -0800
+
+    add ResourceManager
+
+[33mcommit 25399810b42f132174ea64a14d3bdb76ffd02278[m
+Merge: 46d42da 3d8167e
+Author: sith0726 <sith0726@gmail.com>
+Date:   Mon Feb 22 17:04:22 2016 -0800
+
+    Merge pull request #3 from DevelopersGuild/Interface
+    
+    Interface
+
+[33mcommit 3d8167eb631d8b927ecf3b8ff92dbc4261c40326[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Mon Feb 1 23:51:24 2016 -0800
+
+    put the files into src folder
+
+[33mcommit a07c58afcffebeaf4075960b1ac239f7aa0caf0e[m
+Merge: 23e9df2 e65ad30
+Author: sith0726 <sith0726@gmail.com>
+Date:   Mon Feb 1 23:46:13 2016 -0800
+
+    Merge pull request #1 from DevelopersGuild/HeaderFiles
+    
+    Headerfiles
+
+[33mcommit e65ad30eb2fd18de5aed6672f995e2dcdb69dc87[m
+Author: yangf96 <fyang96c@gmail.com>
+Date:   Mon Feb 1 23:40:33 2016 -0800
+
+    Added Skill, Status
+
+[33mcommit 544ff6ec916307327d840dc71c7b4ccf6630902f[m
+Author: yangf96 <fyang96c@gmail.com>
+Date:   Mon Feb 1 23:21:11 2016 -0800
+
+    Added Character and Item Header Files
+    
+    Declared both classes as abstract, and items such as armor, weapon
+    inherits from item.
+
+[33mcommit 23e9df223b1024f6b35f8d1a9a38310a9a928c26[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Sun Jan 31 16:46:09 2016 -0800
+
+    Team class
+
+[33mcommit 846dd28b3c7abf6efd0ff49f3f3a7100c8064a3e[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Sun Jan 31 16:16:52 2016 -0800
+
+    update gitignore 4
+
+[33mcommit 5e061f8f2afb61a8fe8e5afbab1e361ee1e4b1cd[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Sun Jan 31 16:14:45 2016 -0800
+
+    update gitignore 3
+
+[33mcommit 76ed9f9d62f241bf1239f2512a3749a042b63034[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Sun Jan 31 16:13:24 2016 -0800
+
+    update gitignore 2
+
+[33mcommit 60a7b77f58554a98744d555b9704ac4c7f883127[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Fri Jan 29 23:48:28 2016 -0800
+
+    update gitignore
+    
+    upload dll and lib files
+
+[33mcommit 33cef5b013901fb4ef5a5c1d64965d04537a1b5a[m
+Author: sith0726 <macbook@macbooks-MacBook-Air.local>
+Date:   Fri Jan 29 13:57:35 2016 -0800
+
+    Cursor
+    
+    testing
+
+[33mcommit 7b9d7922769e9dc97f8439fd66e3624974ba71a8[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Thu Jan 28 13:53:23 2016 -0800
+
+    Cursor class
+    
+    cursor class?
+
+[33mcommit 4e762a0ac6b831078ac5d1e2fe31047e55cb0235[m
+Author: sith0726 <macbook@macbooks-MacBook-Air.local>
+Date:   Thu Jan 28 01:44:34 2016 -0800
+
+    Create TextBox, Slot class
+
+[33mcommit 960c491b6e6e2e6d6a0701200669ec8413780f35[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Mon Jan 25 01:55:55 2016 -0800
+
+    Textbox class
+    
+    Provide a movable text box, but it is not complete...
+    1.need reshape function
+    2.need to clear special characters(\n,\0...) in the string
+
+[33mcommit ee38a705e38f692a6628d733be6700ad8559ffb4[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Sun Jan 24 03:07:09 2016 -0800
+
+    Create Bar and Add Opacity Animation
+
+[33mcommit 9d040ab36d714dd5e66437f71591a43e810cb819[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Sun Jan 24 01:01:14 2016 -0800
+
+    Create Bar
+
+[33mcommit edf7c7fe45677159904488b3092ff6e41e92e937[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Sat Jan 23 22:25:42 2016 -0800
+
+    Create Bound, DragBound and Button
+    
+    basic player interfaces
+
+[33mcommit 9ec1cfc91d6f034b8e99b591d8e4f0ee087ad59e[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Fri Jan 22 17:47:16 2016 -0800
+
+    Start building interface
+
+[33mcommit 46d42da5a41e54acf2dfd413d09d36e227ee0223[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Fri Jan 22 17:15:25 2016 -0800
+
+    Remove Overlap files
+    
+    also change part of the main.cpp for visual studio in Mac
+
+[33mcommit cd7b10a4470aea4f23374a234ed3a9bbdf692a87[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Fri Jan 22 17:06:07 2016 -0800
+
+    Edit README file
+    
+    It's not fall 2015
+
+[33mcommit 8bf04457d6e77f75c27ea87593799c7b5378b932[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Fri Jan 22 16:57:51 2016 -0800
+
+    Create files
+
+[33mcommit f289a07739c7705e9240c57dada13d95448b1c3f[m
+Author: sith0726 <sith0726@gmail.com>
+Date:   Fri Jan 22 14:04:54 2016 -0800
+
+    Initial commit
