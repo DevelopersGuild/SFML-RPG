@@ -50,6 +50,7 @@ namespace lobby
 		tgui::Picture::Ptr charPic;
 
 		//a clock to count how much time not receviving anything from that player, TBD
+		//if no respond for cerain time, remove that player
 		sf::Clock lastReceiveClock;
 	public:
         Player() : name("Player"), character(lobby::Character::SilverGuy){;}
@@ -67,6 +68,13 @@ namespace lobby
 		
 		//get Panel
 		tgui::Panel::Ptr getPanel() { return panel; }
+
+		//check in function
+		//reset the lastReceiveClock, so that player will not be auto kicked
+		void checkin() { lastReceiveClock.restart(); }
+
+		//get the ElapsedTime since the last singal
+		sf::Time getElapsedTime() { return lastReceiveClock.getElapsedTime(); }
 
 		//insert into packet
 		//note : client need to know the server's ip only, so the server does not have to send ip.
@@ -90,7 +98,7 @@ public:
 private:
 	Configuration& config;		//reference to configuration
 	sf::IpAddress serverIP;		//serverIP is valid for client, invalid for server
-
+	
 	tgui::Panel::Ptr panel;
 	tgui::Button::Ptr backButton;
 	tgui::Button::Ptr startButton;
@@ -110,11 +118,12 @@ private:
 	//function to initialize the gui
 	void initialize();
 
-	//handles the incoming packet
-	void handlePacket(Package& package);
-
+	/*
+	PlayerList
+	*/
 	//playerList collects players
     std::list<std::unique_ptr<lobby::Player>> playerList;
+
     //function to update the playerList's gui
     void updatePlayerList();
 
@@ -122,7 +131,21 @@ private:
 	//true - success
 	//false - the lobby is full
 	bool addPlayer(std::unique_ptr<lobby::Player> playerPtr);
-    
+
+	/*
+	Networking
+	*/
+	//get update packet (# of players << Player...)
+	sf::Packet getUpdatePacket();
+
+	//handle update packet
+	void handleUpdatePacket(sf::Packet& packet);
+
+	//boaredcast the packet
+	void boardcast(sf::Packet& packet);
+
+	//handles the incoming packet
+	void handlePacket(Package& package);
 public:
 	Lobby() = delete;
 	Lobby(const Lobby&) = delete;

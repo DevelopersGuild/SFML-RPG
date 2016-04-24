@@ -233,7 +233,7 @@ void Menu::toLobby()
 void Menu::tryConnect()
 {
 	sf::IpAddress ip(state_connect.IPBox->getText());
-	Connection * conPtr = new Connection();
+	std::unique_ptr<Connection> conPtr(new Connection);	//a temporary connection
 	
 	sf::Packet packet;
 	packet << "lobby_join";
@@ -252,7 +252,7 @@ void Menu::tryConnect()
 			package.packet >> signal;
 			if (signal == "lobby_update")
 			{
-				delete conPtr;
+				conPtr.reset();		//delete the temporary connection so lobby can bind port.
 				lobbyPtr.reset(new Lobby(config, ip, package.packet));
 				return;
 			}

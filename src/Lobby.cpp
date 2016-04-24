@@ -22,20 +22,7 @@ Lobby::Lobby(Configuration& newConfig, sf::IpAddress newServerIP, sf::Packet& up
 	serverIP(newServerIP)
 {
 	initialize();
-	
-	playerList.clear();
-	sf::Int8 size;
-	updatePacket >> size;
-	for (int i = 0; i < size; i++)
-	{
-		std::string name;
-		int charName;
-		updatePacket >> name;
-		updatePacket >> charName;
-		std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, sf::IpAddress(), static_cast<lobby::Character::Name>(charName)));
-		addPlayer(std::move(newPlayer));
-	}
-	updatePlayerList();
+	handleUpdatePacket(updatePacket);
 }
 /*
 Destructor for lobby
@@ -106,6 +93,25 @@ void Lobby::initialize()
 		{
 			chatBox->addLine(str);
 			chatInput->setText("");
+			if (type == TYPE::server)
+			{
+				//boardcast the message to every player
+				for (auto& playerPtr : playerList)
+				{
+					sf::IpAddress ip = playerPtr->getIP();
+					sf::Packet packet;
+					packet << "lobby_message";
+					packet << str;
+					connection.send(ip, packet);
+				}
+			}			
+			else
+			{
+				sf::Packet packet;
+				packet << "lobby_message";
+				packet << str;
+				connection.send(serverIP, packet);
+			}
 		}
 
 	});
@@ -152,6 +158,7 @@ void Lobby::showWithEffect(const tgui::ShowAnimationType& effect, const sf::Time
 
 void Lobby::update()
 {
+	//check if there are new packets received
 	if (!connection.empty())	//if the queue is not empty
 	{
 		Package package;
@@ -170,6 +177,43 @@ bool Lobby::addPlayer(std::unique_ptr<lobby::Player> playerPtr)
 	playerList.push_back(std::move(playerPtr));
 	updatePlayerList();
 	return true;
+}
+
+sf::Packet Lobby::getUpdatePacket()
+{
+	sf::Packet update;
+	update << "lobby_update";
+	update << sf::Int8(playerList.size());	//# of players
+	for (auto& playerPtr : playerList)		//insert each player into the packet
+	{
+		update << *playerPtr;
+	}
+	return update;
+}
+
+void Lobby::handleUpdatePacket(sf::Packet & updatePacket)
+{
+	playerList.clear();
+	sf::Int8 size;
+	updatePacket >> size;
+	for (int i = 0; i < size; i++)
+	{
+		std::string name;
+		int charName;
+		updatePacket >> name;
+		updatePacket >> charName;
+		std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, sf::IpAddress(), static_cast<lobby::Character::Name>(charName)));
+		addPlayer(std::move(newPlayer));
+	}
+	updatePlayerList();
+}
+
+void Lobby::boardcast(sf::Packet & packet)
+{
+	for (auto& playerPtr : playerList)
+	{
+		connection.send(playerPtr->getIP(), packet);
+	}
 }
 
 std::unique_ptr<StartInfo> Lobby::getStartInfo()
@@ -197,24 +241,10 @@ void Lobby::handlePacket(Package& package)
 			std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, package.ip, lobby::Character::SilverGuy));
 			if (addPlayer(std::move(newPlayer)))
 			{
-				std::cout << "new connection from " << package.ip << std::endl;
-
-				//boardcast update here
-				//1.create update packet
-				sf::Packet update;
-				update << "lobby_update";		//marked it as update packet
-				sf::Int8 size = playerList.size();
-				update << size;	//insert the size
-												//2.insert each player into the packet
-				for (auto& playerPtr : playerList)
-				{
-					update << *playerPtr;
-				}
-				//3.send the packet to each player
-				for (auto& playerPtr : playerList)
-				{
-					connection.send(playerPtr->getIP(), update);
-				}
+				chatBox->addLine(name + " joined the game.");
+				//send the packet to each player;
+				sf::Packet updatePacket = getUpdatePacket();
+				boardcast(updatePacket);
 			}
 		}
 		/*
@@ -226,9 +256,46 @@ void Lobby::handlePacket(Package& package)
 			{
 				if (package.ip == playerPtr->getIP())
 				{
+					chatBox->addLine(playerPtr->getName() + " left.");
 					playerList.remove(playerPtr);
 					updatePlayerList();
 					return;
+				}
+				sf::Packet updatePacket = getUpdatePacket();
+				boardcast(updatePacket);
+			}
+		}
+		/*
+		Server : put chatting message on chatBox
+		*/
+		else if (signal == "lobby_message")
+		{
+			std::string str;
+			package.packet >> str;
+
+			//find player, and show "Player : ..."
+			bool done = false;
+			for (auto it = playerList.begin(); it != playerList.end() && !done; it++)
+			{
+				if (package.ip == (*it)->getIP())
+				{
+					chatBox->addLine((*it)->getName() + " : " + str);
+					str = (*it)->getName() + " : " + str;		//update the str for boardcast later
+					done = true;
+				}
+			}
+
+			sf::Packet packet;
+			packet << "lobby_message";
+			packet << str;
+
+			//boardcast the message except the one who send the message to server
+			for (auto& playerPtr : playerList)
+			{
+				sf::IpAddress ip = playerPtr->getIP();
+				if (ip != package.ip)
+				{
+					connection.send(ip, packet);
 				}
 			}
 		}
@@ -262,6 +329,15 @@ void Lobby::handlePacket(Package& package)
 				addPlayer(std::move(newPlayer));
 			}
 			updatePlayerList();
+		}
+		/*
+		Client : receive message for chatBox
+		*/
+		else if (signal == "lobby_message")
+		{
+			std::string str;
+			package.packet >> str;
+			chatBox->addLine(str);
 		}
 	}
 }
