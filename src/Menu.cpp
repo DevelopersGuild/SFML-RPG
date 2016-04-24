@@ -359,7 +359,7 @@ void Menu::ModeChoice::initialize(Configuration & config)
 
 	client = std::make_shared<tgui::Button>();
 	panel->add(client);
-	client->setText("Join gmae");
+	client->setText("Join game");
 	client->setPosition(10, 10);
 
 	server = std::make_shared<tgui::Button>();

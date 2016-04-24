@@ -88,9 +88,11 @@ void Lobby::initialize()
 	chatInputButton->setPosition(357, 473);
 	chatInputButton->setText("send");
 	chatInputButton->connect("mousereleased", [&]() {
-		std::string str = config.player_name + " : " + chatInput->getText();
+		std::string str = chatInput->getText();
 		if (str != "")
 		{
+			str = config.player_name + " : " + chatInput->getText();
+
 			chatBox->addLine(str);
 			chatInput->setText("");
 			if (type == TYPE::server)
@@ -255,7 +257,7 @@ void Lobby::handlePacket(Package& package)
 			{
 				if (package.ip == playerPtr->getIP())
 				{
-					chatBox->addLine(playerPtr->getName() + " left.");
+					chatBox->addLine(playerPtr->getName() + " left the game.");
 					playerList.remove(playerPtr);
 					updatePlayerList();
 					return;
@@ -271,6 +273,8 @@ void Lobby::handlePacket(Package& package)
 		{
 			std::string str;
 			package.packet >> str;
+
+			chatBox->addLine(str);
 
 			sf::Packet packet;
 			packet << "lobby_message";
