@@ -184,7 +184,8 @@ sf::Packet Lobby::getUpdatePacket()
 {
 	sf::Packet update;
 	update << "lobby_update";
-	update << sf::Int8(playerList.size());	//# of players
+	sf::Int8 size = playerList.size(); //# of players
+	update << size;	
 	for (auto& playerPtr : playerList)		//insert each player into the packet
 	{
 		update << *playerPtr;
@@ -302,7 +303,7 @@ void Lobby::handlePacket(Package& package)
 			//clear the playerList
 			playerList.clear();
 			//get the size of the new playerList
-			int size;
+			sf::Int8 size;
 			package.packet >> size;
 			for (int i = 0; i < size; i++)
 			{
