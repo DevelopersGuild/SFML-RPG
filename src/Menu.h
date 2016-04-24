@@ -132,7 +132,9 @@ private:
 	void toLobby();
 
 	//Try to connect to server
-	std::unique_ptr<Lobby> tryConnect(sf::IpAddress& ip);
+	//if success, lobbyPtr is allocated
+	//if failed, lobbyPtr is NULL
+	void tryConnect();
 
 	//The drawing function
 	void draw();

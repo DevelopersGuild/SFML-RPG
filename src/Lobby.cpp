@@ -22,11 +22,9 @@ Lobby::Lobby(Configuration& newConfig, sf::IpAddress newServerIP, sf::Packet& up
 	serverIP(newServerIP)
 {
 	initialize();
-
-	//clear the playerList
+	
 	playerList.clear();
-	//get the size of the new playerList
-	int size;
+	sf::Int8 size;
 	updatePacket >> size;
 	for (int i = 0; i < size; i++)
 	{
@@ -38,7 +36,6 @@ Lobby::Lobby(Configuration& newConfig, sf::IpAddress newServerIP, sf::Packet& up
 		addPlayer(std::move(newPlayer));
 	}
 	updatePlayerList();
-
 }
 /*
 Destructor for lobby

@@ -117,6 +117,11 @@ private:
     std::list<std::unique_ptr<lobby::Player>> playerList;
     //function to update the playerList's gui
     void updatePlayerList();
+
+	//add a player into the lobby
+	//true - success
+	//false - the lobby is full
+	bool addPlayer(std::unique_ptr<lobby::Player> playerPtr);
     
 public:
 	Lobby() = delete;
@@ -157,11 +162,6 @@ public:
 
 	//update the lobby's data
 	void update();
-
-	//add a player into the lobby
-	//true - success
-	//false - the lobby is full
-	bool addPlayer(std::unique_ptr<lobby::Player> playerPtr);
 
 	//get the game data
 	std::unique_ptr<StartInfo> getStartInfo();

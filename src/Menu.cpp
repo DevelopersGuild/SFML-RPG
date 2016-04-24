@@ -101,21 +101,18 @@ Menu::Menu(Configuration & newConfig) :
 	state_connect.connectButton->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
 		toConnecting();
-		//unpdate window immediately
 		config.window.clear();
 		draw();
 		config.window.display();
-		//try to connect to server
-		sf::IpAddress ip(state_connect.IPBox->getText());
-		std::unique_ptr<Lobby> lobbyPtr = tryConnect(ip);
-		if (!lobbyPtr)
+		tryConnect();
+		if (lobbyPtr)
 		{
-			state_connecting.text->setText("Failed to connect the server.");
-			state_connecting.backButton->show();
+			toLobby();
 		}
 		else
 		{
-			toLobby();
+			state_connecting.text->setText("Failed to connect the server.");
+			state_connecting.backButton->show();
 		}
 	});
 
@@ -217,24 +214,15 @@ void Menu::toLobby()
 {
 	gui.removeAllWidgets();
 	state = STATE::multiplayer_lobby;
-	if (!lobbyPtr)	//if the lobbyPre is invalid, that means it is a server
-	{
-		lobbyPtr.reset(new Lobby(config));
-	}
-	else
-	{
-		//else, do nothing, since the lobby is already initialized in tryconnect()
-	}
-
+	//if lobbyPtr is NULL, that means it is server
 	if (!lobbyPtr)
 	{
-		std::cout << "Failed to allocated lobby!" << std::endl;
+		lobbyPtr.reset(new Lobby(config));
 	}
 
 	lobbyPtr->addTgui(gui);
 	lobbyPtr->hide();
-	lobbyPtr->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds(0.2));
-
+	lobbyPtr->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds(0.3));
 	lobbyPtr->connectBackButton("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
 		lobbyPtr.reset();
@@ -242,32 +230,36 @@ void Menu::toLobby()
 	});
 }
 
-std::unique_ptr<Lobby> Menu::tryConnect(sf::IpAddress & ip)
+void Menu::tryConnect()
 {
-	Connection network;
-	sf::Clock clock;
+	sf::IpAddress ip(state_connect.IPBox->getText());
+	Connection * conPtr = new Connection();
+	
 	sf::Packet packet;
 	packet << "lobby_join";
 	packet << config.player_name;
-	network.send(ip, packet);
-	packet.clear();
+	conPtr->send(ip, packet);
+
+	sf::Clock clock;
 	while (clock.getElapsedTime() < sf::seconds(5))
 	{
-		if (!network.empty())
+		if (!conPtr->empty())
 		{
-			Package package;
-			package = network.front();
 			std::string signal;
+			Package package;
+
+			package = conPtr->front();
 			package.packet >> signal;
 			if (signal == "lobby_update")
 			{
+				delete conPtr;
 				lobbyPtr.reset(new Lobby(config, ip, package.packet));
+				return;
 			}
-			
 		}
-		std::this_thread::sleep_for(std::chrono::seconds(1));	//wait for 1 second
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
-	return NULL;
+	return;
 }
 
 void Menu::draw()
