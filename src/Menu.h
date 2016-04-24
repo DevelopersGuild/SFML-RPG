@@ -41,6 +41,9 @@ private:
 	//the gui interface of the menu
 	tgui::Gui gui;
 
+	//the title of the game
+	tgui::Picture::Ptr titlePic;
+
 	/*
 	The gui stuff that only shown in getUserName
 	NOTE: Since other widgets are already in panel,

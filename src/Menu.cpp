@@ -8,6 +8,10 @@ Menu::Menu(Configuration & newConfig) :
 	*/
 	state = STATE::getUserName;
 	gui.setFont(tgui::Font(config.fontMan.get("Carlito-Bold.ttf")));	//set the default font of gui
+	titlePic = std::make_shared<tgui::Picture>();
+	titlePic->setTexture(config.texMan.get("title.png"));
+	titlePic->setPosition(100, 50);
+	titlePic->setSize(600, 150);
 
 	/*
 	initialize the background
@@ -171,6 +175,7 @@ void Menu::toGetUserName()
 	gui.removeAllWidgets();
 	state = STATE::getUserName;
 	gui.add(state_getUserName.panel);
+	gui.add(titlePic);
 }
 
 void Menu::toMainMenu()
@@ -178,6 +183,7 @@ void Menu::toMainMenu()
 	gui.removeAllWidgets();
 	state = STATE::mainMenu;
 	gui.add(state_mainMenu.panel);
+	gui.add(titlePic);
 }
 
 void Menu::tomodeChoice()
@@ -185,6 +191,7 @@ void Menu::tomodeChoice()
 	gui.removeAllWidgets();
 	state = STATE::modeChoice;
 	gui.add(state_modeChoice.panel);
+	gui.add(titlePic);
 }
 
 void Menu::toSetting()
@@ -192,6 +199,7 @@ void Menu::toSetting()
 	gui.removeAllWidgets();
 	state = STATE::setting;
 	gui.add(state_settings.panel);
+	gui.add(titlePic);
 }
 
 void Menu::toConnect()
