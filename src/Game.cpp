@@ -17,8 +17,12 @@ void Game::start()
 	std::unique_ptr<Menu> menu(new Menu(config));
 	std::unique_ptr<StartInfo> startInfo = menu->run();
 	menu.reset();
-	//std::unique_ptr<inGame> inGame<new inGame(config));
-	//result = inGame->run();
-	//inGame.reset();
+
+	if (startInfo) //if startInfo is valid, start the game
+	{
+		//std::unique_ptr<inGame> inGame<new inGame(config));
+		//result = inGame->run();
+		//inGame.reset();
+	}
 	//} while (result);
 }

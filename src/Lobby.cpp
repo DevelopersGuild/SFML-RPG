@@ -221,7 +221,28 @@ void Lobby::boardcast(sf::Packet & packet)
 std::unique_ptr<StartInfo> Lobby::getStartInfo()
 {
 	std::unique_ptr<StartInfo> info(new StartInfo);
-	//do something in here
+	//insert each player to the list
+	for (auto& playerPtr : playerList)
+	{
+		StartInfo::Player startInfo_player;
+		startInfo_player.name = playerPtr->getName();
+		startInfo_player.ip = playerPtr->getIP();
+		//startInfo_player.character = playerPtr->getCharacter();
+		info->playerList.push_back(startInfo_player);
+	}
+	
+	//Map...TBD
+	info->map.name = "Shadow_Kingdom";
+
+	//set the type
+	if (type == TYPE::client)
+		info->type = StartInfo::TYPE::Client;
+	else if (type == TYPE::server)
+		info->type = StartInfo::TYPE::Server;
+
+	//set the mode...TBD
+	info->mode = StartInfo::GAMEMODE::Coop;
+
 	return info;
 }
 

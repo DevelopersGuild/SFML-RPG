@@ -131,6 +131,9 @@ Menu::Menu(Configuration & newConfig) :
 		state_connecting.text->setText("Connecting...");
 		state_connecting.backButton->hide();
 	});
+
+	//set boolean "done" to false
+	done = false;
 }
 
 std::unique_ptr<StartInfo> Menu::run()
@@ -143,7 +146,7 @@ std::unique_ptr<StartInfo> Menu::run()
 	bgMusic->setLoop(true);
 	bgMusic->play();
 
-	while (window.isOpen())
+	while (window.isOpen() && !done)
 	{
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -166,7 +169,13 @@ std::unique_ptr<StartInfo> Menu::run()
 		window.display();
 	}
 	
-	std::unique_ptr<StartInfo> startInfo = lobbyPtr->getStartInfo();
+	std::unique_ptr<StartInfo> startInfo(nullptr);
+
+	//if the Menu exit with game starting, return Startinfo. else, return an null pointer.
+	if (lobbyPtr)
+	{
+		startInfo = lobbyPtr->getStartInfo();
+	}
 	return startInfo;
 }
 
@@ -235,6 +244,10 @@ void Menu::toLobby()
 		config.soundMan.get("Decision2.ogg").play();
 		lobbyPtr.reset();
 		tomodeChoice();
+	});
+
+	lobbyPtr->connectStartButton("mousereleased", [&]() {
+		done = true;
 	});
 }
 
