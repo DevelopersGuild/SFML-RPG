@@ -176,6 +176,7 @@ std::unique_ptr<StartInfo> Menu::run()
 	{
 		startInfo = lobbyPtr->getStartInfo();
 	}
+	bgMusic->stop();
 	return startInfo;
 }
 

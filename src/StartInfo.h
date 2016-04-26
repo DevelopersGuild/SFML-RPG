@@ -14,6 +14,7 @@ struct StartInfo
 	struct Player {
 		std::string name;
 		sf::IpAddress ip;
+		enum Character{ SilverGuy, GoldGuy, RedGirl, BrownGirl } character;
 	};
 
 	//a list of StartInfo::Player

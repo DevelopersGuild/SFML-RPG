@@ -227,7 +227,26 @@ std::unique_ptr<StartInfo> Lobby::getStartInfo()
 		StartInfo::Player startInfo_player;
 		startInfo_player.name = playerPtr->getName();
 		startInfo_player.ip = playerPtr->getIP();
-		//startInfo_player.character = playerPtr->getCharacter();
+
+		lobby::Character& character = playerPtr->getCharacter();
+		switch (character.getName())
+		{
+		case lobby::Character::Name::BrownGirl:
+			startInfo_player.character = StartInfo::Player::Character::BrownGirl;
+			break;
+		case lobby::Character::Name::GoldGuy:
+			startInfo_player.character = StartInfo::Player::Character::GoldGuy;
+			break;
+		case lobby::Character::Name::RedGirl:
+			startInfo_player.character = StartInfo::Player::Character::RedGirl;
+			break;
+		case lobby::Character::Name::SilverGuy:
+			startInfo_player.character = StartInfo::Player::Character::SilverGuy;
+			break;
+		default:
+			startInfo_player.character = StartInfo::Player::Character::SilverGuy;
+		}
+
 		info->playerList.push_back(startInfo_player);
 	}
 	

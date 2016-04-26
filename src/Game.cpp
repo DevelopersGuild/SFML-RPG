@@ -20,9 +20,9 @@ void Game::start()
 
 	if (startInfo) //if startInfo is valid, start the game
 	{
-		//std::unique_ptr<inGame> inGame<new inGame(config));
-		//result = inGame->run();
-		//inGame.reset();
+		std::unique_ptr<InGame> inGame(new InGame(config, std::move(startInfo)));
+		inGame->run();
+		inGame.reset();
 	}
 	//} while (result);
 }
