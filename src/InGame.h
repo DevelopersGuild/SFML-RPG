@@ -11,6 +11,7 @@ class InGame
 {
 private:
 	Configuration& config;
+    enum STATE{loading, inMap, battle, cinematic} state;
 public:
 	InGame() = delete;
 	InGame(const InGame&) = delete;

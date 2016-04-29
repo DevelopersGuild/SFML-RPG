@@ -131,9 +131,8 @@ Menu::Menu(Configuration & newConfig) :
 		state_connecting.text->setText("Connecting...");
 		state_connecting.backButton->hide();
 	});
-
-	//set boolean "done" to false
-	done = false;
+    
+    done = false;
 }
 
 std::unique_ptr<StartInfo> Menu::run()
@@ -162,6 +161,7 @@ std::unique_ptr<StartInfo> Menu::run()
 		if (state == Menu::STATE::multiplayer_lobby)
 		{
 			lobbyPtr->update();
+            done = lobbyPtr->isDone();
 		}
 
 		window.clear();
@@ -248,7 +248,7 @@ void Menu::toLobby()
 	});
 
 	lobbyPtr->connectStartButton("mousereleased", [&]() {
-		done = true;
+        lobbyPtr->startGame();
 	});
 }
 

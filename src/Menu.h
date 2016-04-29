@@ -141,9 +141,9 @@ private:
 
 	//The drawing function
 	void draw();
-
-	//boolean for launching the game
-	bool done;
+    
+    //for launching the game
+    bool done;
 public:
 	Menu() = delete;
 	Menu(const Menu&) = delete;

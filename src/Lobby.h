@@ -99,6 +99,7 @@ public:
 private:
 	Configuration& config;		//reference to configuration
 	sf::IpAddress serverIP;		//serverIP is valid for client, invalid for server
+    bool done;                  //is the game ready to start?
 	
 	tgui::Panel::Ptr panel;
 	tgui::Button::Ptr backButton;
@@ -189,4 +190,11 @@ public:
 
 	//get the game data
 	std::unique_ptr<StartInfo> getStartInfo();
+    
+    //For server only: send the starting signal to client
+    //Call this function when the game is about to start!
+    void startGame();
+    
+    //is the game ready to start?
+    bool isDone(){return done;}
 };

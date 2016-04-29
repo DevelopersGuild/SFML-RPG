@@ -4,7 +4,8 @@ constructor for server's version
 */
 Lobby::Lobby(Configuration & newConfig) :
 	config(newConfig),
-	type(Lobby::TYPE::server)
+	type(Lobby::TYPE::server),
+    done(false)
 {
 	initialize();
     
@@ -19,10 +20,12 @@ constructor for client's version
 Lobby::Lobby(Configuration& newConfig, sf::IpAddress newServerIP, sf::Packet& updatePacket) :
 	config(newConfig),
 	type(Lobby::TYPE::client),
-	serverIP(newServerIP)
+	serverIP(newServerIP),
+    done(false)
 {
 	initialize();
 	handleUpdatePacket(updatePacket);
+    startButton->hide();    //client must wait the starting signal from server
 }
 /*
 Destructor for lobby
@@ -228,8 +231,7 @@ std::unique_ptr<StartInfo> Lobby::getStartInfo()
 		startInfo_player.name = playerPtr->getName();
 		startInfo_player.ip = playerPtr->getIP();
 
-		lobby::Character& character = playerPtr->getCharacter();
-		switch (character.getName())
+		switch (playerPtr->getCharacter().getName())
 		{
 		case lobby::Character::Name::BrownGirl:
 			startInfo_player.character = StartInfo::Player::Character::BrownGirl;
@@ -392,6 +394,13 @@ void Lobby::handlePacket(Package& package)
 			backButton->setPosition(50, 130);
 			panel->add(backButton);
 		}
+        /*
+        Client : the game start
+        */
+        else if(signal == "lobby_start")
+        {
+            done = true;
+        }
 	}
 }
 
@@ -413,6 +422,20 @@ void Lobby::updatePlayerList()
 		playerListPanel->add(ptr);
 		i++;
 	}
+}
+
+void Lobby::startGame()
+{
+    if(type == TYPE::server)
+    {
+        sf::Packet packet;
+        packet << "lobby_start";
+        for(auto& playerPtr: playerList)
+        {
+            connection.send(playerPtr->getIP(), packet);
+        }
+        done = true;
+    }
 }
 
 lobby::Player::Player(std::string newName, sf::IpAddress newIP, Character newChar) :

@@ -2,7 +2,8 @@
 #include <sstream>
 
 InGame::InGame(Configuration& newConfig, std::unique_ptr<StartInfo> startInfo) :
-	config(newConfig)
+	config(newConfig),
+    state(STATE::loading)
 {
 
 }
