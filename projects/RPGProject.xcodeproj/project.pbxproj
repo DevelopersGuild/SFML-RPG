@@ -55,6 +55,9 @@
 		FACCE2211CD2BB5C00327C9F /* Music in Resources */ = {isa = PBXBuildFile; fileRef = FACCE2201CD2BB5C00327C9F /* Music */; };
 		FACCE2231CD2BB7300327C9F /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = FACCE2221CD2BB7300327C9F /* sounds */; };
 		FACCE2251CD2BB9000327C9F /* maps in Resources */ = {isa = PBXBuildFile; fileRef = FACCE2241CD2BB9000327C9F /* maps */; };
+		FACCE2501CD4866100327C9F /* GameSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACCE24F1CD4866100327C9F /* GameSystem.cpp */; };
+		FACCE2571CD4A8FC00327C9F /* GameNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACCE2561CD4A8FC00327C9F /* GameNetwork.cpp */; };
+		FACCE25A1CD4A97300327C9F /* GameInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACCE2591CD4A97300327C9F /* GameInterface.cpp */; };
 		FAFB1C001CBC51090012F144 /* Cursor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFB1BFA1CBC51090012F144 /* Cursor.cpp */; };
 		FAFB1C011CBC51090012F144 /* Menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFB1BFC1CBC51090012F144 /* Menu.cpp */; };
 		FAFB1C021CBC51090012F144 /* PreMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFB1BFE1CBC51090012F144 /* PreMenu.cpp */; };
@@ -133,6 +136,14 @@
 		FACCE2201CD2BB5C00327C9F /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Music; path = ../Music; sourceTree = "<group>"; };
 		FACCE2221CD2BB7300327C9F /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = ../sounds; sourceTree = "<group>"; };
 		FACCE2241CD2BB9000327C9F /* maps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = maps; path = ../maps; sourceTree = "<group>"; };
+		FACCE24E1CD452EC00327C9F /* GameSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameSystem.h; path = ../src/GameSystem.h; sourceTree = SOURCE_ROOT; };
+		FACCE24F1CD4866100327C9F /* GameSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameSystem.cpp; path = ../src/GameSystem.cpp; sourceTree = SOURCE_ROOT; };
+		FACCE2511CD486B100327C9F /* GameData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GameData.cpp; path = ../src/GameData.cpp; sourceTree = SOURCE_ROOT; };
+		FACCE2541CD4A85A00327C9F /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameData.h; path = ../src/GameData.h; sourceTree = SOURCE_ROOT; };
+		FACCE2551CD4A8A700327C9F /* GameNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameNetwork.h; path = ../src/GameNetwork.h; sourceTree = SOURCE_ROOT; };
+		FACCE2561CD4A8FC00327C9F /* GameNetwork.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameNetwork.cpp; path = ../src/GameNetwork.cpp; sourceTree = SOURCE_ROOT; };
+		FACCE2581CD4A94E00327C9F /* GameInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameInterface.h; path = ../src/GameInterface.h; sourceTree = SOURCE_ROOT; };
+		FACCE2591CD4A97300327C9F /* GameInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameInterface.cpp; path = ../src/GameInterface.cpp; sourceTree = SOURCE_ROOT; };
 		FAFB1BFA1CBC51090012F144 /* Cursor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cursor.cpp; path = ../src/Cursor.cpp; sourceTree = SOURCE_ROOT; };
 		FAFB1BFB1CBC51090012F144 /* Cursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cursor.h; path = ../src/Cursor.h; sourceTree = SOURCE_ROOT; };
 		FAFB1BFC1CBC51090012F144 /* Menu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Menu.cpp; path = ../src/Menu.cpp; sourceTree = SOURCE_ROOT; };
@@ -217,6 +228,14 @@
 				FA1285181CC599510066AF05 /* Connection.cpp */,
 				FA1285211CC78DC70066AF05 /* StartInfo.cpp */,
 				FA1285221CC78DC70066AF05 /* StartInfo.h */,
+				FACCE24E1CD452EC00327C9F /* GameSystem.h */,
+				FACCE24F1CD4866100327C9F /* GameSystem.cpp */,
+				FACCE2511CD486B100327C9F /* GameData.cpp */,
+				FACCE2541CD4A85A00327C9F /* GameData.h */,
+				FACCE2551CD4A8A700327C9F /* GameNetwork.h */,
+				FACCE2561CD4A8FC00327C9F /* GameNetwork.cpp */,
+				FACCE2581CD4A94E00327C9F /* GameInterface.h */,
+				FACCE2591CD4A97300327C9F /* GameInterface.cpp */,
 				FA1285191CC599510066AF05 /* Connection.h */,
 				FA12851A1CC599510066AF05 /* Lobby.cpp */,
 				FA12851B1CC599510066AF05 /* Lobby.h */,
@@ -366,15 +385,18 @@
 				FAFB1C001CBC51090012F144 /* Cursor.cpp in Sources */,
 				5F3A1B3C1BC8519100726EBF /* main.cpp in Sources */,
 				5F35EB571BC84F4300FCF070 /* ResourcePathMac.mm in Sources */,
+				FACCE2571CD4A8FC00327C9F /* GameNetwork.cpp in Sources */,
 				FA12851C1CC599510066AF05 /* Connection.cpp in Sources */,
 				FA0497641C4A2F5800AC7816 /* MapObject.cpp in Sources */,
 				FA0497611C4A2F5800AC7816 /* MapLayer.cpp in Sources */,
+				FACCE2501CD4866100327C9F /* GameSystem.cpp in Sources */,
 				FA4F4FD51C80FF15007C2936 /* Configuration.cpp in Sources */,
 				FA0497631C4A2F5800AC7816 /* MapLoaderPublic.cpp in Sources */,
 				FA0497601C4A2F5800AC7816 /* DebugShape.cpp in Sources */,
 				FACCE2151CD2B98F00327C9F /* InGame.cpp in Sources */,
 				FA0497621C4A2F5800AC7816 /* MapLoaderPrivate.cpp in Sources */,
 				FA0497651C4A2F5800AC7816 /* QuadTreeNode.cpp in Sources */,
+				FACCE25A1CD4A97300327C9F /* GameInterface.cpp in Sources */,
 				FA4F4FD61C80FF15007C2936 /* Game.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

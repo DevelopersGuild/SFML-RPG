@@ -39,6 +39,10 @@ Connection::~Connection()
 
 sf::Socket::Status Connection::send(const sf::IpAddress& ip, sf::Packet& packet)
 {
+    if(ip == sf::IpAddress::None)
+    {
+        return sf::Socket::Status::Error;
+    }
     if(sizeof(packet) >= sf::UdpSocket::MaxDatagramSize)
     {
         std::cout << "Error: the packet is bigger than maxDatagram size!" << std::endl;
