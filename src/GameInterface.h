@@ -1,20 +1,22 @@
-//
-//  GameInterface.h
-//  RPGProject
-//
-//  Created by macbook on 4/30/16.
-//  Copyright © 2016 De Anza College Developers' Guild. All rights reserved.
-//
-
 #ifndef GameInterface_h
 #define GameInterface_h
 
-class GameInterface
+#include "GameSystem.h"
+
+namespace Gameplay
 {
-private:
-    
-public:
-    
-};
+	/*
+	GameInterface class
+	Handles inputs from this computer
+	*/
+	class GameInterface
+	{
+	private:
+		//Gameplay::GameSystem& system;	//the interface calls system's function.
+	public:
+
+	};
+}
+
 
 #endif /* GameInterface_h */

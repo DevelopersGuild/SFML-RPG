@@ -1,22 +1,21 @@
-//
-//  GameNetwork.h
-//  RPGProject
-//
-//  Created by macbook on 4/30/16.
-//  Copyright © 2016 De Anza College Developers' Guild. All rights reserved.
-//
-
 #ifndef GameNetwork_h
 #define GameNetwork_h
 
-/*
-GameNetwork class
-*/
-class GameNetwork
+#include "GameSystem.h"
+
+namespace Gameplay
 {
-private:
-    
-public:
-    
-};
+	/*
+	GameNetwork class
+	Handles inputs from the internet
+	*/
+	class GameNetwork
+	{
+	private:
+		//Gameplay::GameSystem& system;	//the network call system's function
+	public:
+
+	};
+}
+
 #endif /* GameNetwork_h */
