@@ -1,7 +1,8 @@
 #ifndef GameSystem_h
 #define GameSystem_h
 
-#include "GameData.h"
+#include "Player.h"
+#include "Configuration.h"
 
 namespace Gameplay
 {
@@ -21,8 +22,10 @@ namespace Gameplay
 	private:
 		GameNetwork* networkPtr;
 	protected:
-		GameData gameData;
-		
+		Configuration& config;
+
+		std::unique_ptr<Player> player;
+		tmx::MapLoader map;
 	public:
 		GameSystem(Configuration& config);
 		GameSystem(const GameSystem&) = delete;
@@ -33,7 +36,7 @@ namespace Gameplay
 
 		void moveCharacter(const float& x, const float& y)
 		{
-			gameData.moveCharacter(x, y);
+			player->moveCharacter(x, y);
 		}
 	};
 }

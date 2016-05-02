@@ -93,9 +93,6 @@
     <ClCompile Include="..\..\src\InGame.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\GameData.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\GameInterface.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
@@ -153,9 +150,6 @@
       <Filter>Header Files\Menu</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\InGame.h">
-      <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\GameData.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\GameInterface.h">

@@ -17,6 +17,7 @@ InGame::~InGame()
 void InGame::run()
 {
 	sf::RenderWindow& window = config.window;
+	window.setFramerateLimit(60);
 
 	while (window.isOpen())
 	{

@@ -153,7 +153,6 @@
     <ClCompile Include="..\..\src\Connection.cpp" />
     <ClCompile Include="..\..\src\Cursor.cpp" />
     <ClCompile Include="..\..\src\Game.cpp" />
-    <ClCompile Include="..\..\src\GameData.cpp" />
     <ClCompile Include="..\..\src\GameInterface.cpp" />
     <ClCompile Include="..\..\src\GameNetwork.cpp" />
     <ClCompile Include="..\..\src\GameSystem.cpp" />
@@ -180,7 +179,6 @@
     <ClInclude Include="..\..\src\Connection.h" />
     <ClInclude Include="..\..\src\Cursor.h" />
     <ClInclude Include="..\..\src\Game.h" />
-    <ClInclude Include="..\..\src\GameData.h" />
     <ClInclude Include="..\..\src\GameInterface.h" />
     <ClInclude Include="..\..\src\GameNetwork.h" />
     <ClInclude Include="..\..\src\GameSystem.h" />
