@@ -167,6 +167,15 @@
     <ClInclude Include="..\..\src\GameSystem.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\ServerSystem.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ClientSystem.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Player.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\ResourcePathMac.mm">

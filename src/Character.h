@@ -1,44 +1,69 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 #include "Item.h"
+#include <list>
+#include <SFML/Graphics.hpp>
+#include "tmx/MapLoader.h"
+#include "Configuration.h"
 
 namespace Gameplay
 {
-	class Character
+	class Character : public sf::Drawable
 	{
 	private:
+		//for accessing resourse
+		Configuration& config;
+
+		//the name of the character(not player)
 		std::string name;
-		int healthPt;
-		int attackPt;
-		int defencePt;
-		int speedPt;
+
+		//Character's HP
+		int hp;
+
+		//Character's Attack
+		int atk;
+
+		//Character's Defense
+		int def;
+
+		//Character's Speed
+		int speed;
+
+		//the direction that the character is looking at
+		enum Direction{up, down, left, right} direction;
+
+		//character's sprite
+		sf::Sprite sprite;
 
 	public:
-		virtual int calculateValue() = 0;
-		virtual int attack() = 0;
-	};
+		Character(Configuration& newConfig) : config(newConfig)
+		{
+			name = "Unnamed character";
+			hp = 100;
+			atk = 1;
+			def = 1;
+			speed = 10;
 
-	class Hero : public Character
-	{
-	private:
-		double money;
-		int level;
-		Item* items;
-	public:
-		Hero(std::string name, int hp, int att, int def, int spd, double money, Item* item);
-	};
+			sprite.setTexture(config.texMan.get("Actor4.png"));
+			sprite.setTextureRect(sf::IntRect(0, 0, 32, 32));
+			sprite.setPosition(200, 200);
+		}
 
-	class Monster : public Character
-	{
-	private:
-		int level;
-	};
+		Character(Configuration& newConfig, const std::string& newName) : 
+			Character(newConfig)
+		{
+			name = newName;
+		}
 
-	class NPC : public Character
-	{
-	private:
-		std::string description;
+		void move(const float& x, const float& y)
+		{
+			sprite.move(x, y);
+		}
 
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const
+		{
+			target.draw(sprite);
+		}
 	};
 }
 #endif

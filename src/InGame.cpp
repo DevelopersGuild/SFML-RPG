@@ -2,17 +2,53 @@
 #include <sstream>
 
 InGame::InGame(Configuration& newConfig, std::unique_ptr<StartInfo> startInfo) :
-	config(newConfig),
-    state(STATE::loading)
+	config(newConfig)
 {
+	loadGame(startInfo);
+}
 
+InGame::~InGame()
+{
+	delete interfacePtr;
+	delete networkPtr;
+	delete systemPtr;
 }
 
 void InGame::run()
 {
 	sf::RenderWindow& window = config.window;
 
-	/*Testing only*/
+	while (window.isOpen())
+	{
+		//input & update phase
+		networkPtr->update();
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			{
+				systemPtr->moveCharacter(10, 0);
+			}
+
+
+		}
+		config.cursor.update();
+
+		//rendering phase
+		window.clear();
+		window.draw(*interfacePtr);
+		window.draw(config.cursor);
+		window.display();
+	}
+}
+
+void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
+{
+	//graphics in loading screen
+	sf::RenderWindow& window = config.window;
 	tgui::Gui gui;
 	gui.setWindow(window);
 
@@ -45,9 +81,8 @@ void InGame::run()
 	tips->setTextSize(24);
 	tips->setText("This is testing. Click cross button to leave.");
 	
-	/*End of Testing only*/
-
-	while (window.isOpen())
+	//the render loop
+	while (window.isOpen() && percent < 99)
 	{
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -55,12 +90,13 @@ void InGame::run()
 			if (event.type == sf::Event::Closed)
 				window.close();
 
+			
 			gui.handleEvent(event);
 		}
-		
+
 		config.cursor.update();
 
-		if (percent < 100 && clock.getElapsedTime() > sf::seconds(0.1))
+		if (clock.getElapsedTime() > sf::seconds(0.05))
 		{
 			percent++;
 			std::stringstream ss;
@@ -74,4 +110,32 @@ void InGame::run()
 		window.draw(config.cursor);
 		window.display();
 	}
+	
+	//if it is server, start server system
+	if (startInfo->type == StartInfo::TYPE::Server)
+	{
+		systemPtr = new Gameplay::ServerSystem(config);
+	}
+	else //else it is client, start client system
+	{
+		//systemPtr = new Gameplay::ClientSystem();
+	}
+
+	//create network and interface which is pointing to the game system
+	networkPtr = new Gameplay::GameNetwork(systemPtr);
+		
+	systemPtr->setNetworkPtr(networkPtr);
+
+	interfacePtr = new Gameplay::GameInterface(systemPtr);
+
+	if (startInfo->type == StartInfo::TYPE::Server)
+	{
+		//send ready signal to every player
+		//...
+	}
+	else //if it is a client
+	{
+		//wait for server's signal
+	}
 }
+

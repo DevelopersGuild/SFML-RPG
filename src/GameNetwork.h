@@ -2,6 +2,8 @@
 #define GameNetwork_h
 
 #include "GameSystem.h"
+#include "Connection.h"
+#include <SFML/Network.hpp>
 
 namespace Gameplay
 {
@@ -12,9 +14,14 @@ namespace Gameplay
 	class GameNetwork
 	{
 	private:
-		//Gameplay::GameSystem& system;	//the network call system's function
+		GameSystem* system;	//the network call system's function
+		Connection connection;
 	public:
+		GameNetwork(GameSystem* system);
+		sf::Socket::Status send(sf::IpAddress& ip, sf::Packet& packet);
 
+		//get and implement the incoming packet
+		void update();
 	};
 }
 

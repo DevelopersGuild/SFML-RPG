@@ -175,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Character.h" />
+    <ClInclude Include="..\..\src\ClientSystem.h" />
     <ClInclude Include="..\..\src\Configuration.h" />
     <ClInclude Include="..\..\src\Connection.h" />
     <ClInclude Include="..\..\src\Cursor.h" />
@@ -187,9 +188,11 @@
     <ClInclude Include="..\..\src\Item.h" />
     <ClInclude Include="..\..\src\Lobby.h" />
     <ClInclude Include="..\..\src\Menu.h" />
+    <ClInclude Include="..\..\src\Player.h" />
     <ClInclude Include="..\..\src\PreMenu.h" />
     <ClInclude Include="..\..\src\ResourceManager.h" />
     <ClInclude Include="..\..\src\ResourcePath.h" />
+    <ClInclude Include="..\..\src\ServerSystem.h" />
     <ClInclude Include="..\..\src\Skill.h" />
     <ClInclude Include="..\..\src\StartInfo.h" />
     <ClInclude Include="..\..\src\Status.h" />
