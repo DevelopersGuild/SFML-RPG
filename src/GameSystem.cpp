@@ -20,7 +20,7 @@ GameSystem::GameSystem(Configuration& newConfig) :
 	//place every player in the corner of the map
 	//TBD, only testing map available
 	auto& layerVector = map.GetLayers();
-	auto& playerLayer = find_if(layerVector.begin(), layerVector.end(), [&](tmx::MapLayer& layer)
+    auto playerLayer = find_if(layerVector.begin(), layerVector.end(), [&](tmx::MapLayer& layer)
 	{
 		return layer.name == "Player";
 	});

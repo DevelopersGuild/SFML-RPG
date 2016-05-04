@@ -25,8 +25,8 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 
 	//set the character pointer to the characterObj of this map
 	//look for the event layer
-	auto& layerVector = currentMap->GetLayers();
-	auto& eventLayer = find_if(layerVector.begin(), layerVector.end(), [&](tmx::MapLayer& layer)
+	auto layerVector = currentMap->GetLayers();
+	auto eventLayer = find_if(layerVector.begin(), layerVector.end(), [&](tmx::MapLayer& layer)
 	{
 		return layer.name == "Event";
 	});
@@ -35,7 +35,7 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 		throw "not found!";	//TBD
 
 	//look for the target obj
-	auto& eventObj = find_if(eventLayer->objects.begin(), eventLayer->objects.end(), [&](tmx::MapObject& obj) {
+	auto eventObj = find_if(eventLayer->objects.begin(), eventLayer->objects.end(), [&](tmx::MapObject& obj) {
 		return obj.GetName() == locationName;
 	});
 
@@ -43,7 +43,7 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 		throw "not found!";	//TBD
 
 	//look for the player layer
-	auto& playerLayer = find_if(layerVector.begin(), layerVector.end(), [&](tmx::MapLayer& layer)
+	auto playerLayer = find_if(layerVector.begin(), layerVector.end(), [&](tmx::MapLayer& layer)
 	{
 		return layer.name == "Player";
 	});
@@ -52,7 +52,7 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 		throw "not found!";
 
 	//look for the target player
-	auto& playerObj = find_if(playerLayer->objects.begin(), playerLayer->objects.end(), [&](tmx::MapObject& obj) {
+	auto playerObj = find_if(playerLayer->objects.begin(), playerLayer->objects.end(), [&](tmx::MapObject& obj) {
 		return name == obj.GetName();
 	});
 
@@ -60,10 +60,12 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 		throw "not found!";
 
 	//set the charPtr
-	charPtr->setCharPtr(playerObj._Ptr);
+    
+	charPtr->setCharPtr(&(*playerObj));
 
 	//move the player to event position
-	charPtr->setPosition(eventObj->GetPosition());
+    sf::Vector2f eventPosition = eventObj->GetPosition();
+	charPtr->setPosition(eventPosition);
 }
 
 void Player::moveCharacter(const Character::Direction& direction)
@@ -98,7 +100,7 @@ void Player::moveCharacter(const Character::Direction& direction)
 	//3.get the object layer of the current map, will use tmx's tree later
 	auto& layer = currentMap->GetLayers();
 	
-	auto& objLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
+	auto objLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
 		return mapLayer.name == "Objects";
 	});
 
