@@ -25,6 +25,8 @@ namespace Gameplay
 		Configuration& config;
 
 		std::unique_ptr<Player> player;
+
+		//once loaded, the map cannot be changed
 		tmx::MapLoader map;
 	public:
 		GameSystem(Configuration& config);
@@ -32,12 +34,14 @@ namespace Gameplay
 		GameSystem operator=(const GameSystem&) = delete;
 		GameSystem(const GameSystem&&) = delete;
 
+		//move the player in the current map
+		void movePlayer(const Character::Direction& direction) { player->moveCharacter(direction); }
+
+		//set the network pointer to Network module
 		void setNetworkPtr(GameNetwork* ptr) { networkPtr = ptr; }
 
-		void moveCharacter(const float& x, const float& y)
-		{
-			player->moveCharacter(x, y);
-		}
+		//add the player to the target map
+		void addPlayertoMap(const std::string& mapName, const std::string& location);
 	};
 }
 #endif /* GameSystem_h */

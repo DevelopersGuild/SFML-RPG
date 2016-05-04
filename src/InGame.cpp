@@ -18,7 +18,7 @@ void InGame::run()
 {
 	sf::RenderWindow& window = config.window;
 	window.setFramerateLimit(60);
-
+	
 	while (window.isOpen())
 	{
 		//input & update phase
@@ -28,14 +28,17 @@ void InGame::run()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-			{
-				systemPtr->moveCharacter(10, 0);
-			}
-
-
 		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+			systemPtr->movePlayer(Gameplay::Character::Direction::left);
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+			systemPtr->movePlayer(Gameplay::Character::Direction::right);
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+			systemPtr->movePlayer(Gameplay::Character::Direction::down);
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+			systemPtr->movePlayer(Gameplay::Character::Direction::up);
+
 		config.cursor.update();
 
 		//rendering phase
@@ -83,6 +86,7 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 	tips->setText("This is testing. Click cross button to leave.");
 	
 	//the render loop
+	/*
 	while (window.isOpen() && percent < 99)
 	{
 		sf::Event event;
@@ -111,11 +115,12 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 		window.draw(config.cursor);
 		window.display();
 	}
-	
-	//if it is server, start server system
+	*/
+	//if it is server, start server system...TBD
+	systemPtr = new Gameplay::GameSystem(config);
 	if (startInfo->type == StartInfo::TYPE::Server)
 	{
-		systemPtr = new Gameplay::ServerSystem(config);
+		//systemPtr = new Gameplay::ServerSystem(config);
 	}
 	else //else it is client, start client system
 	{

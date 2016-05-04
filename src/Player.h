@@ -23,24 +23,26 @@ namespace Gameplay
 
 		//the pointer to the character that controlled by this player
 		std::unique_ptr<Character> charPtr;
+
+		//the pointer to the current map
+		tmx::MapLoader* currentMap;
 	public:
-		Player(Configuration& config)
-		{
-			name = "Unnamed player";
-			charPtr.reset(new Character(config));
-		}
+		Player(Configuration& config);
 
-		Player(Configuration& config, const std::string& playerName, const std::string& charName)
-		{
-			name = playerName;
-			charPtr.reset(new Character(config, charName));
-		}
+		Player(Configuration& config, const std::string& playerName, const std::string& charName);
 
-		void moveCharacter(const float& x, const float& y){ charPtr->move(x, y);}
+		void moveCharacter(const Character::Direction& direction);
 
-		void draw(sf::RenderTarget& target, sf::RenderStates states) const
-		{
-			target.draw(*charPtr);
-		}
+		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+		void setCharacterPosition(sf::Vector2f& position) { charPtr->setPosition(position); }
+
+		const sf::Vector2f& getPosition() { return charPtr->getPosition(); }
+
+		const std::string& getName() { return name; }
+
+		void changeMap(tmx::MapLoader* map, const std::string location);
+
+		tmx::MapLoader* getMap() { return currentMap; }
 	};
 }

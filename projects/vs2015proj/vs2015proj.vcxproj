@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Character.cpp" />
     <ClCompile Include="..\..\src\Configuration.cpp" />
     <ClCompile Include="..\..\src\Connection.cpp" />
     <ClCompile Include="..\..\src\Cursor.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="..\..\src\Lobby.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\Menu.cpp" />
+    <ClCompile Include="..\..\src\Player.cpp" />
     <ClCompile Include="..\..\src\PreMenu.cpp" />
     <ClCompile Include="..\..\src\ResourcePathWindows.cpp" />
     <ClCompile Include="..\..\src\StartInfo.cpp" />
