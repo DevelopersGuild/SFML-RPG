@@ -1,4 +1,7 @@
 #include "Lobby.h"
+
+using namespace sf;
+using namespace std;
 /*
 constructor for server's version
 */
@@ -55,6 +58,8 @@ Lobby::~Lobby()
 }
 void Lobby::initialize()
 {
+	//Music& test = config.musMan.get("Theme1.ogg");
+
 	panel = std::make_shared<tgui::Panel>();
 	panel->setSize(822, 614);
 	panel->setPosition(102, 77);
@@ -63,14 +68,18 @@ void Lobby::initialize()
 	backButton = std::make_shared<tgui::Button>();
 	panel->add(backButton);
 	backButton->setText("Back");
-	backButton->setPosition(65, 542);
+	backButton->setPosition(65, 546);
 
 	startButton = std::make_shared<tgui::Button>();
 	panel->add(startButton);
 	startButton->setText("Start");
 	startButton->setPosition(571, 546);
 	startButton->connect("mousereleased", [&]() {
-
+		cout << "haha" << endl;
+		
+		bgMusic = &config.musMan.get("Down1.ogg");
+		bgMusic->setLoop(true);
+		bgMusic->play();
 	});
 
 	chatBox = std::make_shared<tgui::ChatBox>();
@@ -79,45 +88,54 @@ void Lobby::initialize()
 	chatBox->setPosition(51, 323);
 	chatBox->addLine("Test");
 
-	chatInput = std::make_shared<tgui::TextBox>();
+	chatInput = std::make_shared<tgui::EditBox>();
 	panel->add(chatInput);
 	chatInput->setSize(340, 22);
 	chatInput->setPosition(51, 473);
 	chatInput->setMaximumCharacters(33);
+	chatInput->setTextSize(18);
+	chatInput->connect("ReturnKeyPressed", [&]() {
+		handleMessage();});
+	
 
 	chatInputButton = std::make_shared<tgui::Button>();
 	panel->add(chatInputButton);
 	chatInputButton->setSize(34, 22);
 	chatInputButton->setPosition(357, 473);
 	chatInputButton->setText("send");
-	chatInputButton->connect("mousereleased", [&]() {
-		std::string str = chatInput->getText();
-		if (str != "")
-		{
-			str = config.player_name + " : " + chatInput->getText();
 
-			chatBox->addLine(str);
-			chatInput->setText("");
-			if (type == TYPE::server)
-			{
-				//boardcast the message to every player
-				for (auto& playerPtr : playerList)
-				{
-					sf::IpAddress ip = playerPtr->getIP();
-					sf::Packet packet;
-					packet << "lobby_message";
-					packet << str;
-					connection.send(ip, packet);
-				}
-			}			
-			else
-			{
-				sf::Packet packet;
-				packet << "lobby_message";
-				packet << str;
-				connection.send(serverIP, packet);
-			}
-		}
+	//chatInputButton->connect("keyReleased", [&]() {
+	//	std::string str = chatInput->getText();
+	//	if (str != "")
+	//	{
+	//		str = config.player_name + " : " + chatInput->getText();
+
+	//		chatBox->addLine(str);
+	//		chatInput->setText("");
+	//		if (type == TYPE::server)
+	//		{
+	//			//boardcast the message to every player
+	//			for (auto& playerPtr : playerList)
+	//			{
+	//				sf::IpAddress ip = playerPtr->getIP();
+	//				sf::Packet packet;
+	//				packet << "lobby_message";
+	//				packet << str;
+	//				connection.send(ip, packet);
+	//			}
+	//		}
+	//		else
+	//		{
+	//			sf::Packet packet;
+	//			packet << "lobby_message";
+	//			packet << str;
+	//			connection.send(serverIP, packet);
+	//		}
+	//	}
+	//});
+	
+	chatInputButton->connect("mouseReleased", [&]() {
+		handleMessage();
 	});
 
 	mapPicture = std::make_shared<tgui::Picture>();
@@ -139,7 +157,37 @@ void Lobby::initialize()
 		updatePlayerList();
     });
 }
+void Lobby::handleMessage()
+{
+	std::string str = chatInput->getText();
+	if (str != "" && str != "\n")
+	{
+		str = config.player_name + " : " + chatInput->getText();
 
+		chatBox->addLine(str);
+		chatInput->setText("");
+		if (type == TYPE::server)
+		{
+			//boardcast the message to every player
+			for (auto& playerPtr : playerList)
+			{
+				sf::IpAddress ip = playerPtr->getIP();
+				sf::Packet packet;
+				packet << "lobby_message";
+				packet << str;
+				connection.send(ip, packet);
+			}
+		}
+		else
+		{
+			sf::Packet packet;
+			packet << "lobby_message";
+			packet << str;
+			connection.send(serverIP, packet);
+		}
+	}
+	chatInput->setText("");
+}
 void Lobby::addTgui(tgui::Gui & gui)
 {
 	gui.add(panel);
@@ -170,6 +218,7 @@ void Lobby::update()
 		handlePacket(package);
 		connection.pop();
 	}
+
 }
 
 bool Lobby::addPlayer(std::unique_ptr<lobby::Player> playerPtr)
@@ -187,7 +236,7 @@ sf::Packet Lobby::getUpdatePacket()
 {
 	sf::Packet update;
 	update << "lobby_update";
-	sf::Int8 size = playerList.size(); //# of players
+	int size = playerList.size(); //# of players
 	update << size;	
 	for (auto& playerPtr : playerList)		//insert each player into the packet
 	{
@@ -418,7 +467,7 @@ void Lobby::updatePlayerList()
 	for (auto it = playerList.begin(); it != playerList.end(); it++)
 	{
 		auto ptr = (*it)->getPanel();
-		ptr->setPosition(10, 10 + (i - playerListPanel_scrollBar->getValue()) * 50);
+		ptr->setPosition((float)10, (float)10 + (i - playerListPanel_scrollBar->getValue()) * 50);
 		playerListPanel->add(ptr);
 		i++;
 	}
@@ -433,6 +482,7 @@ void Lobby::startGame()
         for(auto& playerPtr: playerList)
         {
             connection.send(playerPtr->getIP(), packet);
+			
         }
         done = true;
     }

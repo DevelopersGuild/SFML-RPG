@@ -53,6 +53,7 @@ namespace lobby
 		//a clock to count how much time not receviving anything from that player, TBD
 		//if no respond for cerain time, remove that player
 		sf::Clock lastReceiveClock;
+
 	public:
         Player() : name("Player"), character(lobby::Character::SilverGuy){;}
         Player(const Player&) = delete;
@@ -105,7 +106,7 @@ private:
 	tgui::Button::Ptr backButton;
 	tgui::Button::Ptr startButton;
 	tgui::ChatBox::Ptr chatBox;
-	tgui::TextBox::Ptr chatInput;
+	tgui::EditBox::Ptr chatInput;
 	tgui::Button::Ptr chatInputButton;
 	tgui::Picture::Ptr mapPicture;
     tgui::Panel::Ptr playerListPanel;
@@ -148,7 +149,13 @@ private:
 
 	//handles the incoming packet
 	void handlePacket(Package& package);
+
+	// turn on music.
+	sf::Music* bgMusic;
+	//Configuration& config;
+	
 public:
+	/// why constructor = delete ???
 	Lobby() = delete;
 	Lobby(const Lobby&) = delete;
 	Lobby operator=(const Lobby&) = delete;
@@ -197,4 +204,6 @@ public:
     
     //is the game ready to start?
     bool isDone(){return done;}
+
+	void handleMessage();
 };

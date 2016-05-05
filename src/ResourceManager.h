@@ -46,7 +46,7 @@ T& ResourceManager<T>::get(const std::string& str)
 	{
 		std::unique_ptr<T> ptr(new T);
 
-		if (!ptr->loadFromFile(resourcePath() + "Texture/" + str))
+		if (!ptr->loadFromFile(resourcePath() + "Texture/" + str ))
 		{
 			throw "Not found!";	//handle exception...to be changed
 		}

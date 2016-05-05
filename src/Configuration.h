@@ -33,6 +33,8 @@ public:
 
 	//the game window
 	sf::RenderWindow window;
+	// variable to change music.
+	sf::Music *bgMusic;
 
 	//the cursor of the game
 	Cursor cursor;

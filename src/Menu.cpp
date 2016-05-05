@@ -1,7 +1,10 @@
 #include "Menu.h"
+using namespace std;
+// this is constructor.
 Menu::Menu(Configuration & newConfig) :
 	config(newConfig),
 	gui(config.window)
+	/// : ???
 {
 	/*
 	initialize the menu state
@@ -26,6 +29,7 @@ Menu::Menu(Configuration & newConfig) :
 
 	state_getUserName.confirm->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
+		//config.player_name->connect("mousereleased", [&]() {state_getUserName.textBox->setText("")});
 		config.player_name = state_getUserName.textBox->getText();
 		toMainMenu();
 	});
@@ -84,12 +88,20 @@ Menu::Menu(Configuration & newConfig) :
 
 	state_modeChoice.server->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
+		// change the music.
+		bgMusic->stop();
+		bgMusic = &config.musMan.get("Theme1.ogg");
+		bgMusic->setLoop(true);
+		bgMusic->play();
 		toLobby();
 	});
 
 	state_modeChoice.back->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
+	
+
 		toMainMenu();
+		
 	});
 
 	/*
@@ -99,6 +111,7 @@ Menu::Menu(Configuration & newConfig) :
 
 	state_connect.backButton->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
+		
 		tomodeChoice();
 	});
 
@@ -111,6 +124,11 @@ Menu::Menu(Configuration & newConfig) :
 		tryConnect();
 		if (lobbyPtr)
 		{
+			// change the music.
+			bgMusic->stop();
+			bgMusic = &config.musMan.get("Theme1.ogg");
+			bgMusic->setLoop(true);
+			bgMusic->play();
 			toLobby();
 		}
 		else
@@ -127,8 +145,14 @@ Menu::Menu(Configuration & newConfig) :
 
 	state_connecting.backButton->connect("mousereleased", [&](){
 		config.soundMan.get("Decision2.ogg").play();
+		// change music.
+		bgMusic->stop();
+		bgMusic = &config.musMan.get("Down1.ogg");
+		bgMusic->setLoop(true);
+		bgMusic->play();
 		toConnect();
 		state_connecting.text->setText("Connecting...");
+		/// hide vs show ???
 		state_connecting.backButton->hide();
 	});
     
@@ -141,7 +165,7 @@ std::unique_ptr<StartInfo> Menu::run()
 
 	toGetUserName();
 
-	bgMusic = &config.musMan.get("Theme1.ogg");
+	bgMusic = &config.musMan.get("Down1.ogg");
 	bgMusic->setLoop(true);
 	bgMusic->play();
 
@@ -161,9 +185,11 @@ std::unique_ptr<StartInfo> Menu::run()
 		if (state == Menu::STATE::multiplayer_lobby)
 		{
 			lobbyPtr->update();
+
             done = lobbyPtr->isDone();
 		}
 
+		
 		window.clear();
 		draw();
 		window.display();
@@ -218,7 +244,8 @@ void Menu::toConnect()
 	state = STATE::connect;
 	gui.add(state_connect.panel);
 	state_connect.panel->hide();
-	state_connect.panel->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds(0.2));
+	state_connect.panel->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds((float)0.2));
+	gui.add(titlePic);
 }
 
 void Menu::toConnecting()
@@ -226,32 +253,61 @@ void Menu::toConnecting()
 	gui.removeAllWidgets();
 	state = STATE::connecting;
 	gui.add(state_connecting.panel);
+	gui.add(titlePic);
 }
 
 void Menu::toLobby()
 {
+	/*bgmusic->stop();
+	bgmusic = &config.musman.get("theme1.ogg");
+	bgmusic->setloop(true);
+	bgmusic->play();*/
+	
+
 	gui.removeAllWidgets();
+	// kingdom shadow.
+	titlePic = std::make_shared<tgui::Picture>();
+	titlePic->setTexture(config.texMan.get("title.png"));
+	titlePic->setPosition(0, 0);
+	titlePic->setSize(600, 150);
+	gui.add(titlePic);
+
 	state = STATE::multiplayer_lobby;
 	//if lobbyPtr is NULL, that means it is server
 	if (!lobbyPtr)
 	{
 		lobbyPtr.reset(new Lobby(config));
 	}
-
+	
 	lobbyPtr->addTgui(gui);
 	lobbyPtr->hide();
-	lobbyPtr->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds(0.3));
+
+	/// WHAT IS THIS ???
+	lobbyPtr->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds((float)0.3));
 	lobbyPtr->connectBackButton("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
 		lobbyPtr.reset();
+		// change music.
+		bgMusic->stop();
+		bgMusic = &config.musMan.get("Down1.ogg");
+		bgMusic->setLoop(true);
+		bgMusic->play();
 		tomodeChoice();
 	});
 
 	lobbyPtr->connectStartButton("mousereleased", [&]() {
+		// why no music?
+		bgMusic->stop();
+
+		/*bgMusic = &config.musMan.get("Down1.ogg");
+		bgMusic->setLoop(true);
+		bgMusic->play();*/
+
         lobbyPtr->startGame();
 	});
+	/// should change the music in this state.
 }
-
+/// what is this function ???
 void Menu::tryConnect()
 {
 	sf::IpAddress ip(state_connect.IPBox->getText());

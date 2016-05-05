@@ -145,6 +145,7 @@ private:
     //for launching the game
     bool done;
 public:
+	// why delete Menu?
 	Menu() = delete;
 	Menu(const Menu&) = delete;
 	Menu operator=(const Menu&) = delete;

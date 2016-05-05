@@ -1,0 +1,162 @@
+//
+//  ResourceManager.h
+//  RPGProject
+//
+//  Created by macbook on 2/24/16.
+//  Copyright © 2016 De Anza College Developers' Guild. All rights reserved.
+//
+
+#ifndef ResourceManager_h
+#define ResourceManager_h
+
+#include <memory>
+#include <map>
+#include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include "ResourcePath.h"
+
+template<class T>
+class ResourceManager
+{
+private:
+    std::map<std::string, std::unique_ptr<T>> _Map;
+public:
+    ResourceManager();
+	ResourceManager(const ResourceManager&) = delete;
+	ResourceManager operator=(const ResourceManager&) = delete;
+
+	T& get(const std::string&);
+};
+
+template<class T>
+ResourceManager<T>::ResourceManager()
+{
+
+}
+
+template<class T>
+T& ResourceManager<T>::get(const std::string& str)
+{
+	auto it = _Map.find(str);
+	if (it != _Map.end())
+	{
+		return *it->second;
+	}	
+	else
+	{
+		std::unique_ptr<T> ptr(new T);
+
+		if (!ptr->loadFromFile(resourcePath() + "Texture/" + str))
+		{
+			throw "Not found!";	//handle exception...to be changed
+		}
+
+		_Map.emplace(str, std::move(ptr));
+
+		return *_Map[str];
+	}
+}
+
+template<>
+class ResourceManager<sf::Music>
+{
+private:
+	std::map<std::string, std::unique_ptr<sf::Music>> _Map;
+	float musicVolume;
+public:
+	ResourceManager(){musicVolume = 100.f;}
+	ResourceManager(const ResourceManager&) = delete;
+	ResourceManager operator=(const ResourceManager&) = delete;
+
+	sf::Music& get(const std::string& str)
+	{
+		auto it = _Map.find(str);
+		if (it != _Map.end())
+		{
+			return *it->second;
+		}
+		else
+		{
+			std::unique_ptr<sf::Music> ptr(new sf::Music);
+
+			if (!ptr->openFromFile(resourcePath() + "Music/" + str))
+			{
+				throw "Not found!";	//handle exception...to be changed
+			}
+
+			_Map.emplace(str, std::move(ptr));
+
+			return *_Map[str];
+		}
+	}
+
+	//set the global music volume
+	void setVolume(float num)
+	{
+		if (num >= 0 && num <= 100)
+		{
+			musicVolume = num;
+			for (auto it = _Map.begin(); it != _Map.end(); it++)
+			{
+				it->second->setVolume(num);
+			}
+		}
+	}
+
+	//get the global music volume
+	float getVolume() { return musicVolume; }
+};
+
+template<>
+class ResourceManager<sf::Sound>
+{
+private:
+	std::map<std::string, std::unique_ptr<sf::Sound>> _Map;
+	std::map<std::string, sf::SoundBuffer> _bufMap;
+	float soundVolume;
+public:
+	ResourceManager() { soundVolume = 100.f; }
+	ResourceManager(const ResourceManager&) = delete;
+	ResourceManager operator=(const ResourceManager&) = delete;
+
+	sf::Sound& get(const std::string& str)
+	{
+		auto it = _Map.find(str);
+		if (it != _Map.end())
+		{
+			return *it->second;
+		}
+		else
+		{
+			sf::SoundBuffer sbuf;
+			if (!sbuf.loadFromFile(resourcePath() + "sounds/" + str))
+			{
+				throw "Not found!";	//handle exception...to be changed
+			}
+
+			_bufMap.emplace(str, std::move(sbuf));
+			std::unique_ptr<sf::Sound> ptr(new sf::Sound);
+			ptr->setBuffer(_bufMap[str]);
+			_Map.emplace(str, std::move(ptr));
+
+			return *_Map[str];
+		}
+	}
+
+	//set the global volume of sounds
+	void setVolume(float num)
+	{
+		if (num >= 0 && num <= 100)
+		{
+			soundVolume = num;
+			for (auto it = _Map.begin(); it != _Map.end(); it++)
+			{
+				it->second->setVolume(num);
+			}
+		}
+	}
+
+	//get the global volume of sounds
+	float getVolume() { return soundVolume; }
+};
+#endif /* ResourceManager_h */
