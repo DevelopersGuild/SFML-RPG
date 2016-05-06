@@ -13,7 +13,7 @@ namespace Gameplay
 	class Player : public sf::Drawable
 	{
 	private:
-		//the name of the player(not character)
+		//the name of the player
 		std::string name;
 
 		//a vector of items

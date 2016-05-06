@@ -86,7 +86,6 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 	tips->setText("This is testing. Click cross button to leave.");
 	
 	//the render loop
-	/*
 	while (window.isOpen() && percent < 99)
 	{
 		sf::Event event;
@@ -95,7 +94,6 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 			if (event.type == sf::Event::Closed)
 				window.close();
 
-			
 			gui.handleEvent(event);
 		}
 
@@ -115,7 +113,7 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 		window.draw(config.cursor);
 		window.display();
 	}
-	*/
+	
 	//if it is server, start server system...TBD
 	systemPtr = new Gameplay::GameSystem(config);
 	if (startInfo->type == StartInfo::TYPE::Server)

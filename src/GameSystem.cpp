@@ -11,7 +11,7 @@ GameSystem::GameSystem(Configuration& newConfig) :
 {
 	//create the player
 	//TBD, players should be in the std::map
-	player.reset(new Player(config, config.player_name, "asdf"));
+	player.reset(new Player(config, config.player_name, config.player_name));
 
 	//load the map
 	//TBD, load every map needed

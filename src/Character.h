@@ -39,9 +39,9 @@ namespace Gameplay
 		Configuration& config;
 
 		//the pointer to playerObj in the map
-		tmx::MapObject* mapCharPtr;
+		std::vector<tmx::MapLayer>* mapCharPtr;
 
-		//the name of the character(not player)
+		//the name of the character
 		std::string name;
 
 		//Character's HP
@@ -71,6 +71,8 @@ namespace Gameplay
 		SpriteList leftList;
 		SpriteList rightList;
 		SpriteList downList;
+
+		tmx::MapObject* findThisCharacter();
 	public:
 		Character(Configuration& newConfig);
 
@@ -88,9 +90,9 @@ namespace Gameplay
 
 		const sf::Vector2f& getPosition() { return sprite.getPosition(); }
 
-		void setCharPtr(tmx::MapObject* ptr) { mapCharPtr = ptr; }
+		void setCharLayer(std::vector<tmx::MapLayer>* ptr) { mapCharPtr = ptr; }
 
-		sf::FloatRect getAABB() { return mapCharPtr->GetAABB(); }
+		sf::FloatRect getAABB();
 	};
 }
 #endif

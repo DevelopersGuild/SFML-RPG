@@ -61,7 +61,7 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 
 	//set the charPtr
     
-	charPtr->setCharPtr(&(*playerObj));
+	charPtr->setCharLayer(&currentMap->GetLayers());
 
 	//move the player to event position
     sf::Vector2f eventPosition = eventObj->GetPosition();

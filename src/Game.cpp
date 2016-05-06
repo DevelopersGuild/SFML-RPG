@@ -2,19 +2,19 @@
 
 Game::Game()
 {
-	//when the game starts, the state is preMenu.
+	// when the game starts, the state is preMenu.
 	states = GAME_STATES::preMenu;
 }
 
 void Game::start() 
 {
+	// unique pointer.
 	std::unique_ptr<PreMenu> preMenu(new PreMenu(config));
 	preMenu->run();
 	preMenu.reset();
 
-	//do
-	//{
 	std::unique_ptr<Menu> menu(new Menu(config));
+	// return information of characters.
 	std::unique_ptr<StartInfo> startInfo = menu->run();
 	menu.reset();
 

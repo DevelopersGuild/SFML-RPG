@@ -3,7 +3,7 @@
 //  RPGProject
 //
 //  Created by macbook on 2/24/16.
-//  Copyright Â© 2016 De Anza College Developers' Guild. All rights reserved.
+//  Copyright © 2016 De Anza College Developers' Guild. All rights reserved.
 //
 
 #ifndef ResourceManager_h
@@ -46,7 +46,7 @@ T& ResourceManager<T>::get(const std::string& str)
 	{
 		std::unique_ptr<T> ptr(new T);
 
-		if (!ptr->loadFromFile(resourcePath() + "Texture/" + str ))
+		if (!ptr->loadFromFile(resourcePath() + "Texture/" + str))
 		{
 			throw "Not found!";	//handle exception...to be changed
 		}

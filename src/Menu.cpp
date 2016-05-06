@@ -1,4 +1,6 @@
 #include "Menu.h"
+
+// this is constructor.
 Menu::Menu(Configuration & newConfig) :
 	config(newConfig),
 	gui(config.window)
@@ -26,6 +28,7 @@ Menu::Menu(Configuration & newConfig) :
 
 	state_getUserName.confirm->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
+		//config.player_name->connect("mousereleased", [&]() {state_getUserName.textBox->setText("")});
 		config.player_name = state_getUserName.textBox->getText();
 		toMainMenu();
 	});
@@ -89,7 +92,7 @@ Menu::Menu(Configuration & newConfig) :
 
 	state_modeChoice.back->connect("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
-		toMainMenu();
+		toMainMenu();		
 	});
 
 	/*
@@ -129,6 +132,7 @@ Menu::Menu(Configuration & newConfig) :
 		config.soundMan.get("Decision2.ogg").play();
 		toConnect();
 		state_connecting.text->setText("Connecting...");
+		/// hide vs show ???
 		state_connecting.backButton->hide();
 	});
     
@@ -141,7 +145,7 @@ std::unique_ptr<StartInfo> Menu::run()
 
 	toGetUserName();
 
-	bgMusic = &config.musMan.get("Theme1.ogg");
+	bgMusic = &config.musMan.get("Down1.ogg");
 	bgMusic->setLoop(true);
 	bgMusic->play();
 
@@ -161,6 +165,7 @@ std::unique_ptr<StartInfo> Menu::run()
 		if (state == Menu::STATE::multiplayer_lobby)
 		{
 			lobbyPtr->update();
+
             done = lobbyPtr->isDone();
 		}
 
@@ -218,7 +223,8 @@ void Menu::toConnect()
 	state = STATE::connect;
 	gui.add(state_connect.panel);
 	state_connect.panel->hide();
-	state_connect.panel->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds(0.2));
+	state_connect.panel->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds((float)0.2));
+	gui.add(titlePic);
 }
 
 void Menu::toConnecting()
@@ -226,21 +232,30 @@ void Menu::toConnecting()
 	gui.removeAllWidgets();
 	state = STATE::connecting;
 	gui.add(state_connecting.panel);
+	gui.add(titlePic);
 }
 
 void Menu::toLobby()
 {
 	gui.removeAllWidgets();
+	// kingdom shadow.
+	titlePic = std::make_shared<tgui::Picture>();
+	titlePic->setTexture(config.texMan.get("title.png"));
+	titlePic->setPosition(0, 0);
+	titlePic->setSize(600, 150);
+	gui.add(titlePic);
+
 	state = STATE::multiplayer_lobby;
 	//if lobbyPtr is NULL, that means it is server
 	if (!lobbyPtr)
 	{
 		lobbyPtr.reset(new Lobby(config));
 	}
-
+	
 	lobbyPtr->addTgui(gui);
 	lobbyPtr->hide();
-	lobbyPtr->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds(0.3));
+
+	lobbyPtr->showWithEffect(tgui::ShowAnimationType::Fade, sf::seconds((float)0.3));
 	lobbyPtr->connectBackButton("mousereleased", [&]() {
 		config.soundMan.get("Decision2.ogg").play();
 		lobbyPtr.reset();
@@ -251,6 +266,7 @@ void Menu::toLobby()
         lobbyPtr->startGame();
 	});
 }
+
 
 void Menu::tryConnect()
 {
