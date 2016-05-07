@@ -24,7 +24,6 @@ void Gameplay::GameInterface::draw()
 	window.draw(system->map);
 	window.draw(*system->player);
 	gui.draw();
-	std::cout << transitionRect->getPosition().x << " "<< transitionRect->getPosition().y << std::endl;
 	//debug
 	//system->map.Draw(system->config.window, tmx::MapLayer::DrawType::Debug, true);
 }
@@ -37,7 +36,7 @@ void Gameplay::GameInterface::setTransition()
 
 	transitionRect->showWithEffect(tgui::ShowAnimationType::SlideFromRight, sf::seconds(0.2));
 
-	//render loop to make sure setTransition is not called again in 0.2s
+	//render loop to make sure Transition animation is not called again in 0.2s
 	sf::Clock clock;
 	sf::RenderWindow& window = system->config.window;
 	while (clock.getElapsedTime() < sf::seconds(0.2))
@@ -52,7 +51,7 @@ void Gameplay::GameInterface::exitTransition()
 {
 	transitionRect->hideWithEffect(tgui::ShowAnimationType::SlideToLeft, sf::seconds(0.2));
 
-	//render loop to make sure setTransition is not called again in 0.2s
+	//render loop to make sure Transition animation is not called again in 0.2s
 	sf::Clock clock;
 	sf::RenderWindow& window = system->config.window;
 	while (clock.getElapsedTime() < sf::seconds(0.2))

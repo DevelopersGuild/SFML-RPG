@@ -31,16 +31,22 @@ namespace Gameplay
 
 		Player(Configuration& config, const std::string& playerName, const std::string& charName);
 
+		//move Character
 		void moveCharacter(const Character::Direction& direction);
 
+		//draw the character on the screen
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
+		//set the position of the character
 		void setCharacterPosition(sf::Vector2f& position) { charPtr->setPosition(position); }
 
+		//get the position of the character
 		const sf::Vector2f& getPosition() { return charPtr->getPosition(); }
 
+		//get the name of the character
 		const std::string& getName() { return name; }
 
+		//reset the map pointer of character and place the character at certain location.
 		void changeMap(tmx::MapLoader* map, const std::string location);
 
 		tmx::MapLoader* getMap() { return currentMap; }

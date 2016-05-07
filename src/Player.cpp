@@ -4,12 +4,14 @@ using namespace Gameplay;
 Player::Player(Configuration& config)
 {
 	name = "Unnamed player";
+	currentMap = nullptr;
 	charPtr.reset(new Character(config));
 }
 
 Player::Player(Configuration& config, const std::string& playerName, const std::string& charName)
 {
 	name = playerName;
+	currentMap = nullptr;
 	charPtr.reset(new Character(config, charName));
 }
 
@@ -20,6 +22,11 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locationName)
 {
+	//if the character is already in another map, put the character at invisible place(-50,-50)
+	if (currentMap != nullptr)
+	{
+		charPtr->setPosition(sf::Vector2f(-50,-50));
+	}
 	//change pointer to the new map
 	currentMap = map;
 

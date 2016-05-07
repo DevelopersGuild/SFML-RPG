@@ -325,3 +325,4 @@ fastlane/screenshots
 *.out
 *.app
 *.idb
+projects/vs2015proj/vs2015proj.VC.db

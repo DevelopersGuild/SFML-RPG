@@ -238,7 +238,6 @@ void Menu::toConnecting()
 void Menu::toLobby()
 {
 	gui.removeAllWidgets();
-	// kingdom shadow.
 	titlePic = std::make_shared<tgui::Picture>();
 	titlePic->setTexture(config.texMan.get("title.png"));
 	titlePic->setPosition(0, 0);
