@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="99">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="101">
  <tileset firstgid="1" name="desert" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48">
   <image source="tmw_desert_spacing.png" trans="ff00ff" width="265" height="199"/>
   <terraintypes>
@@ -63,16 +63,25 @@
   <object id="83" x="448" y="96" width="32" height="32"/>
   <object id="84" x="384" y="64" width="32" height="32"/>
   <object id="85" x="384" y="160" width="32" height="32"/>
-  <object id="86" x="352" y="192" width="32" height="32"/>
   <object id="87" x="224" y="192" width="32" height="32"/>
   <object id="88" x="192" y="160" width="32" height="32"/>
   <object id="89" x="192" y="64" width="32" height="32"/>
+  <object id="100" x="352" y="192" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Player">
   <object id="98" name="dummy" x="-96" y="-96" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Event">
-  <object id="93" name="event_end" type="event" x="256" y="0" width="96" height="32"/>
+  <object id="93" name="to_Test2.tmx" type="teleport" x="256" y="0" width="96" height="32">
+   <properties>
+    <property name="destination" value="Test2.tmx"/>
+   </properties>
+  </object>
   <object id="94" name="event_start" x="288" y="320" width="32" height="32"/>
+  <object id="99" name="sign_Test" type="dialogue" x="352" y="192" width="32" height="32">
+   <properties>
+    <property name="content" value="Hello world!"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

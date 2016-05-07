@@ -42,6 +42,7 @@ namespace Gameplay
 
 		//add the player to the target map
 		void addPlayertoMap(const std::string& mapName, const std::string& location);
+
 	};
 }
 #endif /* GameSystem_h */

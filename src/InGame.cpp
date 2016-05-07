@@ -28,6 +28,8 @@ void InGame::run()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
+
+			interfacePtr->updateGUI(event);
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
@@ -37,14 +39,14 @@ void InGame::run()
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
 			systemPtr->movePlayer(Gameplay::Character::Direction::down);
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-			systemPtr->movePlayer(Gameplay::Character::Direction::up);
+			systemPtr->movePlayer(Gameplay::Character::Direction::up);		
 
 		config.cursor.update();
 
 		//rendering phase
 		window.clear();
-		window.draw(*interfacePtr);
-		window.draw(config.cursor);
+		interfacePtr->draw();
+		//window.draw(config.cursor);
 		window.display();
 	}
 }

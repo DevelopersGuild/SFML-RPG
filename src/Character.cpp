@@ -18,6 +18,9 @@ tmx::MapObject* Gameplay::Character::findThisCharacter()
 		if (player.GetName() == name)
 			return &player;
 	}
+
+	//player not found, throw exception
+	throw "player not found!";
 }
 
 Character::Character(Configuration& newConfig) : config(newConfig)

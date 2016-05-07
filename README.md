@@ -1,2 +1,2 @@
-# C++ game
-A RPG project in Winter 2016
+# Shadow Kingdom
+A C++ RPG project in Spring 2016

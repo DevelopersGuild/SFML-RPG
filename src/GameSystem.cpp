@@ -15,7 +15,7 @@ GameSystem::GameSystem(Configuration& newConfig) :
 
 	//load the map
 	//TBD, load every map needed
-	map.Load("test.tmx");
+	map.Load("Test2.tmx");
 	
 	//place every player in the corner of the map
 	//TBD, only testing map available
@@ -40,7 +40,7 @@ GameSystem::GameSystem(Configuration& newConfig) :
 	playerObj.SetName(player->getName());
 
 	playerLayer->objects.push_back(std::move(playerObj));
-	addPlayertoMap("test.tmx", "event_start");
+	addPlayertoMap("Test1.tmx", "event_start");
 }
 
 void Gameplay::GameSystem::addPlayertoMap(const std::string & mapName, const std::string & locationName)
