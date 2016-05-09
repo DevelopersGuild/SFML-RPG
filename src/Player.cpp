@@ -75,7 +75,7 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 	charPtr->setPosition(eventPosition);
 }
 
-void Player::moveCharacter(const Character::Direction& direction)
+tmx::MapObject* Player::moveCharacter(const Character::Direction& direction)
 {
 	//collision Test
 	//1.create a temporary float rect from player's rect
@@ -130,5 +130,23 @@ void Player::moveCharacter(const Character::Direction& direction)
 	}	
 
 	//6.perform the event check
-	//...TBD
+	//go to event layer
+	auto eventLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
+		return mapLayer.name == "Event";
+	});
+
+	if (eventLayer == layer.end())
+		throw "not found!";
+	
+	//if the player collides with any event object, return that object
+	auto eventObject = find_if(eventLayer->objects.begin(), eventLayer->objects.end(), [&](tmx::MapObject& obj) {
+		return obj.GetAABB().intersects(charPtr->getAABB());
+	});
+	
+	//7.return mapObjects pointer
+	//if not found, return nullptr. If found, return pointer to mapObject
+	if (eventObject == eventLayer->objects.end())
+		return nullptr;
+	else
+		return &(*eventObject);
 }

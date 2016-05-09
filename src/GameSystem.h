@@ -21,6 +21,7 @@ namespace Gameplay
 		friend GameInterface;
 	private:
 		GameNetwork* networkPtr;
+		GameInterface* interfacePtr;
 	protected:
 		Configuration& config;
 
@@ -35,13 +36,19 @@ namespace Gameplay
 		GameSystem(const GameSystem&&) = delete;
 
 		//move the player in the current map
-		void movePlayer(const Character::Direction& direction) { player->moveCharacter(direction); }
+		void movePlayer(const Character::Direction& direction);
 
 		//set the network pointer to Network module
 		void setNetworkPtr(GameNetwork* ptr) { networkPtr = ptr; }
 
+		//set the interface pointer to Interface module
+		void setInterfacePtr(GameInterface* ptr) { interfacePtr = ptr; }
+
 		//add the player to the target map
 		void addPlayertoMap(const std::string& mapName, const std::string& location);
+
+		//handle game events
+		void handleGameEvent(tmx::MapObject* eventObject);
 
 	};
 }

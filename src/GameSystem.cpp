@@ -1,5 +1,6 @@
 #include "GameSystem.h"
 #include "GameNetwork.h"
+#include "GameInterface.h"
 #include "ResourcePath.h"
 #include <algorithm>
 
@@ -15,7 +16,7 @@ GameSystem::GameSystem(Configuration& newConfig) :
 
 	//load the map
 	//TBD, load every map needed
-	map.Load("Test2.tmx");
+	map.Load("test.tmx");
 	
 	//place every player in the corner of the map
 	//TBD, only testing map available
@@ -43,10 +44,36 @@ GameSystem::GameSystem(Configuration& newConfig) :
 	addPlayertoMap("Test1.tmx", "event_start");
 }
 
+void Gameplay::GameSystem::movePlayer(const Character::Direction & direction)
+{
+	tmx::MapObject* eventObject = player->moveCharacter(direction);
+
+	//if pointer points to a event object, handle event
+	if (eventObject)
+	{
+		handleGameEvent(eventObject);
+	}
+}
+
 void Gameplay::GameSystem::addPlayertoMap(const std::string & mapName, const std::string & locationName)
 {
 	//mapName TBD
 	//...
 
 	player->changeMap(&map, locationName);
+}
+
+void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
+{
+	//Test only
+	if (eventObject->GetType() == "dialogue")
+	{
+		std::cout << "Test dialogue: " << eventObject->GetPropertyString("content") << std::endl;
+	}
+	else if (eventObject->GetType() == "teleport")
+	{
+		std::cout << "Test dialogue: " << eventObject->GetPropertyString("destination") << std::endl;
+		interfacePtr->setTransition();
+		interfacePtr->exitTransition();
+	}
 }

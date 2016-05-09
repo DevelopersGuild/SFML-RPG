@@ -31,8 +31,11 @@ namespace Gameplay
 
 		Player(Configuration& config, const std::string& playerName, const std::string& charName);
 
-		//move Character
-		void moveCharacter(const Character::Direction& direction);
+		/*
+		move Character
+		return pointer to the eventObject on the map, return null is no event found.
+		*/
+		tmx::MapObject* moveCharacter(const Character::Direction& direction);
 
 		//draw the character on the screen
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const;

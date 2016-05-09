@@ -134,6 +134,8 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 
 	interfacePtr = new Gameplay::GameInterface(systemPtr);
 
+	systemPtr->setInterfacePtr(interfacePtr);
+
 	if (startInfo->type == StartInfo::TYPE::Server)
 	{
 		//send ready signal to every player
