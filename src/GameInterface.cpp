@@ -4,11 +4,9 @@ using namespace Gameplay;
 GameInterface::GameInterface(GameSystem* newSystem) :
 	system(newSystem)
 {
-	sf::RenderWindow& window = system->config.window;
 	camera.setSize(500, 375);
 
 	//initialize the transitionRect
-	//transitionRect.setFillColor(sf::Color::Black);
 	gui.setWindow(system->config.window);
 	transitionRect = std::make_shared<tgui::Panel>();
 	gui.add(transitionRect);

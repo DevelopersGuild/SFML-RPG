@@ -29,6 +29,12 @@ void InGame::run()
 			if (event.type == sf::Event::Closed)
 				window.close();
 
+            if(event.type == sf::Event::KeyPressed)
+            {
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+                    systemPtr->interact();
+            }
+            
 			interfacePtr->updateGUI(event);
 		}
 
@@ -39,7 +45,7 @@ void InGame::run()
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
 			systemPtr->movePlayer(Gameplay::Character::Direction::down);
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-			systemPtr->movePlayer(Gameplay::Character::Direction::up);		
+			systemPtr->movePlayer(Gameplay::Character::Direction::up);
 
 		config.cursor.update();
 

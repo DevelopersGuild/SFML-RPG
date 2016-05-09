@@ -123,11 +123,11 @@ tmx::MapObject* Player::moveCharacter(const Character::Direction& direction)
 			collided = true;
 	}
 
-	//5.if no collision, move the player
+	//5.if no collision, move the player. if collision, just change the direction
 	if (!collided)
-	{
 		charPtr->move(direction);
-	}	
+    else
+        charPtr->setDirection(direction);
 
 	//6.perform the event check
 	//go to event layer
@@ -149,4 +149,55 @@ tmx::MapObject* Player::moveCharacter(const Character::Direction& direction)
 		return nullptr;
 	else
 		return &(*eventObject);
+}
+
+tmx::MapObject* Gameplay::Player::interact()
+{
+    tmx::MapObject* temp = nullptr;
+    Character::Direction direction = charPtr->getDirection();
+    
+    //1.create a temporary float rect from player's rect
+    sf::FloatRect charRect = charPtr->getAABB();
+    
+    //2.slightly move the charRect along the character's direction
+    switch (direction)
+    {
+        case Character::Direction::up:
+            charRect.top -= 5;
+            break;
+        case Character::Direction::down:
+            charRect.top += 5;
+            break;
+        case Character::Direction::left:
+            charRect.left -= 5;
+            break;
+        case Character::Direction::right:
+            charRect.left += 5;
+            break;
+        default:
+            ;
+    }
+    
+    //3.perform event check
+    //go to event layer
+    auto& layer = currentMap->GetLayers();
+    auto eventLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
+        return mapLayer.name == "Event";
+    });
+    
+    if (eventLayer == layer.end())
+        throw "not found!";
+    
+    //if the player collides with any event object, return that object
+    auto eventObject = find_if(eventLayer->objects.begin(), eventLayer->objects.end(), [&](tmx::MapObject& obj) {
+        return obj.GetAABB().intersects(charRect);
+    });
+    
+    //4.if found, set the pointer to that object
+    if(eventObject != eventLayer->objects.end())
+    {
+        temp = &(*eventObject);
+    }
+    
+    return temp;
 }

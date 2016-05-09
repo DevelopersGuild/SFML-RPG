@@ -52,6 +52,9 @@ namespace Gameplay
 
 		//handle game events
 		void handleGameEvent(tmx::MapObject* eventObject);
+        
+        //interact with objects
+        void interact();
 
 		//add map into the system
 		//note: only call this function when all players are initialized!

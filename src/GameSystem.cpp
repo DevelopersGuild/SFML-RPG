@@ -16,11 +16,9 @@ GameSystem::GameSystem(Configuration& newConfig) :
 	//load the map
 	//TBD, load every map needed
 	loadMap("test.tmx");
+    loadMap("Test2.tmx");
 
 	addPlayertoMap("test.tmx", "event_start");
-
-	//set current map camera on this computer
-	currentMap = mapTree["test.tmx"];
 }
 
 void Gameplay::GameSystem::movePlayer(const Character::Direction & direction)
@@ -38,23 +36,22 @@ void Gameplay::GameSystem::addPlayertoMap(const std::string & mapName, const std
 {
 	//mapName TBD
 	//...
-	tmx::MapLoader* map = mapTree.at(mapName);
-	player->changeMap(map, locationName);
+	currentMap = mapTree.at(mapName);
+	player->changeMap(currentMap, locationName);
 }
 
 void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
 {
-	//Test only
-	if (eventObject->GetType() == "dialogue")
+	if (eventObject->GetType() == "teleport")
 	{
-		std::cout << "Test dialogue: " << eventObject->GetPropertyString("content") << std::endl;
-	}
-	else if (eventObject->GetType() == "teleport")
-	{
-		std::cout << "Test dialogue: " << eventObject->GetPropertyString("destination") << std::endl;
 		interfacePtr->setTransition();
+        addPlayertoMap(eventObject->GetPropertyString("destination"), "event_start");
 		interfacePtr->exitTransition();
 	}
+    else if(eventObject->GetType() == "dialogue")
+    {
+        std::cout << eventObject->GetPropertyString("content") << std::endl;
+    }
 }
 
 void Gameplay::GameSystem::loadMap(const std::string & filename)
@@ -93,5 +90,16 @@ void Gameplay::GameSystem::loadMap(const std::string & filename)
 
 	//push the map into the tree
 	mapTree.emplace(filename, std::move(newMap));
-	
+}
+
+void Gameplay::GameSystem::interact()
+{
+    //ask player to "interect".
+    tmx::MapObject* eventObj = player->interact();
+    
+    //if eventObj is not null, handle event.
+    if(eventObj)
+    {
+        handleGameEvent(eventObj);
+    }
 }

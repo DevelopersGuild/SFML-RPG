@@ -118,7 +118,7 @@ void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(sprite);
 }
 
-void Gameplay::Character::setPosition(sf::Vector2f & position)
+void Gameplay::Character::setPosition(const sf::Vector2f & position)
 {
 	sprite.setPosition(position);
 
@@ -134,4 +134,26 @@ sf::FloatRect Gameplay::Character::getAABB()
 		return thisPlayer->GetAABB();
 	else
 		throw "Player not found!";
+}
+
+void Gameplay::Character::setDirection(Direction newDirection)
+{
+    direction = newDirection;
+    switch(newDirection)
+    {
+        case Direction::left:
+            sprite.setTextureRect(leftList.front());
+            break;
+        case Direction::right:
+            sprite.setTextureRect(rightList.front());
+            break;
+        case Direction::up:
+            sprite.setTextureRect(upList.front());
+            break;
+        case Direction::down:
+            sprite.setTextureRect(downList.front());
+            break;
+        default:
+            ;
+    }
 }

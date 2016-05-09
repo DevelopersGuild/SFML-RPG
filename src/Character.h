@@ -19,6 +19,7 @@ namespace Gameplay
 		{
 			it = spriteList.begin();
 		}
+        
 		void add(sf::IntRect&& newRect) { spriteList.push_back(newRect); }
 
 		sf::IntRect getNext()
@@ -27,6 +28,11 @@ namespace Gameplay
 				it = spriteList.begin();
 			return *it++;
 		}
+        
+        sf::IntRect front()
+        {
+            return spriteList.front();
+        }
 	};
 
 	class Character : public sf::Drawable
@@ -86,13 +92,17 @@ namespace Gameplay
 
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-		void setPosition(sf::Vector2f& position);
+		void setPosition(const sf::Vector2f& position);
 
 		const sf::Vector2f& getPosition() { return sprite.getPosition(); }
 
 		void setCharLayer(std::vector<tmx::MapLayer>* ptr) { mapCharPtr = ptr; }
 
 		sf::FloatRect getAABB();
+        
+        Direction getDirection(){return direction;}
+        
+        void setDirection(Direction newDirection);
 	};
 }
 #endif

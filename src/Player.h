@@ -48,6 +48,10 @@ namespace Gameplay
 
 		//get the name of the character
 		const std::string& getName() { return name; }
+        
+        //get the event obj that the player is facing
+        //return tmx::MapObject if event object is found in player's facing direction. Return NULL is not found.
+        tmx::MapObject* interact();
 
 		//reset the map pointer of character and place the character at certain location.
 		void changeMap(tmx::MapLoader* map, const std::string location);
