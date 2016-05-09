@@ -18,6 +18,8 @@ namespace Gameplay
 		//sf::RectangleShape transitionRect;	//the rect that blocks the screen in transition state
 		tgui::Gui gui;
 		tgui::Panel::Ptr transitionRect;
+
+		void updateCamera();
 	public:
 		GameInterface(GameSystem* system);
 

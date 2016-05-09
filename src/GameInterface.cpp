@@ -1,7 +1,7 @@
 #include "GameInterface.h"
 using namespace Gameplay;
 
-GameInterface::GameInterface(GameSystem* newSystem) : 
+GameInterface::GameInterface(GameSystem* newSystem) :
 	system(newSystem)
 {
 	sf::RenderWindow& window = system->config.window;
@@ -19,13 +19,42 @@ GameInterface::GameInterface(GameSystem* newSystem) :
 void Gameplay::GameInterface::draw()
 {
 	sf::RenderWindow& window = system->config.window;
-	camera.setCenter(system->player->getPosition());
-	system->config.window.setView(camera);
-	window.draw(system->map);
+	updateCamera();	//update the camera
+	window.draw(*system->currentMap);
 	window.draw(*system->player);
 	gui.draw();
 	//debug
 	//system->map.Draw(system->config.window, tmx::MapLayer::DrawType::Debug, true);
+}
+
+//Peter's function
+void Gameplay::GameInterface::updateCamera()
+{
+	//get the map size, player's position, and camera size
+	const sf::Vector2u& currentMapSize = system->currentMap->GetMapSize();
+	const sf::Vector2f& playerPosition = system->player->getPosition();
+	const sf::Vector2f& cameraSize = camera.getSize();
+
+	//******************************************************************************
+	//Peter's part
+	//example: the camera stops at some point when player approach the top of the map
+	if (playerPosition.y < cameraSize.y / 2) 
+	{
+		camera.setCenter(playerPosition.x, cameraSize.y / 2);
+	}
+	else
+	{
+		camera.setCenter(playerPosition);
+	}
+
+	//....
+	//....
+	//....
+
+	//end of Peter's part
+	//******************************************************************************
+	//ask window to draw the camera in the next render function
+	system->config.window.setView(camera);
 }
 
 void Gameplay::GameInterface::setTransition()

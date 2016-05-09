@@ -26,9 +26,12 @@ namespace Gameplay
 		Configuration& config;
 
 		std::unique_ptr<Player> player;
+		//a tree of players(every player should have unique name)
+		std::map<std::string, Player> playerTree;
 
-		//once loaded, the map cannot be changed
-		tmx::MapLoader map;
+		//a tree of maps(using filename as key)
+		std::map<std::string, tmx::MapLoader*> mapTree;
+		tmx::MapLoader* currentMap;	//the current map camera on this computer
 	public:
 		GameSystem(Configuration& config);
 		GameSystem(const GameSystem&) = delete;
@@ -50,6 +53,9 @@ namespace Gameplay
 		//handle game events
 		void handleGameEvent(tmx::MapObject* eventObject);
 
+		//add map into the system
+		//note: only call this function when all players are initialized!
+		void loadMap(const std::string& filename);
 	};
 }
 #endif /* GameSystem_h */
