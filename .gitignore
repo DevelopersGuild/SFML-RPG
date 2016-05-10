@@ -303,6 +303,8 @@ fastlane/screenshots
 *.lo
 *.o
 *.obj
+*.VC.db
+*.VC.VC.opendb
 
 # Precompiled Headers
 *.gch
@@ -325,4 +327,3 @@ fastlane/screenshots
 *.out
 *.app
 *.idb
-projects/vs2015proj/vs2015proj.VC.db
