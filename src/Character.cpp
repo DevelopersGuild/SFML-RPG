@@ -136,6 +136,11 @@ sf::FloatRect Gameplay::Character::getAABB()
 		throw "Player not found!";
 }
 
+sf::FloatRect Gameplay::Character::getDectionArea()
+{
+	return sf::FloatRect(sprite.getPosition() - sf::Vector2f(10, 10), sf::Vector2f(44, 44));
+}
+
 void Gameplay::Character::setDirection(Direction newDirection)
 {
     direction = newDirection;

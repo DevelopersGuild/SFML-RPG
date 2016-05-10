@@ -103,3 +103,11 @@ void Gameplay::GameSystem::interact()
         handleGameEvent(eventObj);
     }
 }
+
+void Gameplay::GameSystem::updateQuadTree()
+{
+	const sf::View& camera = interfacePtr->getCamera();
+	sf::Vector2f position = camera.getCenter() - sf::Vector2f(camera.getSize().x / 2, camera.getSize().y / 2);
+	sf::FloatRect cameraRect(position, camera.getSize());
+	currentMap->UpdateQuadTree(cameraRect);
+}

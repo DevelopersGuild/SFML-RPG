@@ -56,6 +56,10 @@ namespace Gameplay
         //interact with objects
         void interact();
 
+		//update the quadTree of current map
+		//see tmx::QuadTree
+		void updateQuadTree();
+
 		//add map into the system
 		//note: only call this function when all players are initialized!
 		void loadMap(const std::string& filename);

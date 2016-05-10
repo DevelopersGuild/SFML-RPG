@@ -117,9 +117,10 @@ tmx::MapObject* Player::moveCharacter(const Character::Direction& direction)
 	//4.for each map obj check if there is intersection
 	//assume no collided
 	bool collided = false;
-	for (tmx::MapObject& obj : objLayer->objects)
+	std::vector<tmx::MapObject*> objVector = currentMap->QueryQuadTree(charPtr->getDectionArea());
+	for (tmx::MapObject* obj : objVector)
 	{
-		if (charRect.intersects(obj.GetAABB()))
+		if (obj->GetParent() == "Objects" && charRect.intersects(obj->GetAABB()))
 			collided = true;
 	}
 

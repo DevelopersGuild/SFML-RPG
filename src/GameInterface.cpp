@@ -22,7 +22,8 @@ void Gameplay::GameInterface::draw()
 	window.draw(*system->player);
 	gui.draw();
 	//debug
-	//system->map.Draw(system->config.window, tmx::MapLayer::DrawType::Debug, true);
+	
+	system->currentMap->Draw(system->config.window, tmx::MapLayer::DrawType::Debug, true);
 }
 
 //Peter's function

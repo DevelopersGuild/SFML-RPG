@@ -22,6 +22,7 @@ void InGame::run()
 	while (window.isOpen())
 	{
 		//input & update phase
+		systemPtr->updateQuadTree();
 		networkPtr->update();
 		sf::Event event;
 		while (window.pollEvent(event))

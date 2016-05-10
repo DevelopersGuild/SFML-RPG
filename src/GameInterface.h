@@ -35,6 +35,8 @@ namespace Gameplay
 		//move the transition away from the screen
 		void exitTransition();
 		
+		//get the camera
+		const sf::View& getCamera() { return camera; }
 	};
 }
 

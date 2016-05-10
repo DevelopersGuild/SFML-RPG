@@ -98,7 +98,11 @@ namespace Gameplay
 
 		void setCharLayer(std::vector<tmx::MapLayer>* ptr) { mapCharPtr = ptr; }
 
+		//get the AABB representation in the map
 		sf::FloatRect getAABB();
+
+		//get the colide detection area of this character
+		sf::FloatRect getDectionArea();
         
         Direction getDirection(){return direction;}
         
