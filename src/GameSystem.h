@@ -40,7 +40,7 @@ namespace Gameplay
 		GameSystem(const GameSystem&&) = delete;
 
 		//move the player in the current map
-		void movePlayer(const Character::Direction& direction);
+        void movePlayer(const std::string& playerName, const Character::Direction& direction);
 
 		//set the network pointer to Network module
 		void setNetworkPtr(GameNetwork* ptr) { networkPtr = ptr; }

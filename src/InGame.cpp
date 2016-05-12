@@ -40,13 +40,13 @@ void InGame::run()
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
-			systemPtr->movePlayer(Gameplay::Character::Direction::left);
+			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::left);
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
-			systemPtr->movePlayer(Gameplay::Character::Direction::right);
+			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::right);
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-			systemPtr->movePlayer(Gameplay::Character::Direction::down);
+			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::down);
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-			systemPtr->movePlayer(Gameplay::Character::Direction::up);
+			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::up);
 
 		config.cursor.update();
 

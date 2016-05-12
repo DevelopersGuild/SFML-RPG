@@ -10,7 +10,6 @@ GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& sta
 	config(newConfig)
 {
 	//create the players
-	//TBD, players should be in the std::map
     for(StartInfo::Player& player : startInfoPtr->playerList)
     {
         playerTree.emplace(player.name, Player(config, player.name, player.name));
@@ -25,9 +24,10 @@ GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& sta
 	addPlayertoMap("test.tmx", "event_start");
 }
 
-void Gameplay::GameSystem::movePlayer(const Character::Direction & direction)
+void Gameplay::GameSystem::movePlayer(const std::string& playerName, const Character::Direction & direction)
 {
-	tmx::MapObject* eventObject = thisPlayerPtr->moveCharacter(direction);
+    Player& player = playerTree.at(playerName);
+	tmx::MapObject* eventObject = player.moveCharacter(direction);
 
 	//if pointer points to a event object, handle event
 	if (eventObject)
