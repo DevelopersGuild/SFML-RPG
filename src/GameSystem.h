@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "Configuration.h"
+#include "StartInfo.h"
 
 namespace Gameplay
 {
@@ -25,7 +26,7 @@ namespace Gameplay
 	protected:
 		Configuration& config;
 
-		std::unique_ptr<Player> player;
+		Player* thisPlayerPtr;
 		//a tree of players(every player should have unique name)
 		std::map<std::string, Player> playerTree;
 
@@ -33,7 +34,7 @@ namespace Gameplay
 		std::map<std::string, tmx::MapLoader*> mapTree;
 		tmx::MapLoader* currentMap;	//the current map camera on this computer
 	public:
-		GameSystem(Configuration& config);
+        GameSystem(Configuration& config, std::unique_ptr<StartInfo>& startInfo);
 		GameSystem(const GameSystem&) = delete;
 		GameSystem operator=(const GameSystem&) = delete;
 		GameSystem(const GameSystem&&) = delete;

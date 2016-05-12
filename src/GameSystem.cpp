@@ -6,12 +6,16 @@
 
 using namespace Gameplay;
 
-GameSystem::GameSystem(Configuration& newConfig) :
+GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& startInfoPtr) :
 	config(newConfig)
 {
 	//create the players
 	//TBD, players should be in the std::map
-	player.reset(new Player(config, config.player_name, config.player_name));
+    for(StartInfo::Player& player : startInfoPtr->playerList)
+    {
+        playerTree.emplace(player.name, Player(config, player.name, player.name));
+    }
+    thisPlayerPtr = &playerTree.at(config.player_name);
 
 	//load the map
 	//TBD, load every map needed
@@ -23,7 +27,7 @@ GameSystem::GameSystem(Configuration& newConfig) :
 
 void Gameplay::GameSystem::movePlayer(const Character::Direction & direction)
 {
-	tmx::MapObject* eventObject = player->moveCharacter(direction);
+	tmx::MapObject* eventObject = thisPlayerPtr->moveCharacter(direction);
 
 	//if pointer points to a event object, handle event
 	if (eventObject)
@@ -37,7 +41,7 @@ void Gameplay::GameSystem::addPlayertoMap(const std::string & mapName, const std
 	//mapName TBD
 	//...
 	currentMap = mapTree.at(mapName);
-	player->changeMap(currentMap, locationName);
+	thisPlayerPtr->changeMap(currentMap, locationName);
 }
 
 void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
@@ -75,18 +79,23 @@ void Gameplay::GameSystem::loadMap(const std::string & filename)
 		throw "not found!";
 
 	//create a map object representing player
-	tmx::MapObject playerObj;
-	playerObj.SetShapeType(tmx::MapObjectShape::Rectangle);
-	playerObj.SetSize(sf::Vector2f(20, 12));
-	playerObj.SetPosition(-50, -50);
-	playerObj.AddPoint(sf::Vector2f());
-	playerObj.AddPoint(sf::Vector2f(20, 0));
-	playerObj.AddPoint(sf::Vector2f(20, 12));
-	playerObj.AddPoint(sf::Vector2f(0, 12));
-	playerObj.CreateDebugShape(sf::Color::Blue);
-	playerObj.SetName(player->getName());
+    for(auto& pair: playerTree)
+    {
+        Player& player = pair.second;
+        tmx::MapObject playerObj;
+        playerObj.SetShapeType(tmx::MapObjectShape::Rectangle);
+        playerObj.SetSize(sf::Vector2f(20, 12));
+        playerObj.SetPosition(-50, -50);
+        playerObj.AddPoint(sf::Vector2f());
+        playerObj.AddPoint(sf::Vector2f(20, 0));
+        playerObj.AddPoint(sf::Vector2f(20, 12));
+        playerObj.AddPoint(sf::Vector2f(0, 12));
+        playerObj.CreateDebugShape(sf::Color::Blue);
+        playerObj.SetName(player.getName());
+        
+        playerLayer->objects.push_back(std::move(playerObj));
+    }
 
-	playerLayer->objects.push_back(std::move(playerObj));
 
 	//push the map into the tree
 	mapTree.emplace(filename, std::move(newMap));
@@ -95,7 +104,7 @@ void Gameplay::GameSystem::loadMap(const std::string & filename)
 void Gameplay::GameSystem::interact()
 {
     //ask player to "interect".
-    tmx::MapObject* eventObj = player->interact();
+    tmx::MapObject* eventObj = thisPlayerPtr->interact();
     
     //if eventObj is not null, handle event.
     if(eventObj)

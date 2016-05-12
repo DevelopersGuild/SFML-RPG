@@ -124,7 +124,7 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 	}
 	
 	//if it is server, start server system...TBD
-	systemPtr = new Gameplay::GameSystem(config);
+	systemPtr = new Gameplay::GameSystem(config, startInfo);
 	if (startInfo->type == StartInfo::TYPE::Server)
 	{
 		//systemPtr = new Gameplay::ServerSystem(config);

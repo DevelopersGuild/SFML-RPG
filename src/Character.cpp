@@ -46,6 +46,7 @@ Character::Character(Configuration& newConfig) : config(newConfig)
 
 	sprite.setTexture(config.texMan.get("Actor4.png"));
 	sprite.setTextureRect(downList.getNext());
+    sprite.setOrigin(16, 16);
 }
 
 Character::Character(Configuration& newConfig, const std::string& newName) : Character(newConfig)
@@ -124,7 +125,7 @@ void Gameplay::Character::setPosition(const sf::Vector2f & position)
 
 	tmx::MapObject* thisPlayer = findThisCharacter();
 	if (thisPlayer)
-		thisPlayer->SetPosition(position + sf::Vector2f(6, 20));
+		thisPlayer->SetPosition(position + sf::Vector2f(-10, 4));
 }
 
 sf::FloatRect Gameplay::Character::getAABB()

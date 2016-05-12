@@ -19,7 +19,7 @@ void Gameplay::GameInterface::draw()
 	sf::RenderWindow& window = system->config.window;
 	updateCamera();	//update the camera
 	window.draw(*system->currentMap);
-	window.draw(*system->player);
+	window.draw(*system->thisPlayerPtr);
 	gui.draw();
 	//debug
 	
@@ -31,7 +31,7 @@ void Gameplay::GameInterface::updateCamera()
 {
 	//get the map size, player's position, and camera size
 	const sf::Vector2u& currentMapSize = system->currentMap->GetMapSize();
-	const sf::Vector2f& playerPosition = system->player->getPosition();
+	const sf::Vector2f& playerPosition = system->thisPlayerPtr->getPosition();
 	const sf::Vector2f& cameraSize = camera.getSize();
 
 	//******************************************************************************
