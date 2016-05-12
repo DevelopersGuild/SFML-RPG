@@ -37,10 +37,13 @@ void Gameplay::GameInterface::updateCamera()
 	//******************************************************************************
 	//Peter's part
 	//example: the camera stops at some point when player approach the top of the map
-	if (playerPosition.y < cameraSize.y / 2) 
+
+	if (playerPosition.y < cameraSize.y / 2)
 	{
 		camera.setCenter(playerPosition.x, cameraSize.y / 2);
 	}
+	else if (playerPosition.y > currentMapSize.y - cameraSize.y / 2)
+		camera.setCenter(playerPosition.x, currentMapSize.y - cameraSize.y / 2);
 	else
 	{
 		camera.setCenter(playerPosition);
