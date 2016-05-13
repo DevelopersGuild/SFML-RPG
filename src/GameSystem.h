@@ -64,6 +64,9 @@ namespace Gameplay
 		//add map into the system
 		//note: only call this function when all players are initialized!
 		void loadMap(const std::string& filename);
+
+		//set the player "ready"
+		void setReady(const std::string& playerName, const bool& newState);
 	};
 }
 #endif /* GameSystem_h */

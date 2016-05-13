@@ -26,6 +26,9 @@ namespace Gameplay
 
 		//the pointer to the current map
 		tmx::MapLoader* currentMap;
+
+		//has to player joined(connected) the game
+		bool ready;
 	public:
 		Player(Configuration& config);
 
@@ -56,6 +59,13 @@ namespace Gameplay
 		//reset the map pointer of character and place the character at certain location.
 		void changeMap(tmx::MapLoader* map, const std::string location);
 
+		//return the current map of this player
 		tmx::MapLoader* getMap() { return currentMap; }
+
+		//is the player ready?
+		bool isReady() { return ready; }
+
+		//set playe ready to draw that player on the map
+		void setReady(bool boo) { ready = boo; }
 	};
 }

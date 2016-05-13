@@ -274,6 +274,9 @@ std::unique_ptr<StartInfo> Lobby::getStartInfo()
 	//set the mode...TBD
 	info->mode = StartInfo::GAMEMODE::Coop;
 
+	//set server's ip
+	info->serverIP = serverIP;
+
 	return info;
 }
 

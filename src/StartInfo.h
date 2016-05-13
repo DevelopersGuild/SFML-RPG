@@ -14,6 +14,7 @@ struct StartInfo
 	struct Player {
 		std::string name;
 		sf::IpAddress ip;
+		bool ready = false;
 		enum Character{ SilverGuy, GoldGuy, RedGirl, BrownGirl } character;
 	};
 
@@ -26,6 +27,8 @@ struct StartInfo
 		std::string name;
 		//TBD
 	} map;
+
+	sf::IpAddress serverIP;
 
 	//type of the game
 	enum TYPE {Client, Server} type;

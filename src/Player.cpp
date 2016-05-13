@@ -5,6 +5,7 @@ Player::Player(Configuration& config)
 {
 	name = "Unnamed player";
 	currentMap = nullptr;
+	ready = false;
 	charPtr.reset(new Character(config));
 }
 
@@ -12,6 +13,7 @@ Player::Player(Configuration& config, const std::string& playerName, const std::
 {
 	name = playerName;
 	currentMap = nullptr;
+	ready = false;
 	charPtr.reset(new Character(config, charName));
 }
 

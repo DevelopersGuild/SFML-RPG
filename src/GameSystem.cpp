@@ -101,6 +101,13 @@ void Gameplay::GameSystem::loadMap(const std::string & filename)
 	mapTree.emplace(filename, std::move(newMap));
 }
 
+void Gameplay::GameSystem::setReady(const std::string& playerName, const bool& newState)
+{
+	//get the target player
+	Player& player = playerTree.at(playerName);
+	player.setReady(newState);
+}
+
 void Gameplay::GameSystem::interact()
 {
     //ask player to "interect".

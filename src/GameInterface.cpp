@@ -18,8 +18,15 @@ void Gameplay::GameInterface::draw()
 {
 	sf::RenderWindow& window = system->config.window;
 	updateCamera();	//update the camera
+
+	//draw the map
 	window.draw(*system->currentMap);
-	window.draw(*system->thisPlayerPtr);
+
+	//draw every player in the map
+	for (auto& pair : system->playerTree)
+	{
+		window.draw(pair.second);
+	}
 	gui.draw();
 	//debug
 	

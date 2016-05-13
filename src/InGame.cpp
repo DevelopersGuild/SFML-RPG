@@ -80,7 +80,6 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 	progressBar->setMaximum(100);
 	progressBar->setText("loading...0%");
 	unsigned int percent = 0;
-	sf::Clock clock;
 
 	tgui::Panel::Ptr panel = std::make_shared<tgui::Panel>();
 	gui.add(panel);
@@ -94,8 +93,16 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 	tips->setTextSize(24);
 	tips->setText("This is testing. Click cross button to leave.");
 	
+	//*************************************************************************
 	//the render loop
-	while (window.isOpen() && percent < 99)
+	bool loading_complete = false;	//leave the loop when loading completed
+	Connection* temp_networkPtr = new Connection;
+	if (!temp_networkPtr)
+	{
+		throw "Failed to create network module!";
+	}
+
+	while (window.isOpen() && !loading_complete)
 	{
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -108,21 +115,32 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 
 		config.cursor.update();
 
-		if (clock.getElapsedTime() > sf::seconds(0.05))
+		//if still loading, update percent
+		if (percent < 99)
 		{
-			percent++;
-			std::stringstream ss;
-			ss << percent;
-			progressBar->setText(sf::String("loading...") + sf::String(ss.str()) + sf::String("%"));
-			progressBar->setValue(percent);
-			clock.restart();
+			if (clock.getElapsedTime() > sf::seconds(0.05))
+			{
+				percent++;
+				std::stringstream ss;
+				ss << percent;
+				progressBar->setText(sf::String("loading...") + sf::String(ss.str()) + sf::String("%"));
+				progressBar->setValue(percent);
+				clock.restart();
+			}
 		}
+		else	//else, client: send "ready" signal to server for every 5s; server: start anyway
+		{
+			progressBar->setText(sf::String("waiting for server..."));
+			loading_complete = waitForStart(startInfo, temp_networkPtr);
+		}
+
 		window.clear();
 		gui.draw();
 		window.draw(config.cursor);
 		window.display();
 	}
-	
+	delete temp_networkPtr;
+	//*************************************************************************
 	//if it is server, start server system...TBD
 	systemPtr = new Gameplay::GameSystem(config, startInfo);
 	if (startInfo->type == StartInfo::TYPE::Server)
@@ -135,8 +153,8 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 	}
 
 	//create network and interface which is pointing to the game system
-	networkPtr = new Gameplay::GameNetwork(systemPtr);
-		
+	networkPtr = new Gameplay::GameNetwork(systemPtr, startInfo);
+
 	systemPtr->setNetworkPtr(networkPtr);
 
 	interfacePtr = new Gameplay::GameInterface(systemPtr);
@@ -152,5 +170,38 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 	{
 		//wait for server's signal
 	}
+}
+
+bool InGame::waitForStart(std::unique_ptr<StartInfo>& startInfoPtr, Connection * connectionPtr)
+{
+	if (startInfoPtr->type == StartInfo::TYPE::Server)
+	{
+		return true;
+	}
+	else
+	{
+		//if recevied somthing, if that's from server and the signal if "start", return true
+		if (!connectionPtr->empty())
+		{
+			Package& package = connectionPtr->front();
+			std::string signal;
+			package.packet >> signal;
+			if (package.ip == startInfoPtr->serverIP && signal == "start")
+			{
+				connectionPtr->pop();
+				return true;
+			}
+		}
+		else //else, send "ready" signal to server for every 2s
+		{
+			if (clock.getElapsedTime() > sf::seconds(2))
+			{
+				sf::Packet packet;
+				packet << "ready";
+				connectionPtr->send(startInfoPtr->serverIP, packet);
+			}
+		}
+	}
+	return false;
 }
 
