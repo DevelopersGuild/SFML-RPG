@@ -155,6 +155,7 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 		//if still loading, update percent
 		if (percent < 99)
 		{
+			/*	Uncomment if the game is finished
 			if (clock.getElapsedTime() > sf::seconds(0.05))
 			{
 				percent++;
@@ -164,6 +165,7 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 				progressBar->setValue(percent);
 				clock.restart();
 			}
+			*/
 		}
 		else	//else, client: send "ready" signal to server for every 5s; server: start anyway
 		{
