@@ -197,7 +197,7 @@ sf::Packet Lobby::getUpdatePacket()
 {
 	sf::Packet update;
 	update << "lobby_update";
-	int size = playerList.size(); //# of players
+	sf::Int8 size = playerList.size(); //# of players
 	update << size;	
 	for (auto& playerPtr : playerList)		//insert each player into the packet
 	{
