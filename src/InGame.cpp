@@ -18,7 +18,7 @@ void InGame::run()
 {
 	sf::RenderWindow& window = config.window;
 	window.setFramerateLimit(60);
-	
+
 	while (window.isOpen())
 	{
 		//input & update phase
@@ -30,23 +30,60 @@ void InGame::run()
 			if (event.type == sf::Event::Closed)
 				window.close();
 
-            if(event.type == sf::Event::KeyPressed)
-            {
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-                    systemPtr->interact();
-            }
-            
+			if (event.type == sf::Event::KeyPressed)
+			{
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+					systemPtr->interact();
+			}
+
 			interfacePtr->updateGUI(event);
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+		{
 			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::left);
+
+			if (networkPtr->getServerIP() != sf::IpAddress::None)
+			{
+				sf::Packet packet;
+				packet << "move";
+				packet << "left";
+				networkPtr->send(networkPtr->getServerIP(), packet);
+			}
+		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+		{
 			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::right);
+			if (networkPtr->getServerIP() != sf::IpAddress::None)
+			{
+				sf::Packet packet;
+				packet << "move";
+				packet << "right";
+				networkPtr->send(networkPtr->getServerIP(), packet);
+			}
+		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+		{
 			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::down);
+			if (networkPtr->getServerIP() != sf::IpAddress::None)
+			{
+				sf::Packet packet;
+				packet << "move";
+				packet << "down";
+				networkPtr->send(networkPtr->getServerIP(), packet);
+			}
+		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+		{
 			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::up);
+			if (networkPtr->getServerIP() != sf::IpAddress::None)
+			{
+				sf::Packet packet;
+				packet << "move";
+				packet << "up";
+				networkPtr->send(networkPtr->getServerIP(), packet);
+			}
+		}
 
 		config.cursor.update();
 
