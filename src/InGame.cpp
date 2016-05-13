@@ -39,51 +39,14 @@ void InGame::run()
 			interfacePtr->updateGUI(event);
 		}
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
-        {
-            systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::left);
-            
-            if (networkPtr->getServerIP() != sf::IpAddress::None)
-            {
-                sf::Packet packet;
-                packet << "move";
-                packet << "left";
-                networkPtr->send(networkPtr->getServerIP(), packet);
-            }
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
-        {
-            systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::right);
-            if (networkPtr->getServerIP() != sf::IpAddress::None)
-            {
-                sf::Packet packet;
-                packet << "move";
-                packet << "right";
-                networkPtr->send(networkPtr->getServerIP(), packet);
-            }
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-        {
-            systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::down);
-            if (networkPtr->getServerIP() != sf::IpAddress::None)
-            {
-                sf::Packet packet;
-                packet << "move";
-                packet << "down";
-                networkPtr->send(networkPtr->getServerIP(), packet);
-            }
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-        {
-            systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::up);
-            if (networkPtr->getServerIP() != sf::IpAddress::None)
-            {
-                sf::Packet packet;
-                packet << "move";
-                packet << "up";
-                networkPtr->send(networkPtr->getServerIP(), packet);
-            }
-        }
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::left);
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::right);
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::down);
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::up);
 
 		config.cursor.update();
 
@@ -153,9 +116,8 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 		config.cursor.update();
 
 		//if still loading, update percent
-		if (percent < 99)
+		if (percent < 0)
 		{
-			/*	Uncomment if the game is finished
 			if (clock.getElapsedTime() > sf::seconds(0.05))
 			{
 				percent++;
@@ -165,7 +127,6 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 				progressBar->setValue(percent);
 				clock.restart();
 			}
-			*/
 		}
 		else	//else, client: send "ready" signal to server for every 5s; server: start anyway
 		{
