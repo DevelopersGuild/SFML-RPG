@@ -423,7 +423,24 @@ void Lobby::handlePacket(Package& package)
 
 void Lobby::adjustName(std::string & name)
 {
+	for (int id = 0; ; id++)
+	{
+		std::string newName = name;
+		if (id) newName += "(" + std::to_string(id) + ")";
 
+		bool exist = false;
+		
+		for (auto& player : playerList)
+		{
+			exist |= (newName == player->getName());
+		}
+		
+		if (!exist)
+		{
+			name = newName;
+			return;
+		}
+	}
 }
 
 void Lobby::updatePlayerList()
