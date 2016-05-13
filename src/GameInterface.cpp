@@ -41,17 +41,39 @@ void Gameplay::GameInterface::updateCamera()
 	const sf::Vector2f& playerPosition = system->thisPlayerPtr->getPosition();
 	const sf::Vector2f& cameraSize = camera.getSize();
 
-	//******************************************************************************
-	//Peter's part
-	//example: the camera stops at some point when player approach the top of the map
-	if (playerPosition.y < cameraSize.y / 2) 
-	{
-		camera.setCenter(playerPosition.x, cameraSize.y / 2);
-	}
-	else
-	{
-		camera.setCenter(playerPosition);
-	}
+    sf::Vector2f tempCameraPosition = sf::Vector2f(playerPosition.x, playerPosition.y);
+    //******************************************************************************
+    //Peter's part
+    //example: the camera stops at some point when player approach the top of the map
+    // x, y is temporary camera position.
+    
+    float x, y; x = playerPosition.x; y = playerPosition.y;
+    if (playerPosition.y < cameraSize.y / 2)
+    {
+        //camera.setCenter(playerPosition.x, cameraSize.y / 2);
+        y = cameraSize.y / 2;
+        if (playerPosition.x < cameraSize.x / 2)
+            x = cameraSize.x / 2;
+        else if (playerPosition.x > currentMapSize.x - cameraSize.x / 2)
+            x = currentMapSize.x - cameraSize.x / 2;
+    }
+    else if (playerPosition.y > currentMapSize.y - cameraSize.y / 2)
+    {
+        //camera.setCenter(playerPosition.x, currentMapSize.y - cameraSize.y / 2);
+        y = currentMapSize.y - cameraSize.y / 2;
+        if (playerPosition.x < cameraSize.x / 2)
+            x = cameraSize.x / 2;
+        else if (playerPosition.x > currentMapSize.x - cameraSize.x / 2)
+            x = currentMapSize.x - cameraSize.x / 2;
+    }
+    else if (playerPosition.x < cameraSize.x / 2)
+        x = cameraSize.x / 2;
+    else if (playerPosition.x > currentMapSize.x - cameraSize.x / 2)
+        x = currentMapSize.x - cameraSize.x / 2;
+    //camera.setCenter(playerPosition);
+    tempCameraPosition.x = x;
+    tempCameraPosition.y = y;
+    camera.setCenter(tempCameraPosition);
 
 	//....
 	//....
