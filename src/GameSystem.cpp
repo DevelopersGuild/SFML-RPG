@@ -34,7 +34,7 @@ void Gameplay::GameSystem::movePlayer(const std::string& playerName, const Chara
 	tmx::MapObject* eventObject = player.moveCharacter(direction);
 
 	//if pointer points to a event object, handle event
-	if (eventObject)
+	if (eventObject && playerName == thisPlayerPtr->getName())
 	{
 		handleGameEvent(eventObject);
 	}
@@ -55,7 +55,7 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
 	if (eventObject->GetType() == "teleport")
 	{
 		interfacePtr->setTransition();
-        addPlayertoMap(config.player_name, eventObject->GetPropertyString("destination"), "event_start");
+        addPlayertoMap(thisPlayerPtr->getName(), eventObject->GetPropertyString("destination"), "event_start");
 		interfacePtr->exitTransition();
 	}
     else if(eventObject->GetType() == "dialogue")

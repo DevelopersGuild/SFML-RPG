@@ -46,5 +46,6 @@ void Gameplay::GameNetwork::update()
 			else if(direction == "down")
 				system->movePlayer(playerName_Tree.at(package.ip), Character::Direction::down);
 		}
+        connection.pop();
 	}
 }
