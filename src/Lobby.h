@@ -149,6 +149,8 @@ private:
 
 	//handles the incoming packet
 	void handlePacket(Package& package);
+
+	void adjustName(std::string& name);
 	
 public:
 	/// why constructor = delete ???

@@ -188,6 +188,7 @@ bool Lobby::addPlayer(std::unique_ptr<lobby::Player> playerPtr)
 	{
 		return false;
 	}
+
 	playerList.push_back(std::move(playerPtr));
 	updatePlayerList();
 	return true;
@@ -217,6 +218,7 @@ void Lobby::handleUpdatePacket(sf::Packet & updatePacket)
 		int charName;
 		updatePacket >> name;
 		updatePacket >> charName;
+		adjustName(name);	//perform name check
 		std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, sf::IpAddress(), static_cast<lobby::Character::Name>(charName)));
 		addPlayer(std::move(newPlayer));
 	}
@@ -295,6 +297,7 @@ void Lobby::handlePacket(Package& package)
 		{
 			std::string name;
 			package.packet >> name;
+			adjustName(name);
 			std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, package.ip, lobby::Character::SilverGuy));
 			if (addPlayer(std::move(newPlayer)))
 			{
@@ -376,6 +379,7 @@ void Lobby::handlePacket(Package& package)
 				int charName;
 				package.packet >> name;
 				package.packet >> charName;
+				adjustName(name);
 				std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, sf::IpAddress(), static_cast<lobby::Character::Name>(charName)));
 				addPlayer(std::move(newPlayer));
 			}
@@ -415,6 +419,11 @@ void Lobby::handlePacket(Package& package)
             done = true;
         }
 	}
+}
+
+void Lobby::adjustName(std::string & name)
+{
+
 }
 
 void Lobby::updatePlayerList()
