@@ -39,14 +39,32 @@ void InGame::run()
 			interfacePtr->updateGUI(event);
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
-			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::left);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
-			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::right);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
-			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::down);
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::up);
+		if (networkPtr->getServerIP() == sf::IpAddress::None)
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+				systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::left);
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+				systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::right);
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+				systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::down);
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+				systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::up);
+		}
+		else
+		{
+			sf::Packet packet;
+			packet << "move";
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+				packet << "left";
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+				packet << "right";
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+				packet << "down";
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+				packet << "up";
+			networkPtr->send(networkPtr->getServerIP(), packet);
+		}
+
 
 		config.cursor.update();
 

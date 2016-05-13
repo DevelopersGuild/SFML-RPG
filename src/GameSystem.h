@@ -49,7 +49,7 @@ namespace Gameplay
 		void setInterfacePtr(GameInterface* ptr) { interfacePtr = ptr; }
 
 		//add the player to the target map
-		void addPlayertoMap(const std::string& mapName, const std::string& location);
+		void addPlayertoMap(const std::string& playerName, const std::string& mapName, const std::string& location);
 
 		//handle game events
 		void handleGameEvent(tmx::MapObject* eventObject);

@@ -33,5 +33,18 @@ void Gameplay::GameNetwork::update()
 			send(package.ip, packet);
 			system->setReady(playerName_Tree.at(package.ip), true);
 		}
+		else if (signal == "move")
+		{
+			std::string direction;
+			package.packet >> direction;
+			if (direction == "right")
+				system->movePlayer(playerName_Tree.at(package.ip), Character::Direction::right);
+			else if(direction == "left")
+				system->movePlayer(playerName_Tree.at(package.ip), Character::Direction::left);
+			else if(direction == "up")
+				system->movePlayer(playerName_Tree.at(package.ip), Character::Direction::up);
+			else if(direction == "down")
+				system->movePlayer(playerName_Tree.at(package.ip), Character::Direction::down);
+		}
 	}
 }

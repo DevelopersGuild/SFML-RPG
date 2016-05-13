@@ -25,6 +25,9 @@ namespace Gameplay
 
 		//get and implement the incoming packet
 		void update();
+
+		//get server's ip, invalid if this computer is server
+		sf::IpAddress getServerIP() { return serverIP; }
 	};
 }
 

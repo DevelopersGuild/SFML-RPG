@@ -21,7 +21,11 @@ GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& sta
 	loadMap("test.tmx");
     loadMap("Test2.tmx");
 
-	addPlayertoMap("test.tmx", "event_start");
+	for (auto& pair : playerTree)
+	{
+		addPlayertoMap(pair.second.getName(), "test.tmx", "event_start");
+	}
+	
 }
 
 void Gameplay::GameSystem::movePlayer(const std::string& playerName, const Character::Direction & direction)
@@ -36,12 +40,14 @@ void Gameplay::GameSystem::movePlayer(const std::string& playerName, const Chara
 	}
 }
 
-void Gameplay::GameSystem::addPlayertoMap(const std::string & mapName, const std::string & locationName)
+void Gameplay::GameSystem::addPlayertoMap(const std::string& playerName, const std::string& mapName, const std::string& location)
 {
 	//mapName TBD
 	//...
+
 	currentMap = mapTree.at(mapName);
-	thisPlayerPtr->changeMap(currentMap, locationName);
+	Player& player = playerTree.at(playerName);
+	player.changeMap(currentMap, location);
 }
 
 void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
@@ -49,7 +55,7 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
 	if (eventObject->GetType() == "teleport")
 	{
 		interfacePtr->setTransition();
-        addPlayertoMap(eventObject->GetPropertyString("destination"), "event_start");
+        addPlayertoMap(config.player_name, eventObject->GetPropertyString("destination"), "event_start");
 		interfacePtr->exitTransition();
 	}
     else if(eventObject->GetType() == "dialogue")
