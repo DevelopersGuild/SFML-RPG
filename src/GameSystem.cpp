@@ -54,9 +54,20 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
 {
 	if (eventObject->GetType() == "teleport")
 	{
+		std::string destination = eventObject->GetPropertyString("destination");
+		std::string destination_point = eventObject->GetPropertyString("destination_point");
 		interfacePtr->setTransition();
-        addPlayertoMap(thisPlayerPtr->getName(), eventObject->GetPropertyString("destination"), "event_start");
+        addPlayertoMap(thisPlayerPtr->getName(), destination, destination_point);
 		interfacePtr->exitTransition();
+
+		//if this is client, send the changeMap signal to the server
+		if (networkPtr->getServerIP() != sf::IpAddress::None)
+		{
+			sf::Packet packet;
+			packet << "changeMap";
+			packet << destination << destination_point;
+			networkPtr->send(networkPtr->getServerIP(), packet);
+		}
 	}
     else if(eventObject->GetType() == "dialogue")
     {

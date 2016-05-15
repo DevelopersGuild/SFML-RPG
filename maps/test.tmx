@@ -75,6 +75,7 @@
   <object id="93" name="to_Test2.tmx" type="teleport" x="256" y="0" width="96" height="32">
    <properties>
     <property name="destination" value="Test2.tmx"/>
+    <property name="destination_point" value="event_start"/>
    </properties>
   </object>
   <object id="94" name="event_start" type="position" x="288" y="64" width="32" height="32"/>

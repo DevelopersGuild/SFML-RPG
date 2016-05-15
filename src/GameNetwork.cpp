@@ -46,6 +46,13 @@ void Gameplay::GameNetwork::update()
 			else if(direction == "down")
 				system->movePlayer(playerName_Tree.at(package.ip), Character::Direction::down);
 		}
+		else if (signal == "changeMap")
+		{
+			std::string mapName;
+			std::string location;
+			package.packet >> mapName >> location;
+			system->addPlayertoMap(playerName_Tree.at(package.ip), mapName, location);
+		}
         connection.pop();
 	}
 }
