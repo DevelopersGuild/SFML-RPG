@@ -40,7 +40,7 @@ namespace Gameplay
 		move Character
 		return pointer to the eventObject on the map, return null is no event found.
 		*/
-		tmx::MapObject* moveCharacter(const Character::Direction& direction);
+		tmx::MapObject* moveCharacter(tmx::MapLoader* currentMap, const Character::Direction& direction);
 
 		//draw the character on the screen
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const;

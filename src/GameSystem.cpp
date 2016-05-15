@@ -31,8 +31,8 @@ GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& sta
 void Gameplay::GameSystem::movePlayer(const std::string& playerName, const Character::Direction & direction)
 {
     Player& player = playerTree.at(playerName);
-	tmx::MapObject* eventObject = player.moveCharacter(direction);
-
+	tmx::MapObject* eventObject = player.moveCharacter(currentMap, direction);
+	
 	//if pointer points to a event object, handle event
 	if (eventObject && playerName == thisPlayerPtr->getName())
 	{

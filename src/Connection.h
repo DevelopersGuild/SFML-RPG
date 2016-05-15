@@ -62,5 +62,8 @@ public:
     
     //get the first packet
 	Package& front(){return packetQueue.front();}
+
+	//return the number of packet in the queue
+	int getSize() { return packetQueue.size(); }
 };
  

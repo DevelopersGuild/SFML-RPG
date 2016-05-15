@@ -17,7 +17,7 @@ InGame::~InGame()
 void InGame::run()
 {
 	sf::RenderWindow& window = config.window;
-	window.setFramerateLimit(60);
+	//window.setFramerateLimit(60);
 
 	sf::Clock client_position_clock;	//when clock > 3s, send a position update to the server
 	while (window.isOpen())

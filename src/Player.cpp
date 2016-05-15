@@ -77,7 +77,7 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 	charPtr->setPosition(eventPosition);
 }
 
-tmx::MapObject* Player::moveCharacter(const Character::Direction& direction)
+tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character::Direction& direction)
 {
 	//collision Test
 	//1.create a temporary float rect from player's rect
@@ -119,7 +119,7 @@ tmx::MapObject* Player::moveCharacter(const Character::Direction& direction)
 	//4.for each map obj check if there is intersection, no collision test for other players
 	//assume no collided
 	bool collided = false;
-	if (name == config.player_name)
+	if (cameraMap != currentMap)
 	{
 		std::vector<tmx::MapObject*> objVector = currentMap->QueryQuadTree(charPtr->getDectionArea());
 		for (tmx::MapObject* obj : objVector)
