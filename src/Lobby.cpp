@@ -1,10 +1,12 @@
 #include "Lobby.h"
+
 /*
 constructor for server's version
 */
 Lobby::Lobby(Configuration & newConfig) :
 	config(newConfig),
-	type(Lobby::TYPE::server)
+	type(Lobby::TYPE::server),
+    done(false)
 {
 	initialize();
     
@@ -19,10 +21,12 @@ constructor for client's version
 Lobby::Lobby(Configuration& newConfig, sf::IpAddress newServerIP, sf::Packet& updatePacket) :
 	config(newConfig),
 	type(Lobby::TYPE::client),
-	serverIP(newServerIP)
+	serverIP(newServerIP),
+    done(false)
 {
 	initialize();
 	handleUpdatePacket(updatePacket);
+    startButton->hide();    //client must wait the starting signal from server
 }
 /*
 Destructor for lobby
@@ -52,6 +56,8 @@ Lobby::~Lobby()
 }
 void Lobby::initialize()
 {
+	//Music& test = config.musMan.get("Theme1.ogg");
+
 	panel = std::make_shared<tgui::Panel>();
 	panel->setSize(822, 614);
 	panel->setPosition(102, 77);
@@ -60,15 +66,12 @@ void Lobby::initialize()
 	backButton = std::make_shared<tgui::Button>();
 	panel->add(backButton);
 	backButton->setText("Back");
-	backButton->setPosition(65, 542);
+	backButton->setPosition(65, 546);
 
 	startButton = std::make_shared<tgui::Button>();
 	panel->add(startButton);
 	startButton->setText("Start");
 	startButton->setPosition(571, 546);
-	startButton->connect("mousereleased", [&]() {
-
-	});
 
 	chatBox = std::make_shared<tgui::ChatBox>();
 	panel->add(chatBox);
@@ -76,45 +79,24 @@ void Lobby::initialize()
 	chatBox->setPosition(51, 323);
 	chatBox->addLine("Test");
 
-	chatInput = std::make_shared<tgui::TextBox>();
+	chatInput = std::make_shared<tgui::EditBox>();
 	panel->add(chatInput);
 	chatInput->setSize(340, 22);
 	chatInput->setPosition(51, 473);
 	chatInput->setMaximumCharacters(33);
+	chatInput->setTextSize(18);
+	chatInput->connect("ReturnKeyPressed", [&]() {
+		handleMessage();});
+	
 
 	chatInputButton = std::make_shared<tgui::Button>();
 	panel->add(chatInputButton);
 	chatInputButton->setSize(34, 22);
 	chatInputButton->setPosition(357, 473);
 	chatInputButton->setText("send");
-	chatInputButton->connect("mousereleased", [&]() {
-		std::string str = chatInput->getText();
-		if (str != "")
-		{
-			str = config.player_name + " : " + chatInput->getText();
-
-			chatBox->addLine(str);
-			chatInput->setText("");
-			if (type == TYPE::server)
-			{
-				//boardcast the message to every player
-				for (auto& playerPtr : playerList)
-				{
-					sf::IpAddress ip = playerPtr->getIP();
-					sf::Packet packet;
-					packet << "lobby_message";
-					packet << str;
-					connection.send(ip, packet);
-				}
-			}			
-			else
-			{
-				sf::Packet packet;
-				packet << "lobby_message";
-				packet << str;
-				connection.send(serverIP, packet);
-			}
-		}
+	
+	chatInputButton->connect("mouseReleased", [&]() {
+		handleMessage();
 	});
 
 	mapPicture = std::make_shared<tgui::Picture>();
@@ -136,7 +118,37 @@ void Lobby::initialize()
 		updatePlayerList();
     });
 }
+void Lobby::handleMessage()
+{
+	std::string str = chatInput->getText();
+	if (str != "" && str != "\n")
+	{
+		str = config.player_name + " : " + chatInput->getText();
 
+		chatBox->addLine(str);
+		chatInput->setText("");
+		if (type == TYPE::server)
+		{
+			//boardcast the message to every player
+			for (auto& playerPtr : playerList)
+			{
+				sf::IpAddress ip = playerPtr->getIP();
+				sf::Packet packet;
+				packet << "lobby_message";
+				packet << str;
+				connection.send(ip, packet);
+			}
+		}
+		else
+		{
+			sf::Packet packet;
+			packet << "lobby_message";
+			packet << str;
+			connection.send(serverIP, packet);
+		}
+	}
+	chatInput->setText("");
+}
 void Lobby::addTgui(tgui::Gui & gui)
 {
 	gui.add(panel);
@@ -167,6 +179,7 @@ void Lobby::update()
 		handlePacket(package);
 		connection.pop();
 	}
+
 }
 
 bool Lobby::addPlayer(std::unique_ptr<lobby::Player> playerPtr)
@@ -175,6 +188,7 @@ bool Lobby::addPlayer(std::unique_ptr<lobby::Player> playerPtr)
 	{
 		return false;
 	}
+
 	playerList.push_back(std::move(playerPtr));
 	updatePlayerList();
 	return true;
@@ -204,6 +218,7 @@ void Lobby::handleUpdatePacket(sf::Packet & updatePacket)
 		int charName;
 		updatePacket >> name;
 		updatePacket >> charName;
+		adjustName(name);	//perform name check
 		std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, sf::IpAddress(), static_cast<lobby::Character::Name>(charName)));
 		addPlayer(std::move(newPlayer));
 	}
@@ -221,7 +236,49 @@ void Lobby::boardcast(sf::Packet & packet)
 std::unique_ptr<StartInfo> Lobby::getStartInfo()
 {
 	std::unique_ptr<StartInfo> info(new StartInfo);
-	//do something in here
+	//insert each player to the list
+	for (auto& playerPtr : playerList)
+	{
+		StartInfo::Player startInfo_player;
+		startInfo_player.name = playerPtr->getName();
+		startInfo_player.ip = playerPtr->getIP();
+
+		switch (playerPtr->getCharacter().getName())
+		{
+		case lobby::Character::Name::BrownGirl:
+			startInfo_player.character = StartInfo::Player::Character::BrownGirl;
+			break;
+		case lobby::Character::Name::GoldGuy:
+			startInfo_player.character = StartInfo::Player::Character::GoldGuy;
+			break;
+		case lobby::Character::Name::RedGirl:
+			startInfo_player.character = StartInfo::Player::Character::RedGirl;
+			break;
+		case lobby::Character::Name::SilverGuy:
+			startInfo_player.character = StartInfo::Player::Character::SilverGuy;
+			break;
+		default:
+			startInfo_player.character = StartInfo::Player::Character::SilverGuy;
+		}
+
+		info->playerList.push_back(startInfo_player);
+	}
+	
+	//Map...TBD
+	info->map.name = "Shadow_Kingdom";
+
+	//set the type
+	if (type == TYPE::client)
+		info->type = StartInfo::TYPE::Client;
+	else if (type == TYPE::server)
+		info->type = StartInfo::TYPE::Server;
+
+	//set the mode...TBD
+	info->mode = StartInfo::GAMEMODE::Coop;
+
+	//set server's ip
+	info->serverIP = serverIP;
+
 	return info;
 }
 
@@ -240,6 +297,7 @@ void Lobby::handlePacket(Package& package)
 		{
 			std::string name;
 			package.packet >> name;
+			adjustName(name);
 			std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, package.ip, lobby::Character::SilverGuy));
 			if (addPlayer(std::move(newPlayer)))
 			{
@@ -321,6 +379,7 @@ void Lobby::handlePacket(Package& package)
 				int charName;
 				package.packet >> name;
 				package.packet >> charName;
+				adjustName(name);
 				std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, sf::IpAddress(), static_cast<lobby::Character::Name>(charName)));
 				addPlayer(std::move(newPlayer));
 			}
@@ -352,6 +411,35 @@ void Lobby::handlePacket(Package& package)
 			backButton->setPosition(50, 130);
 			panel->add(backButton);
 		}
+        /*
+        Client : the game start
+        */
+        else if(signal == "lobby_start")
+        {
+            done = true;
+        }
+	}
+}
+
+void Lobby::adjustName(std::string & name)
+{
+	for (int id = 0; ; id++)
+	{
+		std::string newName = name;
+		if (id) newName += "(" + std::to_string(id) + ")";
+
+		bool exist = false;
+		
+		for (auto& player : playerList)
+		{
+			exist |= (newName == player->getName());
+		}
+		
+		if (!exist)
+		{
+			name = newName;
+			return;
+		}
 	}
 }
 
@@ -369,10 +457,25 @@ void Lobby::updatePlayerList()
 	for (auto it = playerList.begin(); it != playerList.end(); it++)
 	{
 		auto ptr = (*it)->getPanel();
-		ptr->setPosition(10, 10 + (i - playerListPanel_scrollBar->getValue()) * 50);
+		ptr->setPosition((float)10, (float)10 + (i - playerListPanel_scrollBar->getValue()) * 50);
 		playerListPanel->add(ptr);
 		i++;
 	}
+}
+
+void Lobby::startGame()
+{
+    if(type == TYPE::server)
+    {
+        sf::Packet packet;
+        packet << "lobby_start";
+        for(auto& playerPtr: playerList)
+        {
+            connection.send(playerPtr->getIP(), packet);
+			
+        }
+        done = true;
+    }
 }
 
 lobby::Player::Player(std::string newName, sf::IpAddress newIP, Character newChar) :

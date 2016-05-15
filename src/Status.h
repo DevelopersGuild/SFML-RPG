@@ -2,15 +2,18 @@
 #define STATUS_H
 #include "Character.h"
 
-class Status
+namespace Gameplay
 {
-private:
-	Character* character;
-	bool isPoisoned;
-	bool isStunned;
-	bool lowHealth;
+	class Status
+	{
+	private:
+		Character* character;
+		bool isPoisoned;
+		bool isStunned;
+		bool lowHealth;
 
-public:
-	Status(bool poisoned, bool stunned, bool lowHealth);
-};
+	public:
+		Status(bool poisoned, bool stunned, bool lowHealth);
+	};
+}
 #endif

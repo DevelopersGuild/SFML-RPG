@@ -149,13 +149,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Character.cpp" />
     <ClCompile Include="..\..\src\Configuration.cpp" />
     <ClCompile Include="..\..\src\Connection.cpp" />
     <ClCompile Include="..\..\src\Cursor.cpp" />
     <ClCompile Include="..\..\src\Game.cpp" />
+    <ClCompile Include="..\..\src\GameInterface.cpp" />
+    <ClCompile Include="..\..\src\GameNetwork.cpp" />
+    <ClCompile Include="..\..\src\GameSystem.cpp" />
+    <ClCompile Include="..\..\src\InGame.cpp" />
     <ClCompile Include="..\..\src\Lobby.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\Menu.cpp" />
+    <ClCompile Include="..\..\src\Player.cpp" />
     <ClCompile Include="..\..\src\PreMenu.cpp" />
     <ClCompile Include="..\..\src\ResourcePathWindows.cpp" />
     <ClCompile Include="..\..\src\StartInfo.cpp" />
@@ -170,16 +176,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Character.h" />
+    <ClInclude Include="..\..\src\ClientSystem.h" />
     <ClInclude Include="..\..\src\Configuration.h" />
     <ClInclude Include="..\..\src\Connection.h" />
     <ClInclude Include="..\..\src\Cursor.h" />
     <ClInclude Include="..\..\src\Game.h" />
+    <ClInclude Include="..\..\src\GameInterface.h" />
+    <ClInclude Include="..\..\src\GameNetwork.h" />
+    <ClInclude Include="..\..\src\GameSystem.h" />
+    <ClInclude Include="..\..\src\InGame.h" />
     <ClInclude Include="..\..\src\Item.h" />
     <ClInclude Include="..\..\src\Lobby.h" />
     <ClInclude Include="..\..\src\Menu.h" />
+    <ClInclude Include="..\..\src\Player.h" />
     <ClInclude Include="..\..\src\PreMenu.h" />
     <ClInclude Include="..\..\src\ResourceManager.h" />
     <ClInclude Include="..\..\src\ResourcePath.h" />
+    <ClInclude Include="..\..\src\ServerSystem.h" />
     <ClInclude Include="..\..\src\Skill.h" />
     <ClInclude Include="..\..\src\StartInfo.h" />
     <ClInclude Include="..\..\src\Status.h" />

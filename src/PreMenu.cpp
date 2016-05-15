@@ -5,7 +5,9 @@
 PreMenu::PreMenu(Configuration & newConfig) :
 	config(newConfig),
 	finished(false)
+	/// ???
 {
+	// do nothing.
 
 }
 
@@ -13,7 +15,7 @@ void PreMenu::run()
 {
 	sf::RenderWindow& window(config.window);
 
-	//the background when loading
+	//the background when loading.
 	sf::RectangleShape backgrd;
 	backgrd.setSize(sf::Vector2f(1024, 768));
 	backgrd.setTexture(&config.texMan.get("Tower1.png"));
@@ -34,6 +36,7 @@ void PreMenu::run()
 		sf::IntRect(0, 0, 31, 31));
 
 	//start the initialze thread
+	// ??? why thread ???
 	std::thread init(&PreMenu::initialize, this);
 	
 	//when not finished, poll event
@@ -61,7 +64,7 @@ void PreMenu::run()
 
 void PreMenu::initialize()
 {
-	sf::Music& test = config.musMan.get("Theme1.ogg");	
+	sf::Music& test = config.musMan.get("Down1.ogg");	
 	//std::this_thread::sleep_for(std::chrono::seconds(2));	//TBC, test only
 
 	finished = true;

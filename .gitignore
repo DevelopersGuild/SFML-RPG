@@ -303,6 +303,8 @@ fastlane/screenshots
 *.lo
 *.o
 *.obj
+*.VC.db
+*.VC.VC.opendb
 
 # Precompiled Headers
 *.gch

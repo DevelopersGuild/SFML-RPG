@@ -53,6 +53,7 @@ namespace lobby
 		//a clock to count how much time not receviving anything from that player, TBD
 		//if no respond for cerain time, remove that player
 		sf::Clock lastReceiveClock;
+
 	public:
         Player() : name("Player"), character(lobby::Character::SilverGuy){;}
         Player(const Player&) = delete;
@@ -99,12 +100,13 @@ public:
 private:
 	Configuration& config;		//reference to configuration
 	sf::IpAddress serverIP;		//serverIP is valid for client, invalid for server
+    bool done;                  //is the game ready to start?
 	
 	tgui::Panel::Ptr panel;
 	tgui::Button::Ptr backButton;
 	tgui::Button::Ptr startButton;
 	tgui::ChatBox::Ptr chatBox;
-	tgui::TextBox::Ptr chatInput;
+	tgui::EditBox::Ptr chatInput;
 	tgui::Button::Ptr chatInputButton;
 	tgui::Picture::Ptr mapPicture;
     tgui::Panel::Ptr playerListPanel;
@@ -147,7 +149,11 @@ private:
 
 	//handles the incoming packet
 	void handlePacket(Package& package);
+
+	void adjustName(std::string& name);
+	
 public:
+	/// why constructor = delete ???
 	Lobby() = delete;
 	Lobby(const Lobby&) = delete;
 	Lobby operator=(const Lobby&) = delete;
@@ -189,4 +195,13 @@ public:
 
 	//get the game data
 	std::unique_ptr<StartInfo> getStartInfo();
+    
+    //For server only: send the starting signal to client
+    //Call this function when the game is about to start!
+    void startGame();
+    
+    //is the game ready to start?
+    bool isDone(){return done;}
+
+	void handleMessage();
 };

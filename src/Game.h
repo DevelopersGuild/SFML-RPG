@@ -4,6 +4,7 @@
 #include "Configuration.h"
 #include "PreMenu.h"
 #include "Menu.h"
+#include "InGame.h"
 
 /*
 The Game class

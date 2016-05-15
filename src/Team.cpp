@@ -1,15 +1,19 @@
 #include "Team.h"
-Team::Team()
+
+namespace Gameplay
 {
+	Team::Team()
+	{
 
-}
+	}
 
-Team::Team(const Team& newTeam)
-{
+	Team::Team(const Team& newTeam)
+	{
 
-}
+	}
 
-Team& Team::operator = (const Team& newTeam)
-{
-	return *this;
+	Team& Team::operator = (const Team& newTeam)
+	{
+		return *this;
+	}
 }

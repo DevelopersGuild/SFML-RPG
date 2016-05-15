@@ -1,4 +1,5 @@
 #include "Cursor.h"
+#include <iostream>
 
 Cursor::Cursor(sf::RenderWindow & newWindow) :
 	window(newWindow)
@@ -8,7 +9,8 @@ Cursor::Cursor(sf::RenderWindow & newWindow) :
 
 sf::Vector2f Cursor::getPosition()
 {
-	return sf::Vector2f(sf::Mouse::getPosition(window));
+	sf::Vector2f pos = sf::Vector2f(sf::Mouse::getPosition(window));
+	return pos;
 }
 
 void Cursor::setLogo(const sf::Texture& texture, const sf::IntRect& intrect) 
