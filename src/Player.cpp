@@ -119,7 +119,7 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	//4.for each map obj check if there is intersection, no collision test for other players
 	//assume no collided
 	bool collided = false;
-	if (cameraMap != currentMap)
+	if (cameraMap == currentMap)
 	{
 		std::vector<tmx::MapObject*> objVector = currentMap->QueryQuadTree(charPtr->getDectionArea());
 		for (tmx::MapObject* obj : objVector)
