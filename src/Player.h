@@ -29,7 +29,7 @@ namespace Gameplay
 		//the pointer to the current map
 		tmx::MapLoader* currentMap;
 
-		//has to player joined(connected) the game
+		//is the player joined(connected) the game
 		bool ready;
 	public:
 		Player(Configuration& config);

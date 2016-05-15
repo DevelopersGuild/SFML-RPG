@@ -39,40 +39,40 @@ namespace Gameplay
 		GameSystem operator=(const GameSystem&) = delete;
 		GameSystem(const GameSystem&&) = delete;
 
-		//move the player in the current map
-        void movePlayer(const std::string& playerName, const Character::Direction& direction);
-
 		//set the network pointer to Network module
 		void setNetworkPtr(GameNetwork* ptr) { networkPtr = ptr; }
 
 		//set the interface pointer to Interface module
 		void setInterfacePtr(GameInterface* ptr) { interfacePtr = ptr; }
 
+		//move the player in the current map
+		virtual void movePlayer(const std::string& playerName, const Character::Direction& direction);
+
 		//add the player to the target map
-		void addPlayertoMap(const std::string& playerName, const std::string& mapName, const std::string& location);
+		virtual void addPlayertoMap(const std::string& playerName, const std::string& mapName, const std::string& location);
 
 		//handle game events
-		void handleGameEvent(tmx::MapObject* eventObject);
+		virtual void handleGameEvent(tmx::MapObject* eventObject);
         
         //interact with objects
-        void interact();
+        virtual void interact();
 
 		//update the quadTree of current map
 		//see tmx::QuadTree
-		void updateQuadTree();
+		virtual void updateQuadTree();
 
-		//add map into the system
+		//add map into the mapTree
 		//note: only call this function when all players are initialized!
-		void loadMap(const std::string& filename);
+		virtual void loadMap(const std::string& filename);
 
 		//set the player "ready"
-		void setReady(const std::string& playerName, const bool& newState);
+		virtual void setReady(const std::string& playerName, const bool& newState);
 
 		//set the player's position in the map
-		void setPlayerPosition(const std::string& playerName, sf::Vector2f pos);
+		virtual void setPlayerPosition(const std::string& playerName, sf::Vector2f pos);
 
 		//get the position of the currentPlayer
-		sf::Vector2f getPlayerPosition() { return playerTree.at(config.player_name).getPosition(); }
+		virtual sf::Vector2f getPlayerPosition() { return playerTree.at(config.player_name).getPosition(); }
 	};
 }
 #endif /* GameSystem_h */

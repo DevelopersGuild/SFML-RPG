@@ -14,9 +14,6 @@ namespace Gameplay
 	private:
 
 	public:
-        ServerSystem(Configuration& config, std::unique_ptr<StartInfo>& startInfoPtr) : GameSystem::GameSystem(config, startInfoPtr)
-		{
-
-		}
+		ServerSystem(Configuration& config, std::unique_ptr<StartInfo>& startInfoPtr);
 	};
 }

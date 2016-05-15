@@ -28,6 +28,9 @@ namespace Gameplay
 
 		//get server's ip, invalid if this computer is server
 		sf::IpAddress& getServerIP() { return serverIP; }
+
+		//(for convenient) is this computer a server?
+		bool isServer() { return serverIP == sf::IpAddress::None; }
 	};
 }
 

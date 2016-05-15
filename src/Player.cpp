@@ -116,7 +116,7 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	if (objLayer == layer.end())
 		throw "not found!";
 
-	//4.for each map obj check if there is intersection, no collision test for other players
+	//4.for each map obj check if there is intersection, perform collision test if the current map is same as character's map
 	//assume no collided
 	bool collided = false;
 	if (cameraMap == currentMap)
