@@ -53,6 +53,13 @@ void Gameplay::GameNetwork::update()
 			package.packet >> mapName >> location;
 			system->addPlayertoMap(playerName_Tree.at(package.ip), mapName, location);
 		}
+		else if (signal == "setPosition")
+		{
+			float x, y;
+			package.packet >> x >> y;
+			sf::Vector2f position(x, y);
+			system->setPlayerPosition(playerName_Tree.at(package.ip), position);
+		}
         connection.pop();
 	}
 }

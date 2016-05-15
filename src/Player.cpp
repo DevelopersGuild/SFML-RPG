@@ -1,7 +1,7 @@
 #include "Player.h"
 using namespace Gameplay;
 
-Player::Player(Configuration& config)
+Player::Player(Configuration& newConfig) : config(newConfig)
 {
 	name = "Unnamed player";
 	currentMap = nullptr;
@@ -9,7 +9,7 @@ Player::Player(Configuration& config)
 	charPtr.reset(new Character(config));
 }
 
-Player::Player(Configuration& config, const std::string& playerName, const std::string& charName)
+Player::Player(Configuration& newConfig, const std::string& playerName, const std::string& charName) : config(newConfig)
 {
 	name = playerName;
 	currentMap = nullptr;
@@ -116,14 +116,17 @@ tmx::MapObject* Player::moveCharacter(const Character::Direction& direction)
 	if (objLayer == layer.end())
 		throw "not found!";
 
-	//4.for each map obj check if there is intersection
+	//4.for each map obj check if there is intersection, no collision test for other players
 	//assume no collided
 	bool collided = false;
-	std::vector<tmx::MapObject*> objVector = currentMap->QueryQuadTree(charPtr->getDectionArea());
-	for (tmx::MapObject* obj : objVector)
+	if (name == config.player_name)
 	{
-		if (obj->GetParent() == "Objects" && charRect.intersects(obj->GetAABB()))
-			collided = true;
+		std::vector<tmx::MapObject*> objVector = currentMap->QueryQuadTree(charPtr->getDectionArea());
+		for (tmx::MapObject* obj : objVector)
+		{
+			if (obj->GetParent() == "Objects" && charRect.intersects(obj->GetAABB()))
+				collided = true;
+		}
 	}
 
 	//5.if no collision, move the player. if collision, just change the direction

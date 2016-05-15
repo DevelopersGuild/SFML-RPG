@@ -13,6 +13,8 @@ namespace Gameplay
 	class Player : public sf::Drawable
 	{
 	private:
+		Configuration& config;
+
 		//the name of the player
 		std::string name;
 

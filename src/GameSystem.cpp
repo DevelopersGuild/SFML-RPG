@@ -44,10 +44,19 @@ void Gameplay::GameSystem::addPlayertoMap(const std::string& playerName, const s
 {
 	//mapName TBD
 	//...
-
-	currentMap = mapTree.at(mapName);
-	Player& player = playerTree.at(playerName);
-	player.changeMap(currentMap, location);
+	//if the player is the one controling this computer...
+	if (playerName == config.player_name)
+	{
+		currentMap = mapTree.at(mapName);
+		Player& player = playerTree.at(playerName);
+		player.changeMap(currentMap, location);
+	}
+	else //if it is another player...
+	{
+		tmx::MapLoader* newMap = mapTree.at(mapName);
+		Player& player = playerTree.at(playerName);
+		player.changeMap(newMap, location);
+	}
 }
 
 void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
@@ -123,6 +132,12 @@ void Gameplay::GameSystem::setReady(const std::string& playerName, const bool& n
 	//get the target player
 	Player& player = playerTree.at(playerName);
 	player.setReady(newState);
+}
+
+void Gameplay::GameSystem::setPlayerPosition(const std::string & playerName, sf::Vector2f pos)
+{
+	Player& player = playerTree.at(playerName);
+	player.setCharacterPosition(pos);
 }
 
 void Gameplay::GameSystem::interact()

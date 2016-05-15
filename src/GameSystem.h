@@ -67,6 +67,12 @@ namespace Gameplay
 
 		//set the player "ready"
 		void setReady(const std::string& playerName, const bool& newState);
+
+		//set the player's position in the map
+		void setPlayerPosition(const std::string& playerName, sf::Vector2f pos);
+
+		//get the position of the currentPlayer
+		sf::Vector2f getPlayerPosition() { return playerTree.at(config.player_name).getPosition(); }
 	};
 }
 #endif /* GameSystem_h */
