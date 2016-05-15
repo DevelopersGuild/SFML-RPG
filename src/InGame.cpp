@@ -19,8 +19,7 @@ void InGame::run()
 	sf::RenderWindow& window = config.window;
 	window.setFramerateLimit(60);
 
-	int client_position_update = 0;	//To be changed, update the position for every 5 calls
-
+	sf::Clock client_position_clock;	//when clock > 3s, send a position update to the server
 	while (window.isOpen())
 	{
 		//input & update phase
@@ -51,7 +50,6 @@ void InGame::run()
 				packet << "move";
 				packet << "left";
 				networkPtr->send(networkPtr->getServerIP(), packet);
-				client_position_update++;
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
@@ -63,7 +61,6 @@ void InGame::run()
 				packet << "move";
 				packet << "right";
 				networkPtr->send(networkPtr->getServerIP(), packet);
-				client_position_update++;
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
@@ -75,7 +72,6 @@ void InGame::run()
 				packet << "move";
 				packet << "down";
 				networkPtr->send(networkPtr->getServerIP(), packet);
-				client_position_update++;
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
@@ -87,11 +83,10 @@ void InGame::run()
 				packet << "move";
 				packet << "up";
 				networkPtr->send(networkPtr->getServerIP(), packet);
-				client_position_update++;
 			}
 		}
 
-		if (client_position_update > 5)
+		if (client_position_clock.getElapsedTime() > sf::seconds(3))
 		{
 			sf::Packet packet;
 			packet << "setPosition";
@@ -99,7 +94,7 @@ void InGame::run()
 			float y = systemPtr->getPlayerPosition().y;
 			packet << x << y;
 			networkPtr->send(networkPtr->getServerIP(), packet);
-			client_position_update = 0;
+			client_position_clock.restart();
 		}
 
 		config.cursor.update();
