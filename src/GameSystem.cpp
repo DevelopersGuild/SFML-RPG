@@ -96,6 +96,10 @@ void Gameplay::GameSystem::loadMap(const std::string & filename)
 	//place every player in the corner of the map
 	//TBD, only testing map available
 	auto& layerVector = newMap->GetLayers();
+
+	//reserve the vector to prevent reallocation
+	//layerVector.reserve(8);
+
 	auto playerLayer = find_if(layerVector.begin(), layerVector.end(), [&](tmx::MapLayer& layer)
 	{
 		return layer.name == "Player";
@@ -103,6 +107,9 @@ void Gameplay::GameSystem::loadMap(const std::string & filename)
 
 	if (playerLayer == layerVector.end())
 		throw "not found!";
+
+	//reserve the vector to prevent reallocation
+	//playerLayer->objects.reserve(8);
 
 	//create a map object representing player
     for(auto& pair: playerTree)

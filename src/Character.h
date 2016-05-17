@@ -45,7 +45,7 @@ namespace Gameplay
 		Configuration& config;
 
 		//the pointer to playerObj in the map
-		std::vector<tmx::MapLayer>* mapCharPtr;
+		tmx::MapObject* mapCharPtr;
 
 		//the name of the character
 		std::string name;
@@ -78,7 +78,7 @@ namespace Gameplay
 		SpriteList rightList;
 		SpriteList downList;
 
-		tmx::MapObject* findThisCharacter();
+		//tmx::MapObject* findThisCharacter();
 	public:
 		Character(Configuration& newConfig);
 
@@ -96,7 +96,7 @@ namespace Gameplay
 
 		const sf::Vector2f& getPosition() { return sprite.getPosition(); }
 
-		void setCharLayer(std::vector<tmx::MapLayer>* ptr) { mapCharPtr = ptr; }
+		void setCharLayer(tmx::MapObject* ptr) { mapCharPtr = ptr; }
 
 		//get the AABB representation in the map
 		sf::FloatRect getAABB();
