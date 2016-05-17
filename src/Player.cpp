@@ -112,7 +112,7 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	auto& layer = currentMap->GetLayers();
 
 	//3.get object Layer
-	auto& objLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
+	const auto& objLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
 		return mapLayer.name == "Objects";
 	});
 
@@ -122,7 +122,7 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	//assume no collided
 	bool collided = false;
 
-	std::vector<tmx::MapObject*>& objVector = currentMap->QueryQuadTree(charPtr->getDectionArea());
+	const std::vector<tmx::MapObject*>& objVector = currentMap->QueryQuadTree(charPtr->getDectionArea());
 		
 	for (tmx::MapObject* obj : objVector)
 	{
@@ -141,7 +141,7 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 
 	//6.perform the event check
 	//go to event layer
-	auto& eventLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
+	const auto& eventLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
 		return mapLayer.name == "Event";
 	});
 	
