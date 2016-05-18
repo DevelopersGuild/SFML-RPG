@@ -67,6 +67,9 @@ namespace Gameplay
 
 		//character's sprite
 		sf::Sprite sprite;
+        
+        //character's name
+        sf::Text nameText;
 
 		//the clock to update sprite
 		sf::Clock spriteClock;
@@ -77,8 +80,6 @@ namespace Gameplay
 		SpriteList leftList;
 		SpriteList rightList;
 		SpriteList downList;
-
-		//tmx::MapObject* findThisCharacter();
 	public:
 		Character(Configuration& newConfig);
 

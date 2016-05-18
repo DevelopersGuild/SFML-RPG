@@ -1,29 +1,6 @@
 #include "Character.h"
 using namespace Gameplay;
 
-/*
-tmx::MapObject* Gameplay::Character::findThisCharacter()
-{
-	//get the the "Player" layer of the map
-	std::vector<tmx::MapLayer>::iterator playerLayer = find_if(mapCharPtr->begin(), mapCharPtr->end(), [&](tmx::MapLayer& layer)
-	{
-		return layer.name == "Player";
-	});
-
-	//get the object vector from player layer
-	std::vector<tmx::MapObject>& playerVector = playerLayer->objects;
-
-	//find the target player
-	for (tmx::MapObject& player : playerVector)
-	{
-		if (player.GetName() == name)
-			return &player;
-	}
-
-	//player not found, throw exception
-	throw "player not found!";
-}
-*/
 Character::Character(Configuration& newConfig) : config(newConfig)
 {
 	mapCharPtr = nullptr;
@@ -48,11 +25,17 @@ Character::Character(Configuration& newConfig) : config(newConfig)
 	sprite.setTexture(config.texMan.get("Actor4.png"));
 	sprite.setTextureRect(downList.getNext());
     sprite.setOrigin(16, 16);
+    
+    nameText.setString(name);
+    nameText.setFont(config.fontMan.get("Carlito-Regular.ttf"));
+    nameText.setCharacterSize(10);
+    nameText.setColor(sf::Color::Black);
 }
 
 Character::Character(Configuration& newConfig, const std::string& newName) : Character(newConfig)
 {
 	name = newName;
+    nameText.setString(name);
 }
 
 void Character::move(const Direction& newDirection)
@@ -106,6 +89,8 @@ void Character::move(const Direction& newDirection)
 		default:
 			;
 		}
+        //set the position of player's name on the character's head
+        nameText.setPosition(sprite.getPosition() - sf::Vector2f(0, 27));
 	}
 
 }
@@ -113,12 +98,18 @@ void Character::move(const Direction& newDirection)
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(sprite);
+    target.draw(nameText);
 }
 
 void Gameplay::Character::setPosition(const sf::Vector2f & position)
 {
 	sprite.setPosition(position);
 	mapCharPtr->SetPosition(position + sf::Vector2f(-10, 4));
+    //set the position of player's name on the character's head
+    sf::FloatRect bound = nameText.getGlobalBounds();
+    nameText.setOrigin(bound.width / 2, bound.height / 2);
+    //set the position of player's name on the character's head
+    nameText.setPosition(sprite.getPosition() - sf::Vector2f(0, 27));
 }
 
 sf::FloatRect Gameplay::Character::getAABB()

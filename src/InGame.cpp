@@ -215,46 +215,51 @@ void InGame::handleKeyboardInput()
 	{
 		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::left);
 
-		if (networkPtr->getServerIP() != sf::IpAddress::None)
-		{
-			sf::Packet packet;
-			packet << "move";
-			packet << "left";
-			networkPtr->send(networkPtr->getServerIP(), packet);
-		}
+        sf::Packet packet;
+        packet << "move";
+        packet << "left";
+        
+		if (networkPtr->isServer())
+            networkPtr->boardCast(packet);
+        else
+            networkPtr->send(networkPtr->getServerIP(), packet);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
 	{
 		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::right);
-		if (networkPtr->getServerIP() != sf::IpAddress::None)
-		{
-			sf::Packet packet;
-			packet << "move";
-			packet << "right";
-			networkPtr->send(networkPtr->getServerIP(), packet);
-		}
+
+        sf::Packet packet;
+        packet << "move";
+        packet << "right";
+        
+        if (networkPtr->isServer())
+            networkPtr->boardCast(packet);
+        else
+            networkPtr->send(networkPtr->getServerIP(), packet);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
 	{
 		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::down);
-		if (networkPtr->getServerIP() != sf::IpAddress::None)
-		{
-			sf::Packet packet;
-			packet << "move";
-			packet << "down";
-			networkPtr->send(networkPtr->getServerIP(), packet);
-		}
+        sf::Packet packet;
+        packet << "move";
+        packet << "down";
+        
+        if (networkPtr->isServer())
+            networkPtr->boardCast(packet);
+        else
+            networkPtr->send(networkPtr->getServerIP(), packet);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
 	{
 		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::up);
-		if (networkPtr->getServerIP() != sf::IpAddress::None)
-		{
-			sf::Packet packet;
-			packet << "move";
-			packet << "up";
-			networkPtr->send(networkPtr->getServerIP(), packet);
-		}
+
+        sf::Packet packet;
+        packet << "move";
+        packet << "up";
+        if (networkPtr->isServer())
+            networkPtr->boardCast(packet);
+        else
+            networkPtr->send(networkPtr->getServerIP(), packet);
 	}
 }
 
