@@ -384,22 +384,7 @@ void Lobby::handlePacket(Package& package)
 		*/
 		if (signal == "lobby_update")
 		{
-			//clear the playerList
-			playerList.clear();
-			//get the size of the new playerList
-			sf::Int8 size;
-			package.packet >> size;
-			for (int i = 0; i < size; i++)
-			{
-				std::string name;
-				int charName;
-				package.packet >> name;
-				package.packet >> charName;
-				adjustName(name);
-				std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, sf::IpAddress(), static_cast<lobby::Character::Name>(charName)));
-				addPlayer(std::move(newPlayer));
-			}
-			updatePlayerList();
+			handleUpdatePacket(package.packet);
 		}
 		/*
 		Client : receive message for chatBox
