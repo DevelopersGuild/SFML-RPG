@@ -72,17 +72,18 @@ void Gameplay::GameNetwork::update()
 		}
 		else if (signal == "setPosition")
 		{
+			std::string playerName;
 			float x, y;
-			package.packet >> x >> y;
+			package.packet >> playerName >> x >> y;
 			sf::Vector2f position(x, y);
-			system->setPlayerPosition(playerName_Tree.at(package.ip), position);
+			system->setPlayerPosition(playerName, position);
             
             //if this is server, forward the move signal to other player
             if(isServer())
             {
                 sf::Packet packet;
                 packet << "setPosition" << x << y;
-                boardCast_excpet(playerName_Tree.at(package.ip), packet);
+                boardCast_excpet(playerName, packet);
             }
 		}
         connection.pop();

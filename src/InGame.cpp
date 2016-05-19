@@ -274,6 +274,7 @@ void InGame::client_sendUpdate()
 		//update the position
 		sf::Packet packet;
 		packet << "setPosition";
+		packet << config.player_name;
 		float x = systemPtr->getPlayerPosition().x;
 		float y = systemPtr->getPlayerPosition().y;
 		packet << x << y;
