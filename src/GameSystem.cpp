@@ -71,6 +71,7 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
 
 		sf::Packet packet;
 		packet << "changeMap";
+		packet << config.player_name;
 		packet << destination << destination_point;
 
 		//if this is client, send the changeMap signal to the server

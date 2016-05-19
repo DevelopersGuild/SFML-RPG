@@ -51,23 +51,24 @@ void Gameplay::GameNetwork::update()
             if(isServer())
             {
                 sf::Packet packet;
-                packet << playerName << "move" << direction;
+                packet << "move" << playerName << direction;
                 boardCast_excpet(playerName, packet);
             }
 		}
 		else if (signal == "changeMap")
 		{
 			std::string mapName;
+			std::string playerName;
 			std::string location;
-			package.packet >> mapName >> location;
-			system->addPlayertoMap(playerName_Tree.at(package.ip), mapName, location);
+			package.packet >> playerName >> mapName >> location;
+			system->addPlayertoMap(playerName, mapName, location);
             
             //if this is server, forward the move signal to other player
             if(isServer())
             {
                 sf::Packet packet;
-                packet << "changeMap" << mapName << location;
-                boardCast_excpet(playerName_Tree.at(package.ip), packet);
+                packet << "changeMap" << playerName << mapName << location;
+                boardCast_excpet(playerName, packet);
             }
 		}
 		else if (signal == "setPosition")
@@ -82,7 +83,7 @@ void Gameplay::GameNetwork::update()
             if(isServer())
             {
                 sf::Packet packet;
-                packet << "setPosition" << x << y;
+                packet << playerName << "setPosition" << x << y;
                 boardCast_excpet(playerName, packet);
             }
 		}
