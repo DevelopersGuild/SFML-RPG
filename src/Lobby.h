@@ -50,6 +50,9 @@ namespace lobby
 		tgui::Label::Ptr nameText;
 		tgui::Picture::Ptr charPic;
 
+		//this player is server?
+		bool isHost;
+
 		//a clock to count how much time not receviving anything from that player, TBD
 		//if no respond for cerain time, remove that player
 		sf::Clock lastReceiveClock;
@@ -82,8 +85,11 @@ namespace lobby
 		//note : client need to know the server's ip only, so the server does not have to send ip.
 		friend sf::Packet& operator<<(sf::Packet& packet, lobby::Player& me)
 		{
-			return packet << me.name << me.character.getName();
+			return packet << me.name << me.character.getName() << me.ip.toInteger() << me.isHost;
 		}
+
+		//set the boolean "host"
+		void setHost(bool boolean) { isHost = boolean; }
 	};
 }
 

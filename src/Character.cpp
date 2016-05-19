@@ -1,28 +1,6 @@
 #include "Character.h"
 using namespace Gameplay;
 
-tmx::MapObject* Gameplay::Character::findThisCharacter()
-{
-	//get the the "Player" layer of the map
-	std::vector<tmx::MapLayer>::iterator playerLayer = find_if(mapCharPtr->begin(), mapCharPtr->end(), [&](tmx::MapLayer& layer)
-	{
-		return layer.name == "Player";
-	});
-
-	//get the object vector from player layer
-	std::vector<tmx::MapObject>& playerVector = playerLayer->objects;
-
-	//find the target player
-	for (tmx::MapObject& player : playerVector)
-	{
-		if (player.GetName() == name)
-			return &player;
-	}
-
-	//player not found, throw exception
-	throw "player not found!";
-}
-
 Character::Character(Configuration& newConfig) : config(newConfig)
 {
 	mapCharPtr = nullptr;
@@ -47,20 +25,21 @@ Character::Character(Configuration& newConfig) : config(newConfig)
 	sprite.setTexture(config.texMan.get("Actor4.png"));
 	sprite.setTextureRect(downList.getNext());
     sprite.setOrigin(16, 16);
+    
+    nameText.setString(name);
+    nameText.setFont(config.fontMan.get("Carlito-Regular.ttf"));
+    nameText.setCharacterSize(10);
+    nameText.setColor(sf::Color::Black);
 }
 
 Character::Character(Configuration& newConfig, const std::string& newName) : Character(newConfig)
 {
 	name = newName;
+    nameText.setString(name);
 }
 
 void Character::move(const Direction& newDirection)
 {
-	tmx::MapObject* thisPlayer = findThisCharacter();
-	if (!thisPlayer)
-	{
-		throw "Player not found!";
-	}
 	//if the pointer to character on the map is null, do nothing.
 	if (mapCharPtr)
 	{
@@ -69,7 +48,7 @@ void Character::move(const Direction& newDirection)
 		{
 		case Direction::left:
 			sprite.move(-speed, 0);
-			thisPlayer->Move(-speed, 0);
+			mapCharPtr->Move(-speed, 0);
 			if (direction != newDirection || spriteClock.getElapsedTime() > sf::seconds(sprite_UpdateRate))
 			{
 				sprite.setTextureRect(leftList.getNext());
@@ -79,7 +58,7 @@ void Character::move(const Direction& newDirection)
 			break;
 		case Direction::right:
 			sprite.move(speed, 0);
-			thisPlayer->Move(speed, 0);
+			mapCharPtr->Move(speed, 0);
 			if (direction != newDirection || spriteClock.getElapsedTime() > sf::seconds(sprite_UpdateRate))
 			{
 				sprite.setTextureRect(rightList.getNext());
@@ -89,7 +68,7 @@ void Character::move(const Direction& newDirection)
 			break;
 		case Direction::up:
 			sprite.move(0, -speed);
-			thisPlayer->Move(0, -speed);
+			mapCharPtr->Move(0, -speed);
 			if (direction != newDirection || spriteClock.getElapsedTime() > sf::seconds(sprite_UpdateRate))
 			{
 				sprite.setTextureRect(upList.getNext());
@@ -99,7 +78,7 @@ void Character::move(const Direction& newDirection)
 			break;
 		case Direction::down:
 			sprite.move(0, speed);
-			thisPlayer->Move(0, speed);	
+			mapCharPtr->Move(0, speed);
 			if (direction != newDirection || spriteClock.getElapsedTime() > sf::seconds(sprite_UpdateRate))
 			{
 				sprite.setTextureRect(downList.getNext());
@@ -110,6 +89,8 @@ void Character::move(const Direction& newDirection)
 		default:
 			;
 		}
+        //set the position of player's name on the character's head
+        nameText.setPosition(sprite.getPosition() - sf::Vector2f(0, 27));
 	}
 
 }
@@ -117,29 +98,28 @@ void Character::move(const Direction& newDirection)
 void Character::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(sprite);
+    target.draw(nameText);
 }
 
 void Gameplay::Character::setPosition(const sf::Vector2f & position)
 {
 	sprite.setPosition(position);
-
-	tmx::MapObject* thisPlayer = findThisCharacter();
-	if (thisPlayer)
-		thisPlayer->SetPosition(position + sf::Vector2f(-10, 4));
+	mapCharPtr->SetPosition(position + sf::Vector2f(-10, 4));
+    //set the position of player's name on the character's head
+    sf::FloatRect bound = nameText.getGlobalBounds();
+    nameText.setOrigin(bound.width / 2, bound.height / 2);
+    //set the position of player's name on the character's head
+    nameText.setPosition(sprite.getPosition() - sf::Vector2f(0, 27));
 }
 
 sf::FloatRect Gameplay::Character::getAABB()
 {
-	tmx::MapObject* thisPlayer= findThisCharacter();
-	if (thisPlayer)
-		return thisPlayer->GetAABB();
-	else
-		throw "Player not found!";
+	return mapCharPtr->GetAABB();
 }
 
 sf::FloatRect Gameplay::Character::getDectionArea()
 {
-	return sf::FloatRect(sprite.getPosition() - sf::Vector2f(10, 10), sf::Vector2f(44, 44));
+	return sf::FloatRect(sprite.getPosition() - sf::Vector2f(16, 16), sf::Vector2f(32, 32));
 }
 
 void Gameplay::Character::setDirection(Direction newDirection)

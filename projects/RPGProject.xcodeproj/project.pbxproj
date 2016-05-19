@@ -54,6 +54,8 @@
 		FA84AE781CE13F3400B2ADE7 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = FA84AE741CE13F3400B2ADE7 /* sounds */; };
 		FA84AE791CE13F3400B2ADE7 /* Texture in Resources */ = {isa = PBXBuildFile; fileRef = FA84AE751CE13F3400B2ADE7 /* Texture */; };
 		FA84AE7B1CE1412800B2ADE7 /* maps in Resources */ = {isa = PBXBuildFile; fileRef = FA84AE7A1CE1412800B2ADE7 /* maps */; };
+		FAB8D9641CEB131A004466BA /* ClientSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAB8D9601CEB131A004466BA /* ClientSystem.cpp */; };
+		FAB8D9651CEB131A004466BA /* ServerSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAB8D9621CEB131A004466BA /* ServerSystem.cpp */; };
 		FACCE2151CD2B98F00327C9F /* InGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACCE2131CD2B98F00327C9F /* InGame.cpp */; };
 		FACCE2501CD4866100327C9F /* GameSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACCE24F1CD4866100327C9F /* GameSystem.cpp */; };
 		FACCE2571CD4A8FC00327C9F /* GameNetwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACCE2561CD4A8FC00327C9F /* GameNetwork.cpp */; };
@@ -136,6 +138,10 @@
 		FA84AE7A1CE1412800B2ADE7 /* maps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = maps; path = ../maps; sourceTree = "<group>"; };
 		FAAA79991C7E8BA300683E22 /* ResourceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ResourceManager.h; path = ../src/ResourceManager.h; sourceTree = SOURCE_ROOT; };
 		FAAB85021C56F6EF0028AF0B /* Interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Interface.h; path = ../src/Interface.h; sourceTree = SOURCE_ROOT; };
+		FAB8D9601CEB131A004466BA /* ClientSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ClientSystem.cpp; path = ../src/ClientSystem.cpp; sourceTree = SOURCE_ROOT; };
+		FAB8D9611CEB131A004466BA /* ClientSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClientSystem.h; path = ../src/ClientSystem.h; sourceTree = SOURCE_ROOT; };
+		FAB8D9621CEB131A004466BA /* ServerSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ServerSystem.cpp; path = ../src/ServerSystem.cpp; sourceTree = SOURCE_ROOT; };
+		FAB8D9631CEB131A004466BA /* ServerSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerSystem.h; path = ../src/ServerSystem.h; sourceTree = SOURCE_ROOT; };
 		FACCE2131CD2B98F00327C9F /* InGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InGame.cpp; path = ../src/InGame.cpp; sourceTree = SOURCE_ROOT; };
 		FACCE2141CD2B98F00327C9F /* InGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InGame.h; path = ../src/InGame.h; sourceTree = SOURCE_ROOT; };
 		FACCE24E1CD452EC00327C9F /* GameSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GameSystem.h; path = ../src/GameSystem.h; sourceTree = SOURCE_ROOT; };
@@ -232,6 +238,10 @@
 				FACCE25E1CDAAB8900327C9F /* Character.cpp */,
 				FACCE25F1CDAAB8900327C9F /* Character.h */,
 				FACCE25B1CDAAA8A00327C9F /* Player.cpp */,
+				FAB8D9601CEB131A004466BA /* ClientSystem.cpp */,
+				FAB8D9611CEB131A004466BA /* ClientSystem.h */,
+				FAB8D9621CEB131A004466BA /* ServerSystem.cpp */,
+				FAB8D9631CEB131A004466BA /* ServerSystem.h */,
 				FACCE25C1CDAAA8A00327C9F /* Player.h */,
 				FA1285181CC599510066AF05 /* Connection.cpp */,
 				FA1285211CC78DC70066AF05 /* StartInfo.cpp */,
@@ -392,6 +402,7 @@
 				FAFB1C001CBC51090012F144 /* Cursor.cpp in Sources */,
 				5F3A1B3C1BC8519100726EBF /* main.cpp in Sources */,
 				5F35EB571BC84F4300FCF070 /* ResourcePathMac.mm in Sources */,
+				FAB8D9651CEB131A004466BA /* ServerSystem.cpp in Sources */,
 				FACCE2571CD4A8FC00327C9F /* GameNetwork.cpp in Sources */,
 				FA12851C1CC599510066AF05 /* Connection.cpp in Sources */,
 				FA0497641C4A2F5800AC7816 /* MapObject.cpp in Sources */,
@@ -404,6 +415,7 @@
 				FACCE2151CD2B98F00327C9F /* InGame.cpp in Sources */,
 				FA0497621C4A2F5800AC7816 /* MapLoaderPrivate.cpp in Sources */,
 				FA0497651C4A2F5800AC7816 /* QuadTreeNode.cpp in Sources */,
+				FAB8D9641CEB131A004466BA /* ClientSystem.cpp in Sources */,
 				FACCE25A1CD4A97300327C9F /* GameInterface.cpp in Sources */,
 				FA4F4FD61C80FF15007C2936 /* Game.cpp in Sources */,
 			);

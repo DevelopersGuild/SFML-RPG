@@ -69,13 +69,19 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
         addPlayertoMap(thisPlayerPtr->getName(), destination, destination_point);
 		interfacePtr->exitTransition();
 
+		sf::Packet packet;
+		packet << "changeMap";
+		packet << config.player_name;
+		packet << destination << destination_point;
+
 		//if this is client, send the changeMap signal to the server
 		if (networkPtr->getServerIP() != sf::IpAddress::None)
 		{
-			sf::Packet packet;
-			packet << "changeMap";
-			packet << destination << destination_point;
 			networkPtr->send(networkPtr->getServerIP(), packet);
+		}
+		else //if this is server, boardcast the signal
+		{
+			networkPtr->boardCast(packet);
 		}
 	}
     else if(eventObject->GetType() == "dialogue")
@@ -96,6 +102,10 @@ void Gameplay::GameSystem::loadMap(const std::string & filename)
 	//place every player in the corner of the map
 	//TBD, only testing map available
 	auto& layerVector = newMap->GetLayers();
+
+	//reserve the vector to prevent reallocation
+	//layerVector.reserve(8);
+
 	auto playerLayer = find_if(layerVector.begin(), layerVector.end(), [&](tmx::MapLayer& layer)
 	{
 		return layer.name == "Player";
@@ -103,6 +113,9 @@ void Gameplay::GameSystem::loadMap(const std::string & filename)
 
 	if (playerLayer == layerVector.end())
 		throw "not found!";
+
+	//reserve the vector to prevent reallocation
+	//playerLayer->objects.reserve(8);
 
 	//create a map object representing player
     for(auto& pair: playerTree)
