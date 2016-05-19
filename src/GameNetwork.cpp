@@ -21,7 +21,7 @@ sf::Socket::Status Gameplay::GameNetwork::send(sf::IpAddress & ip, sf::Packet & 
 
 void Gameplay::GameNetwork::update()
 {
-	if (!connection.empty())
+	while(!connection.empty())
 	{
 		Package& package = connection.front();
 		std::string signal;
