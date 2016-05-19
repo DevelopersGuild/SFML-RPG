@@ -12,6 +12,7 @@ Lobby::Lobby(Configuration & newConfig) :
     
     //add server host into the lobby
     std::unique_ptr<lobby::Player> you(new lobby::Player(config.player_name, sf::IpAddress(), lobby::Character::SilverGuy));
+	you->setHost(true);	//you are the host
 	addPlayer(std::move(you));
 }
 
@@ -216,10 +217,25 @@ void Lobby::handleUpdatePacket(sf::Packet & updatePacket)
 	{
 		std::string name;
 		int charName;
+		int ip;
+		bool isServer;
 		updatePacket >> name;
 		updatePacket >> charName;
+		updatePacket >> ip;
+		updatePacket >> isServer;
 		adjustName(name);	//perform name check
-		std::unique_ptr<lobby::Player> newPlayer(new lobby::Player(name, sf::IpAddress(), static_cast<lobby::Character::Name>(charName)));
+		//is this player is server, set the ip
+		std::unique_ptr<lobby::Player> newPlayer;
+		if (isServer)
+		{
+			newPlayer.reset(new lobby::Player(name, serverIP, static_cast<lobby::Character::Name>(charName)));
+			newPlayer->setHost(true);
+		}
+		else
+		{
+			 newPlayer.reset(new lobby::Player(name, sf::IpAddress(ip), static_cast<lobby::Character::Name>(charName)));
+		}
+		
 		addPlayer(std::move(newPlayer));
 	}
 	updatePlayerList();
@@ -481,7 +497,8 @@ void Lobby::startGame()
 lobby::Player::Player(std::string newName, sf::IpAddress newIP, Character newChar) :
 	name(newName),
 	ip(newIP),
-	character(newChar)
+	character(newChar),
+	isHost(false)
 {
 	panel = std::make_shared<tgui::Panel>();
 	panel->setSize(350, 40);
