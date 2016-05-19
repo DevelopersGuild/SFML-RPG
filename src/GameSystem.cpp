@@ -69,13 +69,18 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
         addPlayertoMap(thisPlayerPtr->getName(), destination, destination_point);
 		interfacePtr->exitTransition();
 
+		sf::Packet packet;
+		packet << "changeMap";
+		packet << destination << destination_point;
+
 		//if this is client, send the changeMap signal to the server
 		if (networkPtr->getServerIP() != sf::IpAddress::None)
 		{
-			sf::Packet packet;
-			packet << "changeMap";
-			packet << destination << destination_point;
 			networkPtr->send(networkPtr->getServerIP(), packet);
+		}
+		else //if this is server, boardcast the signal
+		{
+			networkPtr->boardCast(packet);
 		}
 	}
     else if(eventObject->GetType() == "dialogue")
