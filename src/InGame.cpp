@@ -216,6 +216,7 @@ void InGame::handleKeyboardInput()
 		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::left);
 
         sf::Packet packet;
+		packet << config.player_name;
         packet << "move";
         packet << "left";
         
@@ -229,6 +230,7 @@ void InGame::handleKeyboardInput()
 		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::right);
 
         sf::Packet packet;
+		packet << config.player_name;
         packet << "move";
         packet << "right";
         
@@ -241,6 +243,7 @@ void InGame::handleKeyboardInput()
 	{
 		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::down);
         sf::Packet packet;
+		packet << config.player_name;
         packet << "move";
         packet << "down";
         
@@ -254,6 +257,7 @@ void InGame::handleKeyboardInput()
 		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::up);
 
         sf::Packet packet;
+		packet << config.player_name;
         packet << "move";
         packet << "up";
         if (networkPtr->isServer())

@@ -35,23 +35,24 @@ void Gameplay::GameNetwork::update()
 		}
 		else if (signal == "move")
 		{
+			std::string playerName;
 			std::string direction;
-			package.packet >> direction;
+			package.packet >> playerName >> direction;
 			if (direction == "right")
-				system->movePlayer(playerName_Tree.at(package.ip), Character::Direction::right);
+				system->movePlayer(playerName, Character::Direction::right);
 			else if(direction == "left")
-				system->movePlayer(playerName_Tree.at(package.ip), Character::Direction::left);
+				system->movePlayer(playerName, Character::Direction::left);
 			else if(direction == "up")
-				system->movePlayer(playerName_Tree.at(package.ip), Character::Direction::up);
+				system->movePlayer(playerName, Character::Direction::up);
 			else if(direction == "down")
-				system->movePlayer(playerName_Tree.at(package.ip), Character::Direction::down);
+				system->movePlayer(playerName, Character::Direction::down);
             
             //if this is server, forward the move signal to other player
             if(isServer())
             {
                 sf::Packet packet;
-                packet << "move" << direction;
-                boardCast_excpet(playerName_Tree.at(package.ip), packet);
+                packet << playerName << "move" << direction;
+                boardCast_excpet(playerName, packet);
             }
 		}
 		else if (signal == "changeMap")
