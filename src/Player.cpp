@@ -1,4 +1,6 @@
 #include "Player.h"
+#include <sstream>
+
 using namespace Gameplay;
 
 Player::Player(Configuration& newConfig) : config(newConfig)
@@ -34,14 +36,13 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 
 	//set the character pointer to the characterObj of this map
 	//look for the event layer
-	auto layerVector = currentMap->GetLayers();
+	auto& layerVector = currentMap->GetLayers();
 	auto eventLayer = find_if(layerVector.begin(), layerVector.end(), [&](tmx::MapLayer& layer)
 	{
 		return layer.name == "Event";
 	});
 
-	if (eventLayer == layerVector.end())
-		throw "not found!";	//TBD
+	assert (eventLayer != layerVector.end());
 
 	//look for the target obj
 	auto eventObj = find_if(eventLayer->objects.begin(), eventLayer->objects.end(), [&](tmx::MapObject& obj) {
@@ -57,20 +58,17 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 		return layer.name == "Player";
 	});
 
-	if (playerLayer == layerVector.end())
-		throw "not found!";
+	assert (playerLayer != layerVector.end());
 
 	//look for the target player
 	auto playerObj = find_if(playerLayer->objects.begin(), playerLayer->objects.end(), [&](tmx::MapObject& obj) {
 		return name == obj.GetName();
 	});
 
-	if (playerObj == playerLayer->objects.end())
-		throw "not found!";
+	assert(playerObj != playerLayer->objects.end());
 
 	//set the charPtr
-    
-	charPtr->setCharLayer(&currentMap->GetLayers());
+	charPtr->setCharLayer(&(*playerObj));
 
 	//move the player to event position
     sf::Vector2f eventPosition = eventObj->GetPosition();
@@ -79,6 +77,13 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 
 tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character::Direction& direction)
 {
+	//if character is not on the cameraMap, do not perform collision Test
+	if (cameraMap != currentMap)
+	{
+		charPtr->move(direction);
+		return nullptr;
+	}
+
 	//collision Test
 	//1.create a temporary float rect from player's rect
 	sf::FloatRect charRect = charPtr->getAABB();
@@ -106,29 +111,30 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 		;
 	}
 
-	//3.get the object layer of the current map, will use tmx's tree later
 	auto& layer = currentMap->GetLayers();
-	
-	auto objLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
+
+	//3.get object Layer
+	const auto& objLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
 		return mapLayer.name == "Objects";
 	});
 
-	if (objLayer == layer.end())
-		throw "not found!";
+	assert(objLayer != layer.end()); //if not found, terminate the program
 
-	//4.for each map obj check if there is intersection, no collision test for other players
+	//4.for each map obj check if there is intersection, perform collision test if the current map is same as character's map
 	//assume no collided
 	bool collided = false;
-	if (cameraMap == currentMap)
-	{
-		std::vector<tmx::MapObject*> objVector = currentMap->QueryQuadTree(charPtr->getDectionArea());
-		for (tmx::MapObject* obj : objVector)
-		{
-			if (obj->GetParent() == "Objects" && charRect.intersects(obj->GetAABB()))
-				collided = true;
-		}
-	}
 
+	const std::vector<tmx::MapObject*>& objVector = currentMap->QueryQuadTree(charPtr->getDectionArea());
+		
+	for (tmx::MapObject* obj : objVector)
+	{
+		if (obj->GetParent() == "Objects" && charRect.intersects(obj->GetAABB()))
+		{
+			collided = true;	//collision found, stop further searching
+			break;
+		}		
+	}
+	
 	//5.if no collision, move the player. if collision, just change the direction
 	if (!collided)
 		charPtr->move(direction);
@@ -137,22 +143,32 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 
 	//6.perform the event check
 	//go to event layer
-	auto eventLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
+	const auto& eventLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
 		return mapLayer.name == "Event";
 	});
-
-	if (eventLayer == layer.end())
-		throw "not found!";
 	
 	//if the player collides with any event object, return that object
 	auto eventObject = find_if(eventLayer->objects.begin(), eventLayer->objects.end(), [&](tmx::MapObject& obj) {
 		return obj.GetAABB().intersects(charPtr->getAABB());
 	});
-	
+
 	//7.return mapObjects pointer
-	//if not found, return nullptr. If found, return pointer to mapObject
+	//if not found, proceed battle check. If found, return pointer to mapObject
 	if (eventObject == eventLayer->objects.end())
-		return nullptr;
+	{
+		//if need battle, return the event_battle object in the map. Return nullptr else.
+		if (isBattleEncounter())
+		{
+			auto battleObject = find_if(eventLayer->objects.begin(), eventLayer->objects.end(), [&](tmx::MapObject& obj) {
+				return obj.GetName() == "event_battle";
+			});
+			charPtr->setDistance_lastBattle(0);	//test, should be in joinBattle() function.
+			assert(battleObject != eventLayer->objects.end()); //terminate if no battle object is found.(need battle, but no battle obj found.)
+			return &(*battleObject);
+		}
+		else
+			return nullptr;
+	}
 	else
 		return &(*eventObject);
 }
@@ -190,9 +206,8 @@ tmx::MapObject* Gameplay::Player::interact()
     auto eventLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
         return mapLayer.name == "Event";
     });
-    
-    if (eventLayer == layer.end())
-        throw "not found!";
+
+	assert(eventLayer != layer.end());
     
     //if the player collides with any event object, return that object
     auto eventObject = find_if(eventLayer->objects.begin(), eventLayer->objects.end(), [&](tmx::MapObject& obj) {
@@ -206,4 +221,22 @@ tmx::MapObject* Gameplay::Player::interact()
     }
     
     return temp;
+}
+
+bool Gameplay::Player::isBattleEncounter()
+{
+	//if the map is safe(town, house, etc...), then "battle" will be false, then skip this
+	if (currentMap->GetPropertyString("battle") == "true")
+	{
+		//get the rate of battle of this map
+		std::stringstream ss;
+		ss << currentMap->GetPropertyString("battle_rate");
+		int battle_rate;
+		ss >> battle_rate;
+
+		//TBD, Sabrina's part
+		if (charPtr->getDistance_lastBattle() / 8 > battle_rate)
+			return true;
+	}
+	return false;
 }

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="101">
+ <properties>
+  <property name="battle" value="false"/>
+ </properties>
  <tileset firstgid="1" name="desert" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48">
   <image source="tmw_desert_spacing.png" trans="ff00ff" width="265" height="199"/>
   <terraintypes>

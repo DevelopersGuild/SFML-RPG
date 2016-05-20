@@ -28,6 +28,15 @@ namespace Gameplay
 
 		//get server's ip, invalid if this computer is server
 		sf::IpAddress& getServerIP() { return serverIP; }
+
+		//(for convenient) is this computer a server?
+		bool isServer() { return serverIP == sf::IpAddress::None; }
+        
+        //boardcast the signal to every client(for server only)
+        void boardCast(sf::Packet& packet);
+        
+        //except the certain player, boardcast the signal to every player(for server only)
+        void boardCast_excpet(const std::string& playerName, sf::Packet& packet);
 	};
 }
 

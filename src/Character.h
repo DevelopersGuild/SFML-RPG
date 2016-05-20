@@ -45,7 +45,7 @@ namespace Gameplay
 		Configuration& config;
 
 		//the pointer to playerObj in the map
-		std::vector<tmx::MapLayer>* mapCharPtr;
+		tmx::MapObject* mapCharPtr;
 
 		//the name of the character
 		std::string name;
@@ -67,6 +67,9 @@ namespace Gameplay
 
 		//character's sprite
 		sf::Sprite sprite;
+        
+        //character's name
+        sf::Text nameText;
 
 		//the clock to update sprite
 		sf::Clock spriteClock;
@@ -78,7 +81,8 @@ namespace Gameplay
 		SpriteList rightList;
 		SpriteList downList;
 
-		tmx::MapObject* findThisCharacter();
+		//the distance that character moved after the latest battle
+		int distance_since_lastBattle;
 	public:
 		Character(Configuration& newConfig);
 
@@ -96,7 +100,7 @@ namespace Gameplay
 
 		const sf::Vector2f& getPosition() { return sprite.getPosition(); }
 
-		void setCharLayer(std::vector<tmx::MapLayer>* ptr) { mapCharPtr = ptr; }
+		void setCharLayer(tmx::MapObject* ptr) { mapCharPtr = ptr; }
 
 		//get the AABB representation in the map
 		sf::FloatRect getAABB();
@@ -107,6 +111,12 @@ namespace Gameplay
         Direction getDirection(){return direction;}
         
         void setDirection(Direction newDirection);
+
+		//get the distance that character has moved since the latest battle
+		int getDistance_lastBattle() { return distance_since_lastBattle; }
+
+		//set the distance that character has moved since the latest battle
+		void setDistance_lastBattle(int value) { distance_since_lastBattle = value; }
 	};
 }
 #endif

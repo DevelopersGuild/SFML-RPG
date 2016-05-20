@@ -32,6 +32,20 @@ private:
 	//Second phase: send/receive startGame signal
 	//client: send "ready" signal to server for every 5s; server: start anyway
 	bool waitForStart(std::unique_ptr<StartInfo>&,Connection*);
+
+
+	//update clock : send update to clients/ server at a certain of time
+	sf::Clock updateClock;
+
+	//handle game keyboard input
+	void handleKeyboardInput();
+
+	//client: send the update to server
+	void client_sendUpdate();
+
+	//server: send the update to clients
+	void server_sendUpdate();
+
 public:
 	InGame() = delete;
 	InGame(const InGame&) = delete;

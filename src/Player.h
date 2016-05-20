@@ -29,8 +29,12 @@ namespace Gameplay
 		//the pointer to the current map
 		tmx::MapLoader* currentMap;
 
-		//has to player joined(connected) the game
+		//is the player joined(connected) the game
 		bool ready;
+
+		//the function that determines whether the player will enter a battle or not.
+		bool isBattleEncounter();
+
 	public:
 		Player(Configuration& config);
 
@@ -38,9 +42,11 @@ namespace Gameplay
 
 		/*
 		move Character
+		if the character is on the cameraMap, perform collision check and move character.
+		if the character is not on the cameraMap, move character but no collision check.
 		return pointer to the eventObject on the map, return null is no event found.
 		*/
-		tmx::MapObject* moveCharacter(tmx::MapLoader* currentMap, const Character::Direction& direction);
+		tmx::MapObject* moveCharacter(tmx::MapLoader* cameraMap, const Character::Direction& direction);
 
 		//draw the character on the screen
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const;

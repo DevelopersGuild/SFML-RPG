@@ -17,14 +17,14 @@ InGame::~InGame()
 void InGame::run()
 {
 	sf::RenderWindow& window = config.window;
-	//window.setFramerateLimit(60);
+	window.setFramerateLimit(60);
 
-	sf::Clock client_position_clock;	//when clock > 3s, send a position update to the server
 	while (window.isOpen())
 	{
 		//input & update phase
 		systemPtr->updateQuadTree();
 		networkPtr->update();
+
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
@@ -40,61 +40,17 @@ void InGame::run()
 			interfacePtr->updateGUI(event);
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
-		{
-			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::left);
+		//handle keyboard input, move character, interact...etc
+		handleKeyboardInput();
 
-			if (networkPtr->getServerIP() != sf::IpAddress::None)
-			{
-				sf::Packet packet;
-				packet << "move";
-				packet << "left";
-				networkPtr->send(networkPtr->getServerIP(), packet);
-			}
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+		//if this is server, send status update to client
+		if (networkPtr->isServer())
 		{
-			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::right);
-			if (networkPtr->getServerIP() != sf::IpAddress::None)
-			{
-				sf::Packet packet;
-				packet << "move";
-				packet << "right";
-				networkPtr->send(networkPtr->getServerIP(), packet);
-			}
+			server_sendUpdate();
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+		else //if this is client, send status update to server
 		{
-			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::down);
-			if (networkPtr->getServerIP() != sf::IpAddress::None)
-			{
-				sf::Packet packet;
-				packet << "move";
-				packet << "down";
-				networkPtr->send(networkPtr->getServerIP(), packet);
-			}
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
-		{
-			systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::up);
-			if (networkPtr->getServerIP() != sf::IpAddress::None)
-			{
-				sf::Packet packet;
-				packet << "move";
-				packet << "up";
-				networkPtr->send(networkPtr->getServerIP(), packet);
-			}
-		}
-
-		if (client_position_clock.getElapsedTime() > sf::seconds(3))
-		{
-			sf::Packet packet;
-			packet << "setPosition";
-			float x = systemPtr->getPlayerPosition().x;
-			float y = systemPtr->getPlayerPosition().y;
-			packet << x << y;
-			networkPtr->send(networkPtr->getServerIP(), packet);
-			client_position_clock.restart();
+			client_sendUpdate();
 		}
 
 		config.cursor.update();
@@ -190,15 +146,14 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 	}
 	delete temp_networkPtr;
 	//*************************************************************************
-	//if it is server, start server system...TBD
-	systemPtr = new Gameplay::GameSystem(config, startInfo);
+	//if it is server, start server system...
 	if (startInfo->type == StartInfo::TYPE::Server)
 	{
-		//systemPtr = new Gameplay::ServerSystem(config);
+		systemPtr = new Gameplay::ServerSystem(config, startInfo);
 	}
 	else //else it is client, start client system
 	{
-		//systemPtr = new Gameplay::ClientSystem();
+		systemPtr = new Gameplay::ClientSystem(config, startInfo);
 	}
 
 	//create network and interface which is pointing to the game system
@@ -252,5 +207,84 @@ bool InGame::waitForStart(std::unique_ptr<StartInfo>& startInfoPtr, Connection *
 		}
 	}
 	return false;
+}
+
+void InGame::handleKeyboardInput()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+	{
+		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::left);
+
+        sf::Packet packet;
+        packet << "move";
+		packet << config.player_name;
+        packet << "left";
+        
+		if (networkPtr->isServer())
+            networkPtr->boardCast(packet);
+        else
+            networkPtr->send(networkPtr->getServerIP(), packet);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+	{
+		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::right);
+
+        sf::Packet packet;
+        packet << "move";
+		packet << config.player_name;
+        packet << "right";
+        
+        if (networkPtr->isServer())
+            networkPtr->boardCast(packet);
+        else
+            networkPtr->send(networkPtr->getServerIP(), packet);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+	{
+		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::down);
+        sf::Packet packet;
+        packet << "move";
+		packet << config.player_name;
+        packet << "down";
+        
+        if (networkPtr->isServer())
+            networkPtr->boardCast(packet);
+        else
+            networkPtr->send(networkPtr->getServerIP(), packet);
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+	{
+		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::up);
+
+        sf::Packet packet;
+        packet << "move";
+		packet << config.player_name;
+        packet << "up";
+        if (networkPtr->isServer())
+            networkPtr->boardCast(packet);
+        else
+            networkPtr->send(networkPtr->getServerIP(), packet);
+	}
+}
+
+void InGame::client_sendUpdate()
+{
+	if (updateClock.getElapsedTime() > sf::seconds(2))
+	{
+		//update the position
+		sf::Packet packet;
+		packet << "setPosition";
+		packet << config.player_name;
+		float x = systemPtr->getPlayerPosition().x;
+		float y = systemPtr->getPlayerPosition().y;
+		packet << x << y;
+		networkPtr->send(networkPtr->getServerIP(), packet);
+		updateClock.restart();
+	}
+}
+
+void InGame::server_sendUpdate()
+{
+
 }
 
