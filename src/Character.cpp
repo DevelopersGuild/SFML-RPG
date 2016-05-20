@@ -12,6 +12,7 @@ Character::Character(Configuration& newConfig) : config(newConfig)
 	speed = 3;
 	direction = down;
 	sprite_UpdateRate = 0.08f;
+	distance_since_lastBattle = 0;
 
 	//initialize the spriteLists
 	for (int i = 0; i < 3; i++)
@@ -91,6 +92,9 @@ void Character::move(const Direction& newDirection)
 		}
         //set the position of player's name on the character's head
         nameText.setPosition(sprite.getPosition() - sf::Vector2f(0, 27));
+
+		//increse the distance_since_lastBattle(increase the change of battle encounter)
+		distance_since_lastBattle += speed;
 	}
 
 }

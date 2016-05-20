@@ -1,4 +1,6 @@
 #include "Player.h"
+#include <sstream>
+
 using namespace Gameplay;
 
 Player::Player(Configuration& newConfig) : config(newConfig)
@@ -151,9 +153,22 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	});
 
 	//7.return mapObjects pointer
-	//if not found, return nullptr. If found, return pointer to mapObject
+	//if not found, proceed battle check. If found, return pointer to mapObject
 	if (eventObject == eventLayer->objects.end())
-		return nullptr;
+	{
+		//if need battle, return the event_battle object in the map. Return nullptr else.
+		if (isBattleEncounter())
+		{
+			auto battleObject = find_if(eventLayer->objects.begin(), eventLayer->objects.end(), [&](tmx::MapObject& obj) {
+				return obj.GetName() == "event_battle";
+			});
+			charPtr->setDistance_lastBattle(0);	//test, should be in joinBattle() function.
+			assert(battleObject != eventLayer->objects.end()); //terminate if no battle object is found.(need battle, but no battle obj found.)
+			return &(*battleObject);
+		}
+		else
+			return nullptr;
+	}
 	else
 		return &(*eventObject);
 }
@@ -206,4 +221,22 @@ tmx::MapObject* Gameplay::Player::interact()
     }
     
     return temp;
+}
+
+bool Gameplay::Player::isBattleEncounter()
+{
+	//if the map is safe(town, house, etc...), then "battle" will be false, then skip this
+	if (currentMap->GetPropertyString("battle") == "true")
+	{
+		//get the rate of battle of this map
+		std::stringstream ss;
+		ss << currentMap->GetPropertyString("battle_rate");
+		int battle_rate;
+		ss >> battle_rate;
+
+		//TBD, Sabrina's part
+		if (charPtr->getDistance_lastBattle() / 8 > battle_rate)
+			return true;
+	}
+	return false;
 }

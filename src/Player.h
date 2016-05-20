@@ -31,6 +31,10 @@ namespace Gameplay
 
 		//is the player joined(connected) the game
 		bool ready;
+
+		//the function that determines whether the player will enter a battle or not.
+		bool isBattleEncounter();
+
 	public:
 		Player(Configuration& config);
 

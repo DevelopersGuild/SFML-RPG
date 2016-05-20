@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" nextobjectid="575">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" nextobjectid="576">
+ <properties>
+  <property name="battle" value="true"/>
+  <property name="battle_rate" value="100"/>
+ </properties>
  <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48">
   <image source="../../myTest5/maps/tmw_desert_spacing.png" trans="ff00ff" width="265" height="199"/>
   <terraintypes>
@@ -141,7 +145,7 @@
   <object id="574" x="736" y="1024" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Player">
-  <object id="443" name="Dummy" x="32" y="32" width="32" height="32"/>
+  <object id="443" name="Dummy" x="1888" y="1824" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Event">
   <object id="444" name="to_test.tmx" type="teleport" x="512" y="1888" width="96" height="32">
@@ -151,5 +155,10 @@
    </properties>
   </object>
   <object id="447" name="event_start" x="544" y="1824" width="32" height="32"/>
+  <object id="575" name="event_battle" type="battle" x="1888" y="1888" width="32" height="32">
+   <properties>
+    <property name="sanders" value="100"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

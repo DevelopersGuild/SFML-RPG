@@ -73,6 +73,9 @@ namespace Gameplay
 
 		//get the position of the currentPlayer
 		virtual sf::Vector2f getPlayerPosition() { return playerTree.at(config.player_name).getPosition(); }
+
+		//create battle on the map
+		//virtual void createBattle(tmx::MapLoader* map, sf::Vector2f position);
 	};
 }
 #endif /* GameSystem_h */

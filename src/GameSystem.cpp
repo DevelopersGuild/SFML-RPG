@@ -88,6 +88,10 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
     {
         std::cout << eventObject->GetPropertyString("content") << std::endl;
     }
+	else if (eventObject->GetType() == "battle")
+	{
+		std::cout << "Battle encountered." << std::endl;
+	}
 }
 
 void Gameplay::GameSystem::loadMap(const std::string & filename)

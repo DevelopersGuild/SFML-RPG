@@ -80,6 +80,9 @@ namespace Gameplay
 		SpriteList leftList;
 		SpriteList rightList;
 		SpriteList downList;
+
+		//the distance that character moved after the latest battle
+		int distance_since_lastBattle;
 	public:
 		Character(Configuration& newConfig);
 
@@ -108,6 +111,12 @@ namespace Gameplay
         Direction getDirection(){return direction;}
         
         void setDirection(Direction newDirection);
+
+		//get the distance that character has moved since the latest battle
+		int getDistance_lastBattle() { return distance_since_lastBattle; }
+
+		//set the distance that character has moved since the latest battle
+		void setDistance_lastBattle(int value) { distance_since_lastBattle = value; }
 	};
 }
 #endif
