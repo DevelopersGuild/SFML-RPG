@@ -176,3 +176,20 @@ void Gameplay::GameSystem::updateQuadTree()
 	sf::FloatRect cameraRect(position, camera.getSize());
 	currentMap->UpdateQuadTree(cameraRect);
 }
+
+void Gameplay::GameSystem::createBattle( const std::string& initPlayerName, tmx::MapObject* battleObj)
+{
+    //get the Player from name
+    Player& initPlayer = playerTree.at(initPlayerName);
+    //get the position of player
+    sf::Vector2f playerPos = initPlayer.getPosition();
+    
+    //let BattleFactory creates a battle
+    //Battle battle(battleObj, playerPos);
+    
+    //set player into the battle
+    //initPlayer.joinBattle(battle);
+    
+    //push the battle into the battleList
+    //battleList.push_back(battle);
+}
