@@ -91,6 +91,7 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
 	else if (eventObject->GetType() == "battle")
 	{
 		std::cout << "Battle encountered." << std::endl;
+        std::cout << "Name : " << eventObject->GetName() << std::endl;
 	}
 }
 

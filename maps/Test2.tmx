@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" nextobjectid="576">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" nextobjectid="578">
  <properties>
   <property name="battle" value="true"/>
   <property name="battle_rate" value="100"/>
  </properties>
  <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48">
-  <image source="../../myTest5/maps/tmw_desert_spacing.png" trans="ff00ff" width="265" height="199"/>
+  <image source="tmw_desert_spacing.png" trans="ff00ff" width="265" height="199"/>
   <terraintypes>
    <terrain name="road" tile="-1"/>
   </terraintypes>
@@ -155,7 +155,14 @@
    </properties>
   </object>
   <object id="447" name="event_start" x="544" y="1824" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Battle">
   <object id="575" name="event_battle" type="battle" x="1888" y="1888" width="32" height="32">
+   <properties>
+    <property name="sanders" value="100"/>
+   </properties>
+  </object>
+  <object id="577" name="battlezone1" type="battle" x="896" y="32" width="288" height="256">
    <properties>
     <property name="sanders" value="100"/>
    </properties>

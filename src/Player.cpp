@@ -159,12 +159,29 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 		//if need battle, return the event_battle object in the map. Return nullptr else.
 		if (isBattleEncounter())
 		{
-			auto battleObject = find_if(eventLayer->objects.begin(), eventLayer->objects.end(), [&](tmx::MapObject& obj) {
-				return obj.GetName() == "event_battle";
-			});
-			charPtr->setDistance_lastBattle(0);	//test, should be in joinBattle() function.
-			assert(battleObject != eventLayer->objects.end()); //terminate if no battle object is found.(need battle, but no battle obj found.)
-			return &(*battleObject);
+            charPtr->setDistance_lastBattle(0);	//test, should be in joinBattle() function.
+            
+            auto battleLayer = find_if(currentMap->GetLayers().begin(), currentMap->GetLayers().end(),[&](tmx::MapLayer& layer){
+                return layer.name == "Battle";
+            });
+            
+            //try to find the battlezone that player located
+            for(auto it = battleLayer->objects.begin(); it != battleLayer->objects.end(); it++)
+            {
+                //if player is in that battlezone, return that battle Object
+                if(it->GetAABB().contains(getPosition()))
+                {
+                    return &(*it);
+                }
+            }
+
+            //if not belong to any battlezone, return global battle object
+            auto globalBattleObj = find_if(battleLayer->objects.begin(), battleLayer->objects.end(), [&](tmx::MapObject& obj){
+                return obj.GetName() == "event_battle";
+            });
+            
+			assert(globalBattleObj != eventLayer->objects.end()); //terminate if no battle object is found.(need battle, but no battle obj found.)
+			return &(*globalBattleObj);
 		}
 		else
 			return nullptr;
