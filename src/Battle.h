@@ -2,6 +2,7 @@
 #define Battle_h
 
 #include <SFML/Graphics.hpp>
+#include "Character.h"
 /*
  Battle object
  -to start a battle, the game needs a battle Object.
@@ -54,12 +55,75 @@
 namespace Gameplay
 {
     /*
+    BattleCharacters
+    base class of characters in battle
+    */
+    class BattleCharacter : public sf::Drawable
+    {
+    public:
+        enum DIRECTION{left, right}; //direction of the character
+    protected:
+        sf::Sprite sprite;      //sprite for animation
+        SpriteList spriteList; //sprite intRect for animation
+        enum STATUS{active, non_active, dead} status; //status of character
+        DIRECTION direction;    //current direction of character facing
+        float speed;        //current speed of the character
+        std::string name;   //name of character
+        sf::Clock timer; //timer for animation
+    public:
+        //set the name of the character
+        void setName(const std::string& newName){name = newName;}
+        
+        //load character Sprite
+        virtual void loadSprite(sf::Texture& texture);
+        
+        //move character
+        virtual void move(DIRECTION direction);
+        
+        //animation update. Must be called per frame
+        virtual void animeUpdate();
+        
+        //draw the character on screen
+        virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    };
+    /*
+    BattlePlayer
+    the player in battle
+    */
+    class BattlePlayer : public BattleCharacter
+    {
+    private:
+        Character* charPtr; //pointer to real character
+    public:
+        
+    };
+    /*
+    BattleMonster
+    the monster in the battle
+    */
+    class BattleMonster : public BattleCharacter
+    {
+    private:
+        float max_speed; //max speed of monster
+        int atk; //attack value of monster
+        int def; //defence value of monster
+        int max_hp; //maximum hp of monster
+        int current_hp; //current hp of monster
+    public:
+        
+    };
+    /*
      Battle class
-     Handles the battle stuff in the game.
+     Handles the battle mechanism in the game.
      */
     class Battle
     {
     private:
+        //a tree of all BattleCharacter in the battle
+        std::map<std::string, BattleCharacter> characterTree;
+        
+        //the background image of battle
+        sf::Sprite background;
         
     public:
         

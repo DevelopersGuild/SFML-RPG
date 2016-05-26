@@ -17,10 +17,13 @@ namespace Gameplay
 	public:
 		SpriteList()
 		{
-			it = spriteList.begin();
 		}
         
-		void add(sf::IntRect&& newRect) { spriteList.push_back(newRect); }
+		void add(sf::IntRect&& newRect)
+        {
+            spriteList.push_back(newRect);
+            it = spriteList.begin(); //reset the iterator to prevent error
+        }
 
 		sf::IntRect getNext()
 		{
@@ -50,7 +53,10 @@ namespace Gameplay
 		//the name of the character
 		std::string name;
 
-		//Character's HP
+        //Character's max HP
+        int max_hp;
+        
+		//Character's current HP
 		int hp;
 
 		//Character's Attack
@@ -88,10 +94,6 @@ namespace Gameplay
 
 		Character(Configuration& newConfig, const std::string& newName);
 
-		void setSpeed(float newSpeed) { speed = newSpeed; }
-
-		float getSpeed() { return speed; }
-
 		void move(const Direction& newDirection);
 
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -117,6 +119,36 @@ namespace Gameplay
 
 		//set the distance that character has moved since the latest battle
 		void setDistance_lastBattle(int value) { distance_since_lastBattle = value; }
+        
+        //set the speed of character
+        void setSpeed(float newSpeed) { speed = newSpeed; }
+        
+        //get the speed of character
+        float getSpeed() { return speed; }
+        
+        //set the attack value of character
+        void setAtk(const int& value){atk = value;}
+        
+        //get tthe attack value of character
+        int getAtk(){return atk;}
+        
+        //set the defence value of character
+        void setDef(const int& value){def = value;}
+        
+        //get the defence value of character
+        int getDef(){return def;}
+        
+        //set the character's current hp. If value is greater than maxHp, it will set to maxHp only.
+        void setCurrentHp(const int& value);
+        
+        //get the current Hp of character
+        int getCurrentHp(){return hp;}
+        
+        //set the maximum hp of character
+        void setMaxHp(const int& value);
+        
+        //get the maximum hp of character
+        int getMaxHp(){return max_hp;}
 	};
 }
 #endif

@@ -3,7 +3,7 @@
 #include <memory>
 #include "Item.h"
 #include "Character.h"
-
+#include "Battle.h"
 /*
 Player class
 The player of the game.
@@ -24,13 +24,16 @@ namespace Gameplay
 		//Team pointer...TBD
 
 		//the pointer to the character that controlled by this player
-		std::unique_ptr<Character> charPtr;
+		Character character;
 
 		//the pointer to the current map
 		tmx::MapLoader* currentMap;
 
 		//is the player joined(connected) the game
 		bool ready;
+        
+        //state of player: normal, inBattle
+        enum STATE{normal, inBattle} state;
 
 		//the function that determines whether the player will enter a battle or not.
 		bool isBattleEncounter();
@@ -52,10 +55,10 @@ namespace Gameplay
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 		//set the position of the character
-		void setCharacterPosition(sf::Vector2f& position) { charPtr->setPosition(position); }
+		void setCharacterPosition(sf::Vector2f& position) { character.setPosition(position); }
 
 		//get the position of the character
-		const sf::Vector2f& getPosition() { return charPtr->getPosition(); }
+		const sf::Vector2f& getPosition() { return character.getPosition(); }
 
 		//get the name of the character
 		const std::string& getName() { return name; }
@@ -75,5 +78,11 @@ namespace Gameplay
 
 		//set playe ready to draw that player on the map
 		void setReady(bool boo) { ready = boo; }
+        
+        //change the state to inBattle.
+        void joinBattle(Battle& battle);
+        
+        //leave the battle and change the state back to normal
+        void leaveBattle();
 	};
 }

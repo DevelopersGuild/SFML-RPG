@@ -3,25 +3,29 @@
 
 using namespace Gameplay;
 
-Player::Player(Configuration& newConfig) : config(newConfig)
+Player::Player(Configuration& newConfig) :
+    config(newConfig),
+    character(config)
 {
 	name = "Unnamed player";
 	currentMap = nullptr;
 	ready = false;
-	charPtr.reset(new Character(config));
+    state = normal;
 }
 
-Player::Player(Configuration& newConfig, const std::string& playerName, const std::string& charName) : config(newConfig)
+Player::Player(Configuration& newConfig, const std::string& playerName, const std::string& charName) :
+    config(newConfig),
+    name(playerName),
+    character(config, charName)
 {
-	name = playerName;
 	currentMap = nullptr;
 	ready = false;
-	charPtr.reset(new Character(config, charName));
+    state = normal;
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	target.draw(*charPtr);
+	target.draw(character);
 }
 
 void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locationName)
@@ -29,7 +33,7 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 	//if the character is already in another map, put the character at invisible place(-50,-50)
 	if (currentMap != nullptr)
 	{
-		charPtr->setPosition(sf::Vector2f(-50,-50));
+		character.setPosition(sf::Vector2f(-50,-50));
 	}
 	//change pointer to the new map
 	currentMap = map;
@@ -68,11 +72,11 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 	assert(playerObj != playerLayer->objects.end());
 
 	//set the charPtr
-	charPtr->setCharLayer(&(*playerObj));
+	character.setCharLayer(&(*playerObj));
 
 	//move the player to event position
     sf::Vector2f eventPosition = eventObj->GetPosition();
-	charPtr->setPosition(eventPosition);
+	character.setPosition(eventPosition);
 }
 
 tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character::Direction& direction)
@@ -80,17 +84,17 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	//if character is not on the cameraMap, do not perform collision Test
 	if (cameraMap != currentMap)
 	{
-		charPtr->move(direction);
+		character.move(direction);
 		return nullptr;
 	}
 
 	//collision Test
 	//1.create a temporary float rect from player's rect
-	sf::FloatRect charRect = charPtr->getAABB();
+	sf::FloatRect charRect = character.getAABB();
 
 	//2.shift the temmporary rect to the direction
 	//get the speed of the player
-	float speed = charPtr->getSpeed();
+	float speed = character.getSpeed();
 
 	//shift according to the direction
 	switch (direction)
@@ -124,7 +128,7 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	//assume no collided
 	bool collided = false;
 
-	const std::vector<tmx::MapObject*>& objVector = currentMap->QueryQuadTree(charPtr->getDectionArea());
+	const std::vector<tmx::MapObject*>& objVector = currentMap->QueryQuadTree(character.getDectionArea());
 		
 	for (tmx::MapObject* obj : objVector)
 	{
@@ -137,9 +141,9 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	
 	//5.if no collision, move the player. if collision, just change the direction
 	if (!collided)
-		charPtr->move(direction);
+		character.move(direction);
     else
-        charPtr->setDirection(direction);
+        character.setDirection(direction);
 
 	//6.perform the event check
 	//go to event layer
@@ -149,7 +153,7 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	
 	//if the player collides with any event object, return that object
 	auto eventObject = find_if(eventLayer->objects.begin(), eventLayer->objects.end(), [&](tmx::MapObject& obj) {
-		return obj.GetAABB().intersects(charPtr->getAABB());
+		return obj.GetAABB().intersects(character.getAABB());
 	});
 
 	//7.return mapObjects pointer
@@ -159,7 +163,7 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 		//if need battle, return the event_battle object in the map. Return nullptr else.
 		if (isBattleEncounter())
 		{
-            charPtr->setDistance_lastBattle(0);	//test, should be in joinBattle() function.
+            character.setDistance_lastBattle(0);	//test, should be in joinBattle() function.
             
             auto battleLayer = find_if(currentMap->GetLayers().begin(), currentMap->GetLayers().end(),[&](tmx::MapLayer& layer){
                 return layer.name == "Battle";
@@ -180,7 +184,7 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
                 return obj.GetName() == "event_battle";
             });
             
-			assert(globalBattleObj != eventLayer->objects.end()); //terminate if no battle object is found.(need battle, but no battle obj found.)
+			assert(globalBattleObj != battleLayer->objects.end()); //terminate if no battle object is found.(need battle, but no battle obj found.)
 			return &(*globalBattleObj);
 		}
 		else
@@ -193,10 +197,10 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 tmx::MapObject* Gameplay::Player::interact()
 {
     tmx::MapObject* temp = nullptr;
-    Character::Direction direction = charPtr->getDirection();
+    Character::Direction direction = character.getDirection();
     
     //1.create a temporary float rect from player's rect
-    sf::FloatRect charRect = charPtr->getAABB();
+    sf::FloatRect charRect = character.getAABB();
     
     //2.slightly move the charRect along the character's direction
     switch (direction)
@@ -252,8 +256,18 @@ bool Gameplay::Player::isBattleEncounter()
 		ss >> battle_rate;
 
 		//TBD, Sabrina's part
-		if (charPtr->getDistance_lastBattle() / 8 > battle_rate)
+		if (character.getDistance_lastBattle() / 8 > battle_rate)
 			return true;
 	}
 	return false;
+}
+
+void Gameplay::Player::joinBattle(Gameplay::Battle &battle)
+{
+    //...
+}
+
+void Gameplay::Player::leaveBattle()
+{
+    //...
 }

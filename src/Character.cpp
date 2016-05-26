@@ -147,3 +147,21 @@ void Gameplay::Character::setDirection(Direction newDirection)
             ;
     }
 }
+
+void Gameplay::Character::setMaxHp(const int &value)
+{
+    max_hp = value;
+    if(max_hp < hp)
+    {
+        hp = max_hp;
+    }
+}
+
+void Gameplay::Character::setCurrentHp(const int &value)
+{
+    hp = value;
+    if(max_hp < hp)
+    {
+        hp = max_hp;
+    }
+}
