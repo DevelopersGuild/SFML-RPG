@@ -168,5 +168,25 @@ void Gameplay::Character::setCurrentHp(const int &value)
 
 void Gameplay::Character::gainExp(int value)
 {
-    
+	current_exp += value;
+
+	while(current_exp >= exp_cap) 
+	{
+		current_exp -= exp_cap;
+		levelUp();
+	}
+}
+
+void Gameplay::Character::levelUp()
+{
+	// TODO: test function when battle is done
+	// Update attributes
+	level++;
+	max_hp += 0;
+	atk += 0;
+	def += 0;
+	speed += 0;
+
+	// Update the exp_cap
+	exp_cap += 0;
 }

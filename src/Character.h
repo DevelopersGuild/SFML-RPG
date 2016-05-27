@@ -53,6 +53,9 @@ namespace Gameplay
 		//the name of the character
 		std::string name;
 
+		//Character's level
+		int level;
+
         //Character's max HP
         int max_hp;
         
@@ -158,6 +161,8 @@ namespace Gameplay
         
         //gain Exp. Check level up, update attributes....
         void gainExp(int value);
+
+		void levelUp();
 	};
 }
 #endif
