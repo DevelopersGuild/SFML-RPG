@@ -67,6 +67,12 @@ namespace Gameplay
 
 		//Character's Speed
 		float speed;
+        
+        //current exp of character
+        int current_exp;
+        
+        //exp needed to next level
+        int exp_cap;
 
 		//the Character's facing direction
 		Direction direction;
@@ -149,6 +155,9 @@ namespace Gameplay
         
         //get the maximum hp of character
         int getMaxHp(){return max_hp;}
+        
+        //gain Exp. Check level up, update attributes....
+        void gainExp(int value);
 	};
 }
 #endif

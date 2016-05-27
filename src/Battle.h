@@ -68,8 +68,10 @@ namespace Gameplay
         enum STATUS{active, non_active, dead} status; //status of character
         DIRECTION direction;    //current direction of character facing
         float speed;        //current speed of the character
+        int max_speed;      //the max speed of the character
         std::string name;   //name of character
-        sf::Clock timer; //timer for animation
+        sf::Clock spriteTimer; //timer for animation
+        sf::Clock moveTimer; //timer for moving
     public:
         //set the name of the character
         void setName(const std::string& newName){name = newName;}
@@ -82,6 +84,9 @@ namespace Gameplay
         
         //animation update. Must be called per frame
         virtual void animeUpdate();
+        
+        //set the position of character
+        virtual void setPosition(const sf::Vector2f& pos){sprite.setPosition(pos);}
         
         //draw the character on screen
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

@@ -165,3 +165,8 @@ void Gameplay::Character::setCurrentHp(const int &value)
         hp = max_hp;
     }
 }
+
+void Gameplay::Character::gainExp(int value)
+{
+    
+}
