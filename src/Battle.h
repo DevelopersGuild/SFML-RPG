@@ -2,7 +2,9 @@
 #define Battle_h
 
 #include <SFML/Graphics.hpp>
+#include <memory>
 #include "Character.h"
+#include "Configuration.h"
 /*
  Battle object
  -to start a battle, the game needs a battle Object.
@@ -62,19 +64,27 @@ namespace Gameplay
     {
     public:
         enum DIRECTION{left, right}; //direction of the character
+        enum TYPE{player, monster}; //type of the character
     protected:
         sf::Sprite sprite;      //sprite for animation
         SpriteList spriteList; //sprite intRect for animation
         enum STATUS{active, non_active, dead} status; //status of character
+        
         DIRECTION direction;    //current direction of character facing
+        TYPE type;
+        bool facing_right;  //bool for fixing the direction
         float speed;        //current speed of the character
         int max_speed;      //the max speed of the character
         std::string name;   //name of character
         sf::Clock spriteTimer; //timer for animation
         sf::Clock moveTimer; //timer for moving
     public:
+        BattleCharacter();
         //set the name of the character
         void setName(const std::string& newName){name = newName;}
+        
+        //get the name of the character
+        std::string getName(){return name;}
         
         //load character Sprite
         virtual void loadSprite(sf::Texture& texture);
@@ -90,6 +100,21 @@ namespace Gameplay
         
         //draw the character on screen
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        
+        //get the rectangle of the character
+        sf::FloatRect getAABB(){return sprite.getGlobalBounds();}
+        
+        //get the current speed of the character
+        float getSpeed(){return speed;}
+        
+        //set the current speed of the character
+        void setSpeed(float newSpeed){speed = newSpeed;}
+        
+        //get the maximum speed of the character
+        float getMaxSpeed(){return max_speed;}
+        
+        //set the maximum speed of the character
+        void setMaxSpeed(float value){max_speed = value;}
     };
     /*
     BattlePlayer
@@ -98,9 +123,9 @@ namespace Gameplay
     class BattlePlayer : public BattleCharacter
     {
     private:
-        Character* charPtr; //pointer to real character
+        Character& character; //pointer to real character
     public:
-        
+        BattlePlayer(Character& character);
     };
     /*
     BattleMonster
@@ -115,7 +140,9 @@ namespace Gameplay
         int max_hp; //maximum hp of monster
         int current_hp; //current hp of monster
     public:
-        
+        BattleMonster();
+        BattleMonster(float max_speed, int atk, int def, int max_hp);
+        void animeUpdate();
     };
     /*
      Battle class
@@ -124,14 +151,24 @@ namespace Gameplay
     class Battle
     {
     private:
+        //reference to the configuration
+        Configuration& config;
+        
         //a tree of all BattleCharacter in the battle
-        std::map<std::string, BattleCharacter> characterTree;
+        std::map<std::string, std::unique_ptr<BattleCharacter>> characterTree;
         
         //the background image of battle
-        sf::Sprite background;
+        sf::RectangleShape background;
         
+        void _collisionTest();
     public:
-        
+        Battle(Configuration& config);
+        void setBackGround(sf::Texture* texture);
+        void addCharacter(std::unique_ptr<BattleCharacter> charPtr);
+        void setCharPosition(const std::string& charName, int value);
+        void moveCharacter(const std::string& charName, BattleCharacter::DIRECTION direction);
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        void update();
     };
     
     /*
@@ -141,8 +178,10 @@ namespace Gameplay
     class BattleFactory
     {
     private:
-        
+        Configuration& config;
+        std::map<std::string, std::string> monsterFileMap; //For receviving monster's texture file's name
     public:
+        BattleFactory(Configuration& config);
         
     };
 

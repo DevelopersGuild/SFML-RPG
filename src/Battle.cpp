@@ -1,6 +1,14 @@
 #include "Battle.h"
 
 /*
+The constructor
+*/
+Gameplay::BattleCharacter::BattleCharacter()
+{
+    direction = DIRECTION::right;
+    facing_right = true;
+}
+/*
 BattleChar(base) loadSprite function
 Assume the picture is 320 height
 */
@@ -32,8 +40,22 @@ add 0.5 speed only
 */
 void Gameplay::BattleCharacter::move(Gameplay::BattleCharacter::DIRECTION newDirection)
 {
-    //if the direction is different, flip the sprite
-    //if(direction != newDirection)
+    if(direction != newDirection)
+    {
+        sprite.scale(-1, 1);
+        facing_right = !facing_right;
+    }
+    
+    if(direction == DIRECTION::right && !facing_right)
+    {
+        sprite.scale(-1,1);
+        facing_right = !facing_right;
+    }
+    else if(direction == DIRECTION::left && facing_right)
+    {
+        sprite.scale(-1, 1);
+        facing_right = !facing_right;
+    }
     
     //if speed is already at max speed, do nothing
     if(speed < max_speed && speed > -max_speed)
@@ -77,7 +99,7 @@ void Gameplay::BattleCharacter::animeUpdate()
         speed = 0;
     
     //if 0.8s has passed since the last sprite, go to the next sprite
-    if(spriteTimer.getElapsedTime() > sf::seconds(0.8))
+    if(spriteTimer.getElapsedTime() > sf::seconds(0.4))
     {
         sprite.setTextureRect(spriteList.getNext());
         spriteTimer.restart();
@@ -91,4 +113,184 @@ draw the sprite of character
 void Gameplay::BattleCharacter::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(sprite);
+}
+
+/*
+BattlePlayer constructor
+constructor of BattlePlayer class, need a character pointer
+*/
+Gameplay::BattlePlayer::BattlePlayer(Character& newCharacter) : character(newCharacter)
+{
+    speed = character.getSpeed();
+    max_speed = 4;  //TBD
+    type = player;
+}
+
+/*
+BattleMonster constructor
+default constructor of monster.
+*/
+Gameplay::BattleMonster::BattleMonster()
+{
+    max_speed = 2;
+    max_hp = 20;
+    current_hp = max_hp;
+    atk = 5;
+    def = 5;
+    direction = left;
+    facing_right = false;
+    type = monster;
+}
+
+/*
+BattleMonster constructor with attributes
+initiate attributes of monster
+*/
+Gameplay::BattleMonster::BattleMonster(float newMaxSpeed, int newAtk, int newDef, int newMaxHP)
+{
+    max_speed = newMaxSpeed;
+    atk = newAtk;
+    def = newDef;
+    max_hp = newMaxHP;
+    current_hp = max_hp;
+    direction = left;
+    facing_right = false;
+    type = monster;
+}
+
+/*
+BattleMonster animeUpdate
+the monster moves left.
+*/
+void Gameplay::BattleMonster::animeUpdate()
+{
+    this->move(left);
+    BattleCharacter::animeUpdate();
+}
+
+/*
+Battle constructor
+constructor of battle
+*/
+Gameplay::Battle::Battle(Configuration& newConfig) : config(newConfig)
+{
+    //the background is as big as the window
+    background.setSize(sf::Vector2f(config.window.getSize()));
+    
+}
+
+/*
+Battle setBackGround
+set the background of the battle
+*/
+void Gameplay::Battle::setBackGround(sf::Texture* texture)
+{
+    background.setTexture(texture);
+}
+
+/*
+Battle addCharacter
+add the character to the character Tree, if the playerName is already in the
+tree, rename the character with additional number.
+*/
+void Gameplay::Battle::addCharacter(std::unique_ptr<BattleCharacter> charPtr)
+{
+    std::string searchStr;
+    
+    for(int i = 0; ; i++)
+    {
+        searchStr = charPtr->getName();
+        if(i) searchStr += i;
+        
+        //search for the name in the character Tree
+        auto it = characterTree.find(searchStr);
+        //if not found, then add the character to the tree
+        if(it == characterTree.end())
+        {
+            charPtr->setName(searchStr);
+            characterTree.emplace(searchStr, std::move(charPtr));
+            return;
+        }
+    }
+}
+
+/*
+Battle setCharPosition
+set the position of the character.
+Since the battle is on x-axis only, so only one value is needed.
+if the name is not found, do nothing.
+*/
+void Gameplay::Battle::setCharPosition(const std::string& charName, int value)
+{
+    auto it = characterTree.find(charName);
+    if(it != characterTree.end())
+        it->second->setPosition(sf::Vector2f(value, 400));
+    return;
+}
+
+/*
+Battle moveCharacter
+move the character in certain direction
+if the name is not found, do nothing.
+*/
+void Gameplay::Battle::moveCharacter(const std::string &charName, BattleCharacter::DIRECTION direction)
+{
+    auto it = characterTree.find(charName);
+    it->second->move(direction);
+}
+
+/*
+Battle draw
+draw the battle in window
+*/
+void Gameplay::Battle::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    for(auto& pair : characterTree)
+    {
+        target.draw(*pair.second);
+    }
+}
+
+/*
+Battle update
+perform animation update and collision test(thus dealing damage)
+for battle. Must called in every frame.
+*/
+void Gameplay::Battle::update()
+{
+    for(auto& pair : characterTree)
+    {
+        pair.second->animeUpdate();
+    }
+    _collisionTest();
+}
+
+/*
+Battle collisionTest
+test if any two character intersect in the battle and then call 
+deal damage function.
+*/
+void Gameplay::Battle::_collisionTest()
+{
+    for(auto& pair : characterTree)
+    {
+        for(auto& otherPair : characterTree)
+        {
+            if(pair.first != otherPair.first && pair.second->getAABB().intersects(otherPair.second->getAABB()))
+            {
+                pair.second->setSpeed(4);
+                otherPair.second->setSpeed(-4);
+            }
+        }
+    }
+}
+
+/*
+BattleFactory constructor
+load all monster's name and their texture file's name into the tree.
+*/
+Gameplay::BattleFactory::BattleFactory(Configuration& newConfig) : config(newConfig)
+{
+    //load all monster name and texture filename here.
+    //...
 }

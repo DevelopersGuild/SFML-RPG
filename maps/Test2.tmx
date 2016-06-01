@@ -159,11 +159,13 @@
  <objectgroup name="Battle">
   <object id="575" name="event_battle" type="battle" x="1888" y="1888" width="32" height="32">
    <properties>
+    <property name="background" value="desert_bg.png"/>
     <property name="sanders" value="100"/>
    </properties>
   </object>
   <object id="577" name="battlezone1" type="battle" x="896" y="32" width="288" height="256">
    <properties>
+    <property name="background" value="desert_bg.png"/>
     <property name="sanders" value="100"/>
    </properties>
   </object>
