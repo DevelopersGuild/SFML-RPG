@@ -91,12 +91,12 @@ void Gameplay::GameInterface::setTransition()
 	transitionRect->setSize(gui.getSize());
 	//const sf::Vector2f& viewSize = view.getSize();
 
-	transitionRect->showWithEffect(tgui::ShowAnimationType::SlideFromRight, sf::seconds(0.2));
+	transitionRect->showWithEffect(tgui::ShowAnimationType::SlideFromRight, sf::seconds(0.2f));
 
 	//render loop to make sure Transition animation is not called again in 0.2s
 	sf::Clock clock;
 	sf::RenderWindow& window = system->config.window;
-	while (clock.getElapsedTime() < sf::seconds(0.2))
+	while (clock.getElapsedTime() < sf::seconds(0.2f))
 	{
 		window.clear();
 		this->draw();
@@ -106,12 +106,12 @@ void Gameplay::GameInterface::setTransition()
 
 void Gameplay::GameInterface::exitTransition()
 {
-	transitionRect->hideWithEffect(tgui::ShowAnimationType::SlideToLeft, sf::seconds(0.2));
+	transitionRect->hideWithEffect(tgui::ShowAnimationType::SlideToLeft, sf::seconds(0.2f));
 
 	//render loop to make sure Transition animation is not called again in 0.2s
 	sf::Clock clock;
 	sf::RenderWindow& window = system->config.window;
-	while (clock.getElapsedTime() < sf::seconds(0.2))
+	while (clock.getElapsedTime() < sf::seconds(0.2f))
 	{
 		window.clear();
 		this->draw();

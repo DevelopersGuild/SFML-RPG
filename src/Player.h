@@ -80,7 +80,7 @@ namespace Gameplay
 		void setReady(bool boo) { ready = boo; }
         
         //change the state to inBattle.
-        void joinBattle(Battle& battle);
+        void joinBattle(Gameplay::Battle& battle);
         
         //leave the battle and change the state back to normal
         void leaveBattle();

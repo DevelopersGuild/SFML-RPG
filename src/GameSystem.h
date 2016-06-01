@@ -23,6 +23,7 @@ namespace Gameplay
 	private:
 		GameNetwork* networkPtr;
 		GameInterface* interfacePtr;
+		BattleFactory battleFactory;
 	protected:
 		Configuration& config;
 

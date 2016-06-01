@@ -1,4 +1,6 @@
 #include "Battle.h"
+#include <fstream>
+#include <sstream>
 
 /*
 The constructor
@@ -287,10 +289,39 @@ void Gameplay::Battle::_collisionTest()
 
 /*
 BattleFactory constructor
-load all monster's name and their texture file's name into the tree.
+load all monster's name and their data into the tree.
 */
 Gameplay::BattleFactory::BattleFactory(Configuration& newConfig) : config(newConfig)
 {
     //load all monster name and texture filename here.
-    //...
+	std::ifstream input;
+	input.open(resourcePath() + "maps/monsterData.txt");
+	if (!input.is_open())
+	{
+		std::cout << "Error: maps/monsterData.txt not found!" << std::endl;
+		exit(1);
+	}
+	//load the data to a new BattleMonster
+	while (!input.eof())
+	{
+		std::string name, spriteName, line;
+		int max_speed, atk, def, max_hp;
+		std::getline(input, line);
+		std::stringstream ss(line);
+		ss >> name >> max_speed >> atk >> def >> max_hp >> spriteName;
+		monsterTree.emplace(name, BattleMonster(max_speed, atk, def, max_hp));
+		monsterTree.at(name).loadSprite(config.texMan.get(spriteName));
+	}
+	input.close();
+}
+
+/*
+BattleFactory generateBattle
+generate a battle based on the battleObject and player who started the battle
+*/
+std::shared_ptr<Gameplay::BattleCharacter> Gameplay::BattleFactory::generateBattle(tmx::MapObject* battleObject)
+{
+	//TBD
+	std::shared_ptr<Gameplay::BattleCharacter> temp(new BattleCharacter());
+	return temp;
 }

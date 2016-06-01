@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\Battle.cpp" />
     <ClCompile Include="..\..\src\Character.cpp" />
     <ClCompile Include="..\..\src\ClientSystem.cpp" />
     <ClCompile Include="..\..\src\Configuration.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="..\..\src\tmx\QuadTreeNode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\Battle.h" />
     <ClInclude Include="..\..\src\Character.h" />
     <ClInclude Include="..\..\src\ClientSystem.h" />
     <ClInclude Include="..\..\src\Configuration.h" />

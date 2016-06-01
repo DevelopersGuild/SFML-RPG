@@ -5,6 +5,7 @@
 #include <memory>
 #include "Character.h"
 #include "Configuration.h"
+
 /*
  Battle object
  -to start a battle, the game needs a battle Object.
@@ -88,6 +89,9 @@ namespace Gameplay
         
         //load character Sprite
         virtual void loadSprite(sf::Texture& texture);
+
+		//get the character Sprite
+		virtual const sf::Texture* getSprite() { return sprite.getTexture(); }
         
         //move character
         virtual void move(DIRECTION direction);
@@ -111,7 +115,7 @@ namespace Gameplay
         void setSpeed(float newSpeed){speed = newSpeed;}
         
         //get the maximum speed of the character
-        float getMaxSpeed(){return max_speed;}
+        int getMaxSpeed(){return max_speed;}
         
         //set the maximum speed of the character
         void setMaxSpeed(float value){max_speed = value;}
@@ -142,6 +146,19 @@ namespace Gameplay
     public:
         BattleMonster();
         BattleMonster(float max_speed, int atk, int def, int max_hp);
+
+		float getMaxSpeed() { return max_speed; }
+		int getAtk() { return atk; }
+		int getDef() { return def; }
+		int getMaxHP() { return max_hp; }
+		int getCurrent_hp() { return current_hp; }
+
+		void setMaxSpeed(float value) { max_speed = value; }
+		void setAtk(int value) { atk = value; }
+		void setDef(int value) { def = value; }
+		void setMaxHP(int value) { max_hp = value; }
+		void setCurrentHP(int value) { current_hp = value; }
+
         void animeUpdate();
     };
     /*
@@ -171,6 +188,7 @@ namespace Gameplay
         void update();
     };
     
+
     /*
     BattleFactory
     generate Battles
@@ -179,10 +197,10 @@ namespace Gameplay
     {
     private:
         Configuration& config;
-        std::map<std::string, std::string> monsterFileMap; //For receviving monster's texture file's name
+        std::map<std::string, BattleMonster> monsterTree; //For receviving monster's data
     public:
         BattleFactory(Configuration& config);
-        
+		std::shared_ptr<Gameplay::BattleCharacter> generateBattle(tmx::MapObject* battleObject);
     };
 
 }

@@ -7,7 +7,8 @@
 using namespace Gameplay;
 
 GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& startInfoPtr) :
-	config(newConfig)
+	config(newConfig),
+	battleFactory(newConfig)
 {
 	//create the players
     for(StartInfo::Player& player : startInfoPtr->playerList)
