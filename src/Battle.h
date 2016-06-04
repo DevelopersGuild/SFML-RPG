@@ -66,10 +66,11 @@ namespace Gameplay
     public:
         enum DIRECTION{left, right}; //direction of the character
         enum TYPE{player, monster}; //type of the character
+		enum STATUS { active, non_active, dead }; //status of character
     protected:
         sf::Sprite sprite;      //sprite for animation
         SpriteList spriteList; //sprite intRect for animation
-        enum STATUS{active, non_active, dead} status; //status of character
+        STATUS status; //status of character
         
         DIRECTION direction;    //current direction of character facing
         TYPE type;
@@ -106,19 +107,32 @@ namespace Gameplay
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         
         //get the rectangle of the character
-        sf::FloatRect getAABB(){return sprite.getGlobalBounds();}
+        virtual sf::FloatRect getAABB(){return sprite.getGlobalBounds();}
         
         //get the current speed of the character
-        float getSpeed(){return speed;}
+        virtual float getSpeed(){return speed;}
         
         //set the current speed of the character
-        void setSpeed(float newSpeed){speed = newSpeed;}
+        virtual void setSpeed(float newSpeed){speed = newSpeed;}
         
         //get the maximum speed of the character
-        int getMaxSpeed(){return max_speed;}
+        virtual float getMaxSpeed(){return max_speed;}
         
         //set the maximum speed of the character
-        void setMaxSpeed(float value){max_speed = value;}
+        virtual void setMaxSpeed(float value){max_speed = value;}
+
+		//the attributes
+		virtual int getAtk() = 0;
+		virtual int getDef() = 0;
+		virtual int getMaxHP() = 0;
+		virtual int getCurrent_hp() = 0;
+		virtual int getExp() = 0;
+
+		virtual void setAtk(int value) = 0;
+		virtual void setDef(int value) = 0;
+		virtual void setMaxHP(int value) = 0;
+		virtual void setCurrentHP(int value) = 0;
+		virtual void setExp(int value) = 0;
     };
     /*
     BattlePlayer
@@ -131,6 +145,17 @@ namespace Gameplay
     public:
         BattlePlayer(Character& character);
         void animeUpdate();
+		int getAtk() { return character.getAtk(); }
+		int getDef() { return character.getDef(); }
+		int getMaxHP() { return character.getMaxHp(); }
+		int getCurrent_hp() { return character.getCurrentHp(); }
+		int getExp(){ return character.getExp(); }
+
+		void setAtk(int value) { character.setAtk(value); }
+		void setDef(int value) { character.setDef(value); }
+		void setMaxHP(int value) { character.setMaxHp(value); }
+		void setCurrentHP(int value) { character.setCurrentHp(value); }
+		void setExp(int value) {character.setExp(value);}
     };
     /*
     BattleMonster
@@ -143,6 +168,7 @@ namespace Gameplay
         int def; //defence value of monster
         int max_hp; //maximum hp of monster
         int current_hp; //current hp of monster
+		int exp; //exp gained if the monster is defeated
     public:
         BattleMonster();
         BattleMonster(float max_speed, int atk, int def, int max_hp);
@@ -154,12 +180,14 @@ namespace Gameplay
 		int getDef() { return def; }
 		int getMaxHP() { return max_hp; }
 		int getCurrent_hp() { return current_hp; }
+		int getExp() { return exp; }
 
 		void setMaxSpeed(float value) { max_speed = value; }
 		void setAtk(int value) { atk = value; }
 		void setDef(int value) { def = value; }
 		void setMaxHP(int value) { max_hp = value; }
 		void setCurrentHP(int value) { current_hp = value; }
+		void setExp(int value) { exp = value; }
 
         void animeUpdate();
     };
@@ -169,6 +197,9 @@ namespace Gameplay
      */
     class Battle : public sf::Drawable
     {
+	public:
+		//the state of the battle
+		enum STATE{started, overed};
     private:
         //reference to the configuration
         Configuration& config;
@@ -178,14 +209,22 @@ namespace Gameplay
         
         //the background image of battle
         sf::RectangleShape background;
-        
+
+		//camera of battle
+		sf::View camera;
+
+		//the state of the battle
+		STATE state;
+
         void _collisionTest();
+		void _dealDamage(std::unique_ptr<BattleCharacter>& player, std::unique_ptr<BattleCharacter>& monster);
     public:
         Battle(Configuration& config);
         void setBackGround(sf::Texture* texture);
         void addCharacter(std::unique_ptr<BattleCharacter> charPtr);
         void setCharPosition(const std::string& charName, int value);
         void moveCharacter(const std::string& charName, BattleCharacter::DIRECTION direction);
+		const sf::View& getCamera() { return camera; }
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         void update();
     };

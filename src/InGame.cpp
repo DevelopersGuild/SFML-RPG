@@ -41,17 +41,16 @@ void InGame::run()
 		}
 
 		//handle keyboard input, move character, interact...etc
-		handleKeyboardInput();
+		if (systemPtr->isInBattle())
+			handleKeyboardInput_battle();
+		else
+			handleKeyboardInput();
 
 		//if this is server, send status update to client
 		if (networkPtr->isServer())
-		{
 			server_sendUpdate();
-		}
 		else //if this is client, send status update to server
-		{
 			client_sendUpdate();
-		}
 
 		config.cursor.update();
 
@@ -266,6 +265,12 @@ void InGame::handleKeyboardInput()
             networkPtr->send(networkPtr->getServerIP(), packet);
 	}
 }
+
+void InGame::handleKeyboardInput_battle()
+{
+
+}
+
 
 void InGame::client_sendUpdate()
 {

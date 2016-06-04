@@ -56,6 +56,9 @@ namespace Gameplay
 		//Character's level
 		int level;
 
+		//character's exp
+		int exp;
+
         //Character's max HP
         int max_hp;
         
@@ -161,6 +164,12 @@ namespace Gameplay
         
         //get the maximum hp of character
         int getMaxHp(){return max_hp;}
+
+		//get (not gain)the current exp value of the player
+		int getExp() { return exp; }
+
+		//set the current exp value of the player
+		void setExp(int value) { exp = value; }
         
         //gain Exp. Check level up, update attributes....
         void gainExp(int value);

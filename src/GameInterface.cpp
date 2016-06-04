@@ -32,7 +32,7 @@ void Gameplay::GameInterface::draw()
     if(system->currentBattle)
     {
         system->currentBattle->update();
-        window.setView(window.getDefaultView());
+		window.setView(system->currentBattle->getCamera());
         sf::RectangleShape test;
         test.setFillColor(sf::Color::Red);
         window.draw(*system->currentBattle);

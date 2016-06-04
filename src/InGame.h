@@ -40,6 +40,9 @@ private:
 	//handle game keyboard input
 	void handleKeyboardInput();
 
+	//handle game keyboard input for battle
+	void handleKeyboardInput_battle();
+
 	//client: send the update to server
 	void client_sendUpdate();
 

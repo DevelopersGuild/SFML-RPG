@@ -11,6 +11,7 @@ Gameplay::BattleCharacter::BattleCharacter()
 {
     direction = DIRECTION::right;
     facing_right = true;
+	status = active;
 }
 /*
 BattleChar(base) loadSprite function
@@ -156,6 +157,8 @@ Gameplay::BattleMonster::BattleMonster()
     direction = left;
     facing_right = false;
     type = monster;
+	status = active;
+	exp = 1;
 }
 
 /*
@@ -165,6 +168,7 @@ initiate attributes of monster
 Gameplay::BattleMonster::BattleMonster(float newMaxSpeed, int newAtk, int newDef, int newMaxHP)
 {
     max_speed = newMaxSpeed;
+	speed = 0;
     atk = newAtk;
     def = newDef;
     max_hp = newMaxHP;
@@ -172,6 +176,8 @@ Gameplay::BattleMonster::BattleMonster(float newMaxSpeed, int newAtk, int newDef
     direction = left;
     facing_right = false;
     type = monster;
+	status = active;
+	exp = 1;
 }
 
 /*
@@ -181,6 +187,7 @@ copy constructor
 Gameplay::BattleMonster::BattleMonster(const BattleMonster& newMonster)
 {
     max_speed = newMonster.max_speed;
+	speed = 0;
     atk = newMonster.atk;
     def = newMonster.def;
     max_hp = newMonster.max_hp;
@@ -188,6 +195,8 @@ Gameplay::BattleMonster::BattleMonster(const BattleMonster& newMonster)
     direction = newMonster.direction;
     facing_right = newMonster.facing_right;
     type = monster;
+	status = newMonster.status;
+	exp = newMonster.exp;
     const sf::Texture* texture = newMonster.sprite.getTexture();
     sf::Vector2u textureSize = texture->getSize();
     int num_frame = textureSize.x / 320;
@@ -205,6 +214,7 @@ assign constructor
 Gameplay::BattleMonster& Gameplay::BattleMonster::operator=(const BattleMonster& newMonster)
 {
     max_speed = newMonster.max_speed;
+	speed = 0;
     atk = newMonster.atk;
     def = newMonster.def;
     max_hp = newMonster.max_hp;
@@ -212,6 +222,8 @@ Gameplay::BattleMonster& Gameplay::BattleMonster::operator=(const BattleMonster&
     direction = newMonster.direction;
     facing_right = newMonster.facing_right;
     type = monster;
+	status = newMonster.status;
+	exp = newMonster.exp;
     const sf::Texture* texture = newMonster.sprite.getTexture();
     sf::Vector2u textureSize = texture->getSize();
     int num_frame = textureSize.x / 320;
@@ -236,11 +248,11 @@ void Gameplay::BattleMonster::animeUpdate()
 Battle constructor
 constructor of battle
 */
-Gameplay::Battle::Battle(Configuration& newConfig) : config(newConfig)
+Gameplay::Battle::Battle(Configuration& newConfig) : config(newConfig), camera(config.window.getDefaultView())
 {
     //the background is as big as the window
     background.setSize(sf::Vector2f(config.window.getSize()));
-    
+	state = started;
 }
 
 /*
@@ -345,12 +357,22 @@ void Gameplay::Battle::_collisionTest()
         {
             if(pair.first != otherPair.first && pair.second->getAABB().intersects(otherPair.second->getAABB()))
             {
-                pair.second->setSpeed(4);
-                otherPair.second->setSpeed(-4);
+				_dealDamage(pair.second, otherPair.second);
                 return;
             }
         }
     }
+}
+
+/*
+Battle dealDamage 
+determine the damage taken. Put the damage number to the rendering list, and set the speed of player and monster
+*/
+void Gameplay::Battle::_dealDamage(std::unique_ptr<BattleCharacter>& player, std::unique_ptr<BattleCharacter>& monster)
+{
+	
+	player->setSpeed(4);
+	monster->setSpeed(-4);
 }
 
 /*
@@ -371,11 +393,12 @@ Gameplay::BattleFactory::BattleFactory(Configuration& newConfig) : config(newCon
 	while (!input.eof())
 	{
 		std::string name, spriteName, line;
-		int max_speed, atk, def, max_hp;
+		int max_speed, atk, def, max_hp, exp;
 		std::getline(input, line);
 		std::stringstream ss(line);
-		ss >> name >> max_speed >> atk >> def >> max_hp >> spriteName;
+		ss >> name >> max_speed >> atk >> def >> max_hp >> exp >> spriteName;
         BattleMonster newMonster(max_speed, atk, def, max_hp);
+		newMonster.setExp(exp);
         newMonster.loadSprite(config.texMan.get(spriteName));
         monsterTree.emplace(name, newMonster);
 	}
