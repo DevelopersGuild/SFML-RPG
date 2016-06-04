@@ -19,15 +19,27 @@ void Gameplay::GameInterface::draw()
 	sf::RenderWindow& window = system->config.window;
 	updateCamera();	//update the camera
 
-	//draw the map
-	window.draw(*system->currentMap);
+    //draw the map
+    window.draw(*system->currentMap);
+    
+    //draw every player in the map
+    for (auto& pair : system->playerTree)
+    {
+        window.draw(pair.second);
+    }
+    
+    //if it is in battle, draw the battle
+    if(system->currentBattle)
+    {
+        system->currentBattle->update();
+        window.setView(window.getDefaultView());
+        sf::RectangleShape test;
+        test.setFillColor(sf::Color::Red);
+        window.draw(*system->currentBattle);
+        window.draw(test);
+    }
 
-	//draw every player in the map
-	for (auto& pair : system->playerTree)
-	{
-		window.draw(pair.second);
-	}
-	gui.draw();
+    gui.draw();
 	//debug
 	
 	//system->currentMap->Draw(system->config.window, tmx::MapLayer::DrawType::Debug, true);

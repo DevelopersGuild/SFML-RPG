@@ -156,6 +156,9 @@ namespace Gameplay
         //set the maximum hp of character
         void setMaxHp(const int& value);
         
+        //set the name of the character
+        std::string getName(){return name;}
+        
         //get the maximum hp of character
         int getMaxHp(){return max_hp;}
         

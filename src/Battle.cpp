@@ -1,6 +1,8 @@
 #include "Battle.h"
 #include <fstream>
 #include <sstream>
+#include <stdlib.h>
+#include <time.h>
 
 /*
 The constructor
@@ -126,6 +128,18 @@ Gameplay::BattlePlayer::BattlePlayer(Character& newCharacter) : character(newCha
     speed = character.getSpeed();
     max_speed = 4;  //TBD
     type = player;
+    name = newCharacter.getName();
+    max_speed = newCharacter.getSpeed();
+}
+
+/*
+BattlePlayer animeUpdate
+move the player right
+*/
+void Gameplay::BattlePlayer::animeUpdate()
+{
+    this->move(right);
+    BattleCharacter::animeUpdate();
 }
 
 /*
@@ -160,6 +174,54 @@ Gameplay::BattleMonster::BattleMonster(float newMaxSpeed, int newAtk, int newDef
     type = monster;
 }
 
+/*
+BattleMonster copy constructor
+copy constructor
+*/
+Gameplay::BattleMonster::BattleMonster(const BattleMonster& newMonster)
+{
+    max_speed = newMonster.max_speed;
+    atk = newMonster.atk;
+    def = newMonster.def;
+    max_hp = newMonster.max_hp;
+    current_hp = newMonster.current_hp;
+    direction = newMonster.direction;
+    facing_right = newMonster.facing_right;
+    type = monster;
+    const sf::Texture* texture = newMonster.sprite.getTexture();
+    sf::Vector2u textureSize = texture->getSize();
+    int num_frame = textureSize.x / 320;
+    for(int i = 0; i < num_frame; i++)
+        spriteList.add(sf::IntRect(i * 320, 0, 320, 320));
+    sprite.setTexture(*texture);
+    sprite.setOrigin(160, 160);
+    sprite.setTextureRect(spriteList.getNext());
+}
+
+/*
+BattleMonster assign constructor
+assign constructor
+*/
+Gameplay::BattleMonster& Gameplay::BattleMonster::operator=(const BattleMonster& newMonster)
+{
+    max_speed = newMonster.max_speed;
+    atk = newMonster.atk;
+    def = newMonster.def;
+    max_hp = newMonster.max_hp;
+    current_hp = newMonster.current_hp;
+    direction = newMonster.direction;
+    facing_right = newMonster.facing_right;
+    type = monster;
+    const sf::Texture* texture = newMonster.sprite.getTexture();
+    sf::Vector2u textureSize = texture->getSize();
+    int num_frame = textureSize.x / 320;
+    for(int i = 0; i < num_frame; i++)
+        spriteList.add(sf::IntRect(i * 320, 0, 320, 320));
+    sprite.setTexture(*texture);
+    sprite.setOrigin(160, 160);
+    sprite.setTextureRect(spriteList.getNext());
+    return *this;
+}
 /*
 BattleMonster animeUpdate
 the monster moves left.
@@ -226,7 +288,9 @@ void Gameplay::Battle::setCharPosition(const std::string& charName, int value)
 {
     auto it = characterTree.find(charName);
     if(it != characterTree.end())
-        it->second->setPosition(sf::Vector2f(value, 400));
+        it->second->setPosition(sf::Vector2f(value, 500));
+    else
+        std::cout << "Error: char not found." << std::endl;
     return;
 }
 
@@ -247,6 +311,7 @@ draw the battle in window
 */
 void Gameplay::Battle::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+    target.draw(background);
     for(auto& pair : characterTree)
     {
         target.draw(*pair.second);
@@ -282,6 +347,7 @@ void Gameplay::Battle::_collisionTest()
             {
                 pair.second->setSpeed(4);
                 otherPair.second->setSpeed(-4);
+                return;
             }
         }
     }
@@ -309,8 +375,9 @@ Gameplay::BattleFactory::BattleFactory(Configuration& newConfig) : config(newCon
 		std::getline(input, line);
 		std::stringstream ss(line);
 		ss >> name >> max_speed >> atk >> def >> max_hp >> spriteName;
-		monsterTree.emplace(name, BattleMonster(max_speed, atk, def, max_hp));
-		monsterTree.at(name).loadSprite(config.texMan.get(spriteName));
+        BattleMonster newMonster(max_speed, atk, def, max_hp);
+        newMonster.loadSprite(config.texMan.get(spriteName));
+        monsterTree.emplace(name, newMonster);
 	}
 	input.close();
 }
@@ -319,9 +386,43 @@ Gameplay::BattleFactory::BattleFactory(Configuration& newConfig) : config(newCon
 BattleFactory generateBattle
 generate a battle based on the battleObject and player who started the battle
 */
-std::shared_ptr<Gameplay::BattleCharacter> Gameplay::BattleFactory::generateBattle(tmx::MapObject* battleObject)
+std::shared_ptr<Gameplay::Battle> Gameplay::BattleFactory::generateBattle(tmx::MapObject* battleObject)
 {
-	//TBD
-	std::shared_ptr<Gameplay::BattleCharacter> temp(new BattleCharacter());
-	return temp;
+    //create empty battle
+    std::shared_ptr<Gameplay::Battle> battle(new Battle(config));
+    
+    //load the background
+    std::string background = battleObject->GetPropertyString("background");
+    battle->setBackGround(&config.texMan.get(background));
+    
+    //get the possible monster set
+    std::string monster_set = battleObject->GetPropertyString("monster_set");
+    std::stringstream ss(monster_set);
+    std::vector<std::string> monsterList;
+    std::string hold;
+    while(ss >> hold) monsterList.push_back(hold);
+    
+    int random = rand() % 100;
+    int min = 0, max = 0, temp = 0;
+    std::string result;
+    for(auto it = monsterList.begin(); it != monsterList.end(); it++)
+    {
+        std::stringstream numss(battleObject->GetPropertyString(*it));
+        numss >> temp;
+        max += temp;
+        
+        if(random >= min && random < max)
+        {
+            result = *it;
+            break;
+        }
+        min = max;
+    }
+    
+    //create a monster from the tree
+    std::unique_ptr<BattleMonster> monster(new BattleMonster(monsterTree.at(result)));
+    std::string monsterName = monster->getName();
+    battle->addCharacter(std::move(monster));
+    battle->setCharPosition(monsterName, 800);
+	return battle;
 }

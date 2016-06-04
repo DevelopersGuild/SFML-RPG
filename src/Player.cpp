@@ -262,12 +262,16 @@ bool Gameplay::Player::isBattleEncounter()
 	return false;
 }
 
-void Gameplay::Player::joinBattle(Gameplay::Battle &battle)
+void Gameplay::Player::joinBattle(std::shared_ptr<Battle> battle)
 {
-    //...
+    battlePtr = battle;
+    std::unique_ptr<BattleCharacter> battlePlayer(new BattlePlayer(character));
+    battlePlayer->loadSprite(config.texMan.get("playerSprite.png"));
+    battle->addCharacter(std::move(battlePlayer));
+    battle->setCharPosition(name, 200);
 }
 
 void Gameplay::Player::leaveBattle()
 {
-    //...
+    battlePtr.reset();
 }

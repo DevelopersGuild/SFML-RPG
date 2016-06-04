@@ -26,7 +26,6 @@ GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& sta
 	{
 		addPlayertoMap(pair.second.getName(), "test.tmx", "event_start");
 	}
-	
 }
 
 void Gameplay::GameSystem::movePlayer(const std::string& playerName, const Character::Direction & direction)
@@ -93,6 +92,7 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
 	{
 		std::cout << "Battle encountered." << std::endl;
         std::cout << "Name : " << eventObject->GetName() << std::endl;
+        createBattle(thisPlayerPtr->getName(), eventObject);
 	}
 }
 
@@ -181,17 +181,16 @@ void Gameplay::GameSystem::updateQuadTree()
 
 void Gameplay::GameSystem::createBattle( const std::string& initPlayerName, tmx::MapObject* battleObj)
 {
+    interfacePtr->setTransition();
     //get the Player from name
     Player& initPlayer = playerTree.at(initPlayerName);
     //get the position of player
     sf::Vector2f playerPos = initPlayer.getPosition();
-    
-    //let BattleFactory creates a battle
-    //Battle battle(battleObj, playerPos);
-    
-    //set player into the battle
-    //initPlayer.joinBattle(battle);
-    
-    //push the battle into the battleList
-    //battleList.push_back(battle);
+    //create battle
+    std::shared_ptr<Battle> battle(battleFactory.generateBattle(battleObj));
+    //the player joins the battle
+    initPlayer.joinBattle(battle);
+    if(initPlayerName == thisPlayerPtr->getName())
+        currentBattle = battle;
+    interfacePtr->exitTransition();
 }

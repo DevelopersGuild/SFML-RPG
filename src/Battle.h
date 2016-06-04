@@ -75,7 +75,7 @@ namespace Gameplay
         TYPE type;
         bool facing_right;  //bool for fixing the direction
         float speed;        //current speed of the character
-        int max_speed;      //the max speed of the character
+        float max_speed;      //the max speed of the character
         std::string name;   //name of character
         sf::Clock spriteTimer; //timer for animation
         sf::Clock moveTimer; //timer for moving
@@ -90,8 +90,8 @@ namespace Gameplay
         //load character Sprite
         virtual void loadSprite(sf::Texture& texture);
 
-		//get the character Sprite
-		virtual const sf::Texture* getSprite() { return sprite.getTexture(); }
+		//get the character Texture
+		virtual const sf::Texture* getTexture() { return sprite.getTexture(); }
         
         //move character
         virtual void move(DIRECTION direction);
@@ -130,6 +130,7 @@ namespace Gameplay
         Character& character; //pointer to real character
     public:
         BattlePlayer(Character& character);
+        void animeUpdate();
     };
     /*
     BattleMonster
@@ -138,7 +139,6 @@ namespace Gameplay
     class BattleMonster : public BattleCharacter
     {
     private:
-        float max_speed; //max speed of monster
         int atk; //attack value of monster
         int def; //defence value of monster
         int max_hp; //maximum hp of monster
@@ -146,6 +146,8 @@ namespace Gameplay
     public:
         BattleMonster();
         BattleMonster(float max_speed, int atk, int def, int max_hp);
+        BattleMonster(const BattleMonster&);
+        BattleMonster& operator=(const BattleMonster&);
 
 		float getMaxSpeed() { return max_speed; }
 		int getAtk() { return atk; }
@@ -165,7 +167,7 @@ namespace Gameplay
      Battle class
      Handles the battle mechanism in the game.
      */
-    class Battle
+    class Battle : public sf::Drawable
     {
     private:
         //reference to the configuration
@@ -200,7 +202,7 @@ namespace Gameplay
         std::map<std::string, BattleMonster> monsterTree; //For receviving monster's data
     public:
         BattleFactory(Configuration& config);
-		std::shared_ptr<Gameplay::BattleCharacter> generateBattle(tmx::MapObject* battleObject);
+		std::shared_ptr<Gameplay::Battle> generateBattle(tmx::MapObject* battleObject);
     };
 
 }

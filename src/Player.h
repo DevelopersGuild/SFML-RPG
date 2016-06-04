@@ -37,6 +37,9 @@ namespace Gameplay
 
 		//the function that determines whether the player will enter a battle or not.
 		bool isBattleEncounter();
+        
+        //the current battle of the player, null is no battle
+        std::shared_ptr<Battle> battlePtr;
 
 	public:
 		Player(Configuration& config);
@@ -80,7 +83,7 @@ namespace Gameplay
 		void setReady(bool boo) { ready = boo; }
         
         //change the state to inBattle.
-        void joinBattle(Gameplay::Battle& battle);
+        void joinBattle(std::shared_ptr<Battle> battle);
         
         //leave the battle and change the state back to normal
         void leaveBattle();
