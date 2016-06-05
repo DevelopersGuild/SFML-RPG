@@ -79,6 +79,9 @@ namespace Gameplay
         
         //exp needed to next level
         int exp_cap;
+        
+        //the number of continuous battle escaped(cannot escape after 3 times)
+        int num_Continuous_battle_escape;
 
 		//the Character's facing direction
 		Direction direction;
@@ -173,6 +176,12 @@ namespace Gameplay
         
         //gain Exp. Check level up, update attributes....
         void gainExp(int value);
+        
+        //get the number of continuous battle escaped
+        int getBattleEscaped(){return num_Continuous_battle_escape;}
+        
+        //increment the number of continuous battle escaped
+        void incBattleEscaped(){num_Continuous_battle_escape++;}
 
 		void levelUp();
 	};

@@ -194,3 +194,19 @@ void Gameplay::GameSystem::createBattle( const std::string& initPlayerName, tmx:
         currentBattle = battle;
     interfacePtr->exitTransition();
 }
+
+void Gameplay::GameSystem::deleteBattle()
+{
+    interfacePtr->setTransition();
+    currentBattle.reset();
+    interfacePtr->exitTransition();
+}
+
+bool Gameplay::GameSystem::isBattleOver()
+{
+    if(currentBattle)
+    {
+        return currentBattle->getState() == Battle::STATE::overed;
+    }
+    return true;    //there is no battle, return true anyway...
+}

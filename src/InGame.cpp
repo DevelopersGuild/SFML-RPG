@@ -42,7 +42,14 @@ void InGame::run()
 
 		//handle keyboard input, move character, interact...etc
 		if (systemPtr->isInBattle())
-			handleKeyboardInput_battle();
+        {
+            handleKeyboardInput_battle();
+            //if the battle is over, delete the battle
+            if(systemPtr->isBattleOver())
+            {
+                systemPtr->deleteBattle();
+            }
+        }
 		else
 			handleKeyboardInput();
 

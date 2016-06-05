@@ -8,11 +8,12 @@ Character::Character(Configuration& newConfig) : config(newConfig)
 	name = "Unnamed character";
 	hp = 100;
 	atk = 5;
-	def = 5;
+	def = 2;
 	speed = 3;
 	direction = down;
 	sprite_UpdateRate = 0.08f;
 	distance_since_lastBattle = 0;
+    num_Continuous_battle_escape = 0;
 
 	//initialize the spriteLists
 	for (int i = 0; i < 3; i++)

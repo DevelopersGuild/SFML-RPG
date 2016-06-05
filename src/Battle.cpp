@@ -139,8 +139,50 @@ move the player right
 */
 void Gameplay::BattlePlayer::animeUpdate()
 {
-    this->move(right);
+    if(status == STATUS::active)
+        this->move(right);
     BattleCharacter::animeUpdate();
+}
+
+/*
+BattlePlayer escapeBattle
+try to escape (or "be escaped") the battle. Failed if the number of continuous battle escaped
+is greater than 3.
+*/
+bool Gameplay::BattlePlayer::escapeBattle()
+{
+    if(character.getBattleEscaped() > 3)
+    {
+        return false;
+    }
+    else
+    {
+        character.incBattleEscaped();
+        return true;
+    }
+}
+
+/*
+BattlePlayer leaveBattle
+leave the battle normally.
+*/
+void Gameplay::BattlePlayer::leaveBattle()
+{
+    //nothing happen...
+}
+
+/*
+BattlePlayer takeDamage
+take the damage...if hp is below 0. The player is defeated and 
+flys out the battle.
+*/
+void Gameplay::BattlePlayer::takeDamage(int value)
+{
+    character.setCurrentHp(character.getCurrentHp() - value);
+    if(character.getCurrentHp() <= 0)
+    {
+        status = STATUS::non_active;
+    }
 }
 
 /*
@@ -240,8 +282,24 @@ the monster moves left.
 */
 void Gameplay::BattleMonster::animeUpdate()
 {
-    this->move(left);
+    if(status == BattleCharacter::STATUS::active)
+    {
+        this->move(left);
+    }
     BattleCharacter::animeUpdate();
+}
+
+/*
+BattleMonster takeDamage
+take Damage. Flys out when hp is below 0.
+*/
+void Gameplay::BattleMonster::takeDamage(int value)
+{
+    current_hp = current_hp - value;
+    if(current_hp <= 0)
+    {
+        status = STATUS::non_active;
+    }
 }
 
 /*
@@ -386,6 +444,7 @@ void Gameplay::Battle::update()
     for(auto& pair : characterTree)
     {
         pair.second->animeUpdate();
+        _hitWallTest(pair.second);
     }
     _collisionTest();
     
@@ -406,19 +465,57 @@ void Gameplay::Battle::update()
 }
 
 /*
+Battle hitWallTest
+check if the character hits the edge of the battle.
+*/
+void Gameplay::Battle::_hitWallTest(std::unique_ptr<BattleCharacter>& character)
+{
+    //if the target is hitting the invisible wall....
+    //right wall
+    if(character->getPosition().x >= background.getSize().x)
+    {
+        //if it is monster, stop the monster
+        if(character->getType() == BattleCharacter::TYPE::monster)
+            character->setPosition(sf::Vector2f(background.getSize().x, 500));
+        //if it is player, the player leaves the battle
+        if(character->getType() == BattleCharacter::TYPE::player)
+        {
+            character->leaveBattle();
+            this->state = STATE::overed;
+        }
+    }
+    else if(character->getPosition().x <= 0)//left wall
+    {
+        //if it is player, escape the battle if it is the first 3 times
+        if(character->getType() == BattleCharacter::TYPE::player)
+        {
+            if(character->escapeBattle())
+            {
+                this->state = STATE::overed;
+            }
+            else
+            {
+                character->setPosition(sf::Vector2f(0, 500)); //stop the player
+            }
+        }
+        //well it is impossible for monster to get to the left wall
+    }
+}
+
+/*
 Battle collisionTest
-test if any two character intersect in the battle and then call 
+test if any two character intersect in the battle and then call
 deal damage function.
 */
 void Gameplay::Battle::_collisionTest()
 {
     for(auto& pair : characterTree)
     {
-        if(pair.second->getType() == BattleCharacter::TYPE::player)
+        if(pair.second->getStatus() == BattleCharacter::STATUS::active && pair.second->getType() == BattleCharacter::TYPE::player)
         {
             for(auto& otherPair : characterTree)
             {
-                if(otherPair.second->getType() == BattleCharacter::TYPE::monster && pair.first != otherPair.first && pair.second->getAABB().intersects(otherPair.second->getAABB()))
+                if(otherPair.second->getStatus() == BattleCharacter::STATUS::active && otherPair.second->getType() == BattleCharacter::TYPE::monster && pair.first != otherPair.first && pair.second->getAABB().intersects(otherPair.second->getAABB()))
                 {
                     _dealDamage(pair.second, otherPair.second);
                     return;
@@ -454,10 +551,9 @@ void Gameplay::Battle::_dealDamage(std::unique_ptr<BattleCharacter>& player, std
     if(damage_ratio <= 0.8f)
         damage_ratio = 0.8f;
     
-    
-    //subtract the hp with damage
-    player->setCurrentHP(player->getCurrent_hp() - damage_monsterToPlayer);
-    monster->setCurrentHP(monster->getCurrent_hp() - damage_playerToMonster);
+    //characters take damage
+    player->takeDamage(damage_monsterToPlayer);
+    monster->takeDamage(damage_playerToMonster);
     
     //put the damage number to render list
     std::unique_ptr<BattleDamage> playerDamageToken(new BattleDamage(config.fontMan.get("Carlito-Bold.ttf"), std::to_string(damage_monsterToPlayer)));
@@ -472,12 +568,6 @@ void Gameplay::Battle::_dealDamage(std::unique_ptr<BattleCharacter>& player, std
     
     damageRenderList.push_back(std::move(playerDamageToken));
     damageRenderList.push_back(std::move(monsterDamageToken));
-    
-    //if the player or monster's hp below 0, set non-active and flyout the screen
-    if(player->getCurrent_hp() <= 0)
-        ;
-    if(monster->getCurrent_hp() <= 0)
-        ;
     
     //generate two random numbers between -2 to 2
     int r1 = rand() % 5 - 2;

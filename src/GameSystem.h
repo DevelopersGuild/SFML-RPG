@@ -80,9 +80,15 @@ namespace Gameplay
         //if the initial plater is the one controlling this computer,
         //set currentBattlePtr to battle
         virtual void createBattle(const std::string& initPlayerName, tmx::MapObject* battleObject);
+        
+        //delete battle on the map
+        virtual void deleteBattle();
 
 		//is the current game in battle?
 		virtual bool isInBattle() { return currentBattle.get() != nullptr; }
+        
+        //is the current battle over?
+        bool isBattleOver();
 	};
 }
 #endif /* GameSystem_h */

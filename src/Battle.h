@@ -127,6 +127,18 @@ namespace Gameplay
         
         //get the type of character
         TYPE getType(){return type;}
+        
+        //get the STATUS of character
+        STATUS getStatus(){return status;}
+        
+        //try to escape the battle(failed if more than 3 times)
+        virtual bool escapeBattle(){return true;}
+        
+        //try to leave the battle(okay anyway)
+        virtual void leaveBattle(){;}
+        
+        //take damage
+        virtual void takeDamage(int value) = 0;
 
 		//the attributes
 		virtual int getAtk() = 0;
@@ -152,6 +164,10 @@ namespace Gameplay
     public:
         BattlePlayer(Character& character);
         void animeUpdate();
+        bool escapeBattle();
+        void leaveBattle();
+        void takeDamage(int value);
+        
 		int getAtk() { return character.getAtk(); }
 		int getDef() { return character.getDef(); }
 		int getMaxHP() { return character.getMaxHp(); }
@@ -197,6 +213,7 @@ namespace Gameplay
 		void setExp(int value) { exp = value; }
 
         void animeUpdate();
+        void takeDamage(int value);
     };
     
     /*
@@ -248,6 +265,7 @@ namespace Gameplay
 
         void _collisionTest();
 		void _dealDamage(std::unique_ptr<BattleCharacter>& player, std::unique_ptr<BattleCharacter>& monster);
+        void _hitWallTest(std::unique_ptr<BattleCharacter>& character);
     public:
         Battle(Configuration& config);
         void setBackGround(sf::Texture* texture);
@@ -257,6 +275,7 @@ namespace Gameplay
 		const sf::View& getCamera() { return camera; }
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         void update();
+        STATE getState(){return state;}
     };
     
     /*
