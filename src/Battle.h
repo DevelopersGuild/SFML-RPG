@@ -5,7 +5,8 @@
 #include <memory>
 #include "Character.h"
 #include "Configuration.h"
-
+#include <stdlib.h>
+#include <time.h>
 /*
  Battle object
  -to start a battle, the game needs a battle Object.
@@ -103,6 +104,9 @@ namespace Gameplay
         //set the position of character
         virtual void setPosition(const sf::Vector2f& pos){sprite.setPosition(pos);}
         
+        //get the position of character
+        virtual const sf::Vector2f& getPosition(){return sprite.getPosition();}
+        
         //draw the character on screen
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         
@@ -120,6 +124,9 @@ namespace Gameplay
         
         //set the maximum speed of the character
         virtual void setMaxSpeed(float value){max_speed = value;}
+        
+        //get the type of character
+        TYPE getType(){return type;}
 
 		//the attributes
 		virtual int getAtk() = 0;
@@ -191,6 +198,26 @@ namespace Gameplay
 
         void animeUpdate();
     };
+    
+    /*
+    Battle damage number class
+    the damage number that poped out when player and monster fight each other
+    */
+    class BattleDamage : public sf::Drawable
+    {
+    private:
+        sf::Text text;
+        bool done;
+        sf::Clock clock;    //for determine if time > 0.3s
+        sf::Clock updateClock;  //for determine a frame time
+    public:
+        BattleDamage(const sf::Font& font, const std::string& string);
+        void update();
+        bool isDone(){return done;}
+        void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+        void setPosition(const sf::Vector2f& pos){text.setPosition(pos);}
+        void setTextColor(const sf::Color& color){text.setColor(color);}
+    };
     /*
      Battle class
      Handles the battle mechanism in the game.
@@ -215,6 +242,9 @@ namespace Gameplay
 
 		//the state of the battle
 		STATE state;
+        
+        //a list of drawable things
+        std::list<std::unique_ptr<BattleDamage>> damageRenderList;
 
         void _collisionTest();
 		void _dealDamage(std::unique_ptr<BattleCharacter>& player, std::unique_ptr<BattleCharacter>& monster);
@@ -229,7 +259,6 @@ namespace Gameplay
         void update();
     };
     
-
     /*
     BattleFactory
     generate Battles

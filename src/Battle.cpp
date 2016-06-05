@@ -318,6 +318,48 @@ void Gameplay::Battle::moveCharacter(const std::string &charName, BattleCharacte
 }
 
 /*
+Battle damage number constructor
+set the text with font and number.
+*/
+Gameplay::BattleDamage::BattleDamage(const sf::Font& font, const std::string& str)
+{
+    text.setFont(font);
+    text.setString(str);
+    text.setCharacterSize(32);
+    done = false;
+}
+
+/*
+Battle damage number update
+update the position of the number(flys up)
+after 0.3s, set the boolean done to true.
+*/
+void Gameplay::BattleDamage::update()
+{
+    if(clock.getElapsedTime() < sf::seconds(0.8f))
+    {
+        if(updateClock.getElapsedTime() > sf::seconds(0.015f))
+        {
+            text.move(0,-2);
+            updateClock.restart();
+        }
+    }
+    else
+    {
+        done = true;
+    }
+}
+
+/*
+Battle damage number draw
+draw the number on screen
+*/
+void Gameplay::BattleDamage::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    target.draw(text);
+}
+
+/*
 Battle draw
 draw the battle in window
 */
@@ -327,6 +369,10 @@ void Gameplay::Battle::draw(sf::RenderTarget& target, sf::RenderStates states) c
     for(auto& pair : characterTree)
     {
         target.draw(*pair.second);
+    }
+    for(const std::unique_ptr<BattleDamage>& obj : damageRenderList)
+    {
+        target.draw(*obj);
     }
 }
 
@@ -342,6 +388,21 @@ void Gameplay::Battle::update()
         pair.second->animeUpdate();
     }
     _collisionTest();
+    
+    //update the drawList
+    for(auto it = damageRenderList.begin(); it != damageRenderList.end(); it++)
+    {
+        if((*it)->isDone())
+        {
+            damageRenderList.erase(it);
+            it = damageRenderList.begin();
+        }
+    }
+    
+    for(auto it = damageRenderList.begin(); it != damageRenderList.end(); it++)
+    {
+        (*it)->update();
+    }
 }
 
 /*
@@ -353,12 +414,15 @@ void Gameplay::Battle::_collisionTest()
 {
     for(auto& pair : characterTree)
     {
-        for(auto& otherPair : characterTree)
+        if(pair.second->getType() == BattleCharacter::TYPE::player)
         {
-            if(pair.first != otherPair.first && pair.second->getAABB().intersects(otherPair.second->getAABB()))
+            for(auto& otherPair : characterTree)
             {
-				_dealDamage(pair.second, otherPair.second);
-                return;
+                if(otherPair.second->getType() == BattleCharacter::TYPE::monster && pair.first != otherPair.first && pair.second->getAABB().intersects(otherPair.second->getAABB()))
+                {
+                    _dealDamage(pair.second, otherPair.second);
+                    return;
+                }
             }
         }
     }
@@ -370,9 +434,57 @@ determine the damage taken. Put the damage number to the rendering list, and set
 */
 void Gameplay::Battle::_dealDamage(std::unique_ptr<BattleCharacter>& player, std::unique_ptr<BattleCharacter>& monster)
 {
-	
-	player->setSpeed(4);
-	monster->setSpeed(-4);
+    //calculate damage
+    int damage_playerToMonster = player->getAtk() - monster->getDef();
+    int damage_monsterToPlayer = monster->getAtk() - player->getDef();
+    
+    //set the damage to 1 if the damage is 0 or negative
+    if(damage_playerToMonster <= 0)
+        damage_playerToMonster = 1;
+    if(damage_monsterToPlayer <= 0)
+        damage_monsterToPlayer = 1;
+    
+    //calculate ratio
+    float damage_ratio = (static_cast<float>(damage_monsterToPlayer) / damage_playerToMonster);
+    
+    //if damage_ratio is greater than 1.2, set it as 1.2
+    if(damage_ratio >= 1.2f)
+        damage_ratio = 1.2f;
+    //if damage_ratio is less than 0.8 set it as 0.8
+    if(damage_ratio <= 0.8f)
+        damage_ratio = 0.8f;
+    
+    
+    //subtract the hp with damage
+    player->setCurrentHP(player->getCurrent_hp() - damage_monsterToPlayer);
+    monster->setCurrentHP(monster->getCurrent_hp() - damage_playerToMonster);
+    
+    //put the damage number to render list
+    std::unique_ptr<BattleDamage> playerDamageToken(new BattleDamage(config.fontMan.get("Carlito-Bold.ttf"), std::to_string(damage_monsterToPlayer)));
+    
+    playerDamageToken->setPosition(player->getPosition() - sf::Vector2f(0, 170));
+    playerDamageToken->setTextColor(sf::Color::Red);
+    
+    std::unique_ptr<BattleDamage> monsterDamageToken(new BattleDamage(config.fontMan.get("Carlito-Bold.ttf"), std::to_string(damage_playerToMonster)));
+    
+    monsterDamageToken->setPosition(monster->getPosition() - sf::Vector2f(0, 170));
+    monsterDamageToken->setTextColor(sf::Color::Black);
+    
+    damageRenderList.push_back(std::move(playerDamageToken));
+    damageRenderList.push_back(std::move(monsterDamageToken));
+    
+    //if the player or monster's hp below 0, set non-active and flyout the screen
+    if(player->getCurrent_hp() <= 0)
+        ;
+    if(monster->getCurrent_hp() <= 0)
+        ;
+    
+    //generate two random numbers between -2 to 2
+    int r1 = rand() % 5 - 2;
+    int r2 = rand() % 5 - 2;
+    //set the speed
+	player->setSpeed((-4 * damage_ratio) + r1);
+	monster->setSpeed((4 *  (1.f / damage_ratio)) + r2);
 }
 
 /*

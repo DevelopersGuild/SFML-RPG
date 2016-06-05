@@ -7,8 +7,8 @@ Character::Character(Configuration& newConfig) : config(newConfig)
 
 	name = "Unnamed character";
 	hp = 100;
-	atk = 1;
-	def = 1;
+	atk = 5;
+	def = 5;
 	speed = 3;
 	direction = down;
 	sprite_UpdateRate = 0.08f;
