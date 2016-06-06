@@ -133,6 +133,9 @@ namespace Gameplay
         
         //try to escape the battle(failed if more than 3 times)
         virtual bool escapeBattle(){return true;}
+
+		//reset the number of escape
+		virtual void resetEscapeBattle() { ; }
         
         //try to leave the battle(okay anyway)
         virtual void leaveBattle(){;}
@@ -179,6 +182,8 @@ namespace Gameplay
 		void setMaxHP(int value) { character.setMaxHp(value); }
 		void setCurrentHP(int value) { character.setCurrentHp(value); }
 		void setExp(int value) {character.gainExp(value);} //gain exp instead
+
+		void resetEscapeBattle() { character.resetBattleEscaped(); }
     };
     /*
     BattleMonster
@@ -266,6 +271,7 @@ namespace Gameplay
         void _collisionTest();
 		void _dealDamage(std::unique_ptr<BattleCharacter>& player, std::unique_ptr<BattleCharacter>& monster);
         void _hitWallTest(std::unique_ptr<BattleCharacter>& character);
+		bool haswon();
     public:
         Battle(Configuration& config);
         void setBackGround(sf::Texture* texture);

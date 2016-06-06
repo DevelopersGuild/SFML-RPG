@@ -8,12 +8,12 @@ Character::Character(Configuration& newConfig) : config(newConfig)
 	name = "Unnamed character";
 	max_hp = 100;
 	hp = max_hp;
-	atk = 5;
-	def = 5;
+	atk = 6;
+	def = 3;
 	speed = 3;
     speed_battle = 6;
-	level = 0;
-    exp = 0;
+	level = 1;
+    current_exp = 0;
     exp_cap = 20;
 	direction = down;
 	sprite_UpdateRate = 0.08f;

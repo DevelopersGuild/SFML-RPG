@@ -30,13 +30,29 @@ GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& sta
 
 void Gameplay::GameSystem::movePlayer(const std::string& playerName, const Character::Direction & direction)
 {
-    Player& player = playerTree.at(playerName);
-	tmx::MapObject* eventObject = player.moveCharacter(currentMap, direction);
-	
-	//if pointer points to a event object, handle event
-	if (eventObject && playerName == thisPlayerPtr->getName())
+	//if the player is in battle, do the input for battle only
+	if (currentBattle)
 	{
-		handleGameEvent(eventObject);
+		switch (direction)
+		{
+		case Character::Direction::left:
+			currentBattle->moveCharacter(playerName, BattleCharacter::DIRECTION::left);
+			break;
+		case Character::Direction::right:
+			currentBattle->moveCharacter(playerName, BattleCharacter::DIRECTION::right);
+			break;
+		}
+	}
+	else
+	{
+		Player& player = playerTree.at(playerName);
+		tmx::MapObject* eventObject = player.moveCharacter(currentMap, direction);
+
+		//if pointer points to a event object, handle event
+		if (eventObject && playerName == thisPlayerPtr->getName())
+		{
+			handleGameEvent(eventObject);
+		}
 	}
 }
 
@@ -198,6 +214,7 @@ void Gameplay::GameSystem::createBattle( const std::string& initPlayerName, tmx:
 void Gameplay::GameSystem::deleteBattle()
 {
     interfacePtr->setTransition();
+	thisPlayerPtr->leaveBattle();
     currentBattle.reset();
     interfacePtr->exitTransition();
 }

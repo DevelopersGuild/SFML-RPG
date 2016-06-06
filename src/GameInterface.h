@@ -7,6 +7,26 @@
 namespace Gameplay
 {
 	/*
+	CharInfoInterface
+	the interface at the left-top corner
+	includes hp bar, exp bar and level...
+	*/
+	class CharInfoInterface
+	{
+	private:
+		tgui::Panel::Ptr panel;
+		tgui::Label::Ptr text_hp;
+		tgui::ProgressBar::Ptr hpBar;
+		tgui::Label::Ptr text_exp;
+		tgui::ProgressBar::Ptr expBar;
+		tgui::Label::Ptr text_level;
+	public:
+		CharInfoInterface(Configuration& config);
+		void addToGui(tgui::Gui& gui);
+		void update(Player* player);
+	};
+
+	/*
 	GameInterface class
 	Handles inputs from this computer
 	*/
@@ -18,6 +38,7 @@ namespace Gameplay
 		//sf::RectangleShape transitionRect;	//the rect that blocks the screen in transition state
 		tgui::Gui gui;
 		tgui::Panel::Ptr transitionRect;
+		CharInfoInterface charInfo;
 
 		void updateCamera();
 	public:

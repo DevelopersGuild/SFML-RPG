@@ -275,6 +275,10 @@ void InGame::handleKeyboardInput()
 
 void InGame::handleKeyboardInput_battle()
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::left);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::right);
 
 }
 

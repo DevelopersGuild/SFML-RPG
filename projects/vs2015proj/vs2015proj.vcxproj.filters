@@ -115,7 +115,7 @@
       <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Battle.cpp">
-      <Filter>Header Files\Game</Filter>
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -87,5 +87,12 @@ namespace Gameplay
         
         //leave the battle and change the state back to normal
         void leaveBattle();
+
+		//character attributes
+		int getCurrentHp() { return character.getCurrentHp(); }
+		int getMaxHp() { return character.getMaxHp(); }
+		int getCurrentExp() { return character.getExp(); }
+		int getExpCap() { return character.getExpCap(); }
+		int getLevel() { return character.getLevel(); }
 	};
 }

@@ -55,9 +55,6 @@ namespace Gameplay
 		//Character's level
 		int level;
 
-		//character's exp
-		int exp;
-
         //Character's max HP
         int max_hp;
         
@@ -177,19 +174,25 @@ namespace Gameplay
         int getMaxHp(){return max_hp;}
 
 		//get (not gain)the current exp value of the player
-		int getExp() { return exp; }
+		int getExp() { return current_exp; }
 
-		//set the current exp value of the player
-		void setExp(int value) { exp = value; }
+		//get the exp required to next level
+		int getExpCap() { return exp_cap; }
         
         //gain Exp. Check level up, update attributes....
         void gainExp(int value);
+
+		//get the level of character
+		int getLevel() { return level; }
         
         //get the number of continuous battle escaped
         int getBattleEscaped(){return num_Continuous_battle_escape;}
         
         //increment the number of continuous battle escaped
         void incBattleEscaped(){num_Continuous_battle_escape++;}
+
+		//reset the number of continuous attle escaped
+		void resetBattleEscaped() { num_Continuous_battle_escape = 0; }
 
 		void levelUp();
 	};

@@ -139,8 +139,8 @@ move the player right
 */
 void Gameplay::BattlePlayer::animeUpdate()
 {
-    if(status == STATUS::active)
-        this->move(right);
+    //if(status == STATUS::active)
+        //this->move(right);
     BattleCharacter::animeUpdate();
 }
 
@@ -151,7 +151,7 @@ is greater than 3.
 */
 bool Gameplay::BattlePlayer::escapeBattle()
 {
-    if(character.getBattleEscaped() > 3)
+    if(character.getBattleEscaped() >= 3)
     {
         return false;
     }
@@ -441,6 +441,10 @@ for battle. Must called in every frame.
 */
 void Gameplay::Battle::update()
 {
+	//do nothing if battle is already over
+	if (state == overed)
+		return;
+
     for(auto& pair : characterTree)
     {
         pair.second->animeUpdate();
@@ -483,22 +487,28 @@ void Gameplay::Battle::_hitWallTest(std::unique_ptr<BattleCharacter>& character)
         //if it is player, the player leaves the battle
         if(character->getType() == BattleCharacter::TYPE::player)
         {
+			character->resetEscapeBattle();
             character->leaveBattle();
             this->state = STATE::overed;
         }
     }
     else if(character->getPosition().x <= 0)//left wall
     {
-        //if it is player, escape the battle if it is the first 3 times
+        //if it is player and the player has not won the battle yet, escape the battle if it is the first 3 times
         if(character->getType() == BattleCharacter::TYPE::player)
         {
-            if(character->escapeBattle())
+			if (haswon())
+			{
+				character->resetEscapeBattle();
+				this->state = STATE::overed;
+			}
+            else if( character->escapeBattle())
             {
                 this->state = STATE::overed;
             }
             else
             {
-                character->setPosition(sf::Vector2f(0, 500)); //stop the player
+                character->setPosition(sf::Vector2f(1, 500)); //stop the player
             }
         }
         //well it is impossible for monster to get to the left wall
@@ -562,19 +572,19 @@ void Gameplay::Battle::_dealDamage(std::unique_ptr<BattleCharacter>& player, std
     if(monster->getStatus() == BattleCharacter::STATUS::non_active)
     {
         player->setExp(monster->getExp());
-        std::unique_ptr<BattleDamage> expgain(new BattleDamage(config.fontMan.get("Carlito-Bold.ttf"), "exp +" + std::to_string(monster->getExp())));
+        std::unique_ptr<BattleDamage> expgain(new BattleDamage(config.fontMan.get("PressStart2P.ttf"), "exp +" + std::to_string(monster->getExp())));
         expgain->setTextColor(sf::Color::Yellow);
         expgain->setPosition(player->getPosition() - sf::Vector2f(0, 170));
         damageRenderList.push_back(std::move(expgain));
     }
     
     //put the damage number to render list
-    std::unique_ptr<BattleDamage> playerDamageToken(new BattleDamage(config.fontMan.get("Carlito-Bold.ttf"), std::to_string(damage_monsterToPlayer)));
+    std::unique_ptr<BattleDamage> playerDamageToken(new BattleDamage(config.fontMan.get("PressStart2P.ttf"), std::to_string(damage_monsterToPlayer)));
     
     playerDamageToken->setPosition(player->getPosition() - sf::Vector2f(0, 170));
     playerDamageToken->setTextColor(sf::Color::Red);
     
-    std::unique_ptr<BattleDamage> monsterDamageToken(new BattleDamage(config.fontMan.get("Carlito-Bold.ttf"), std::to_string(damage_playerToMonster)));
+    std::unique_ptr<BattleDamage> monsterDamageToken(new BattleDamage(config.fontMan.get("PressStart2P.ttf"), std::to_string(damage_playerToMonster)));
     
     monsterDamageToken->setPosition(monster->getPosition() - sf::Vector2f(0, 170));
     monsterDamageToken->setTextColor(sf::Color::Black);
@@ -583,11 +593,25 @@ void Gameplay::Battle::_dealDamage(std::unique_ptr<BattleCharacter>& player, std
     damageRenderList.push_back(std::move(monsterDamageToken));
     
     //generate two random numbers between 0 to 2
-    float r1 = rand() % 21 / 10.f;
-    float r2 = rand() % 21 / 10.f;
+    int r1 = rand() % 4;
+    int r2 = rand() % 4;
     //set the speed
 	player->setSpeed((-4 * damage_ratio) - r1);
 	monster->setSpeed((4 *  (1.f / damage_ratio)) + r2);
+}
+
+/*
+Battle haswon
+has the player won the battle?(i.e. no monster are active)
+*/
+bool Gameplay::Battle::haswon()
+{
+	for (auto& pair : characterTree)
+	{
+		if (pair.second->getType() == BattleCharacter::TYPE::monster && pair.second->getStatus() == BattleCharacter::STATUS::active)
+			return false;
+	}
+	return true;
 }
 
 /*
