@@ -1,1 +1,1 @@
-sanders 3 6 3 20 10 sanders.png
+sanders 6 6 3 20 10 sanders.png

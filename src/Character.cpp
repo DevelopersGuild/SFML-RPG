@@ -8,8 +8,11 @@ Character::Character(Configuration& newConfig) : config(newConfig)
 	name = "Unnamed character";
 	hp = 100;
 	atk = 5;
-	def = 2;
+	def = 5;
 	speed = 3;
+    speed_battle = 6;
+    exp = 0;
+    exp_cap = 20;
 	direction = down;
 	sprite_UpdateRate = 0.08f;
 	distance_since_lastBattle = 0;
@@ -171,7 +174,7 @@ void Gameplay::Character::gainExp(int value)
 {
 	current_exp += value;
 
-	while(current_exp >= exp_cap) 
+	while(current_exp >= exp_cap)
 	{
 		current_exp -= exp_cap;
 		levelUp();

@@ -178,7 +178,7 @@ namespace Gameplay
 		void setDef(int value) { character.setDef(value); }
 		void setMaxHP(int value) { character.setMaxHp(value); }
 		void setCurrentHP(int value) { character.setCurrentHp(value); }
-		void setExp(int value) {character.setExp(value);}
+		void setExp(int value) {character.gainExp(value);} //gain exp instead
     };
     /*
     BattleMonster

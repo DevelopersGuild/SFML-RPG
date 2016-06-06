@@ -126,11 +126,11 @@ constructor of BattlePlayer class, need a character pointer
 */
 Gameplay::BattlePlayer::BattlePlayer(Character& newCharacter) : character(newCharacter)
 {
-    speed = character.getSpeed();
+    speed = 0;
     max_speed = 4;  //TBD
     type = player;
     name = newCharacter.getName();
-    max_speed = newCharacter.getSpeed();
+    max_speed = newCharacter.getBattleSpeed();
 }
 
 /*
@@ -555,6 +555,16 @@ void Gameplay::Battle::_dealDamage(std::unique_ptr<BattleCharacter>& player, std
     player->takeDamage(damage_monsterToPlayer);
     monster->takeDamage(damage_playerToMonster);
     
+    //player may gain exp if the monster is defeated
+    if(monster->getStatus() == BattleCharacter::STATUS::non_active)
+    {
+        player->setExp(monster->getExp());
+        std::unique_ptr<BattleDamage> expgain(new BattleDamage(config.fontMan.get("Carlito-Bold.ttf"), "exp +" + std::to_string(monster->getExp())));
+        expgain->setTextColor(sf::Color::Yellow);
+        expgain->setPosition(player->getPosition() - sf::Vector2f(0, 170));
+        damageRenderList.push_back(std::move(expgain));
+    }
+    
     //put the damage number to render list
     std::unique_ptr<BattleDamage> playerDamageToken(new BattleDamage(config.fontMan.get("Carlito-Bold.ttf"), std::to_string(damage_monsterToPlayer)));
     
@@ -569,11 +579,11 @@ void Gameplay::Battle::_dealDamage(std::unique_ptr<BattleCharacter>& player, std
     damageRenderList.push_back(std::move(playerDamageToken));
     damageRenderList.push_back(std::move(monsterDamageToken));
     
-    //generate two random numbers between -2 to 2
-    int r1 = rand() % 5 - 2;
-    int r2 = rand() % 5 - 2;
+    //generate two random numbers between 0 to 2
+    float r1 = rand() % 21 / 10.f;
+    float r2 = rand() % 21 / 10.f;
     //set the speed
-	player->setSpeed((-4 * damage_ratio) + r1);
+	player->setSpeed((-4 * damage_ratio) - r1);
 	monster->setSpeed((4 *  (1.f / damage_ratio)) + r2);
 }
 

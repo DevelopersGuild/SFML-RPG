@@ -71,8 +71,11 @@ namespace Gameplay
 		//Character's Defense
 		int def;
 
-		//Character's Speed
+		//Character's Speed on the main map
 		float speed;
+        
+        //Character's spped during the battle
+        float speed_battle;
         
         //current exp of character
         int current_exp;
@@ -140,6 +143,12 @@ namespace Gameplay
         
         //get the speed of character
         float getSpeed() { return speed; }
+        
+        //set the battle speed of character
+        void setBattleSpeed(float newSpeed){speed_battle = newSpeed;}
+        
+        //get the battle speed of character
+        float getBattleSpeed(){return speed_battle;}
         
         //set the attack value of character
         void setAtk(const int& value){atk = value;}
