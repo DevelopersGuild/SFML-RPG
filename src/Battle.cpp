@@ -454,7 +454,10 @@ void Gameplay::Battle::update()
         if((*it)->isDone())
         {
             damageRenderList.erase(it);
-            it = damageRenderList.begin();
+			if (damageRenderList.empty())
+				break;
+			else
+				it = damageRenderList.begin();
         }
     }
     

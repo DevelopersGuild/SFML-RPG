@@ -6,11 +6,13 @@ Character::Character(Configuration& newConfig) : config(newConfig)
 	mapCharPtr = nullptr;
 
 	name = "Unnamed character";
-	hp = 100;
+	max_hp = 100;
+	hp = max_hp;
 	atk = 5;
 	def = 5;
 	speed = 3;
     speed_battle = 6;
+	level = 0;
     exp = 0;
     exp_cap = 20;
 	direction = down;

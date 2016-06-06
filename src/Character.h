@@ -1,5 +1,4 @@
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#pragma once
 #include "Item.h"
 #include <list>
 #include <SFML/Graphics.hpp>
@@ -195,4 +194,3 @@ namespace Gameplay
 		void levelUp();
 	};
 }
-#endif
