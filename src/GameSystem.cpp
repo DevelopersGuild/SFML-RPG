@@ -31,7 +31,8 @@ GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& sta
 void Gameplay::GameSystem::movePlayer(const std::string& playerName, const Character::Direction & direction)
 {
 	//if the player is in battle, do the input for battle only
-	if (currentBattle)
+	Player& player = playerTree.at(playerName);
+	if (player.getState() == Player::STATE::inBattle)
 	{
 		switch (direction)
 		{
@@ -45,7 +46,6 @@ void Gameplay::GameSystem::movePlayer(const std::string& playerName, const Chara
 	}
 	else
 	{
-		Player& player = playerTree.at(playerName);
 		tmx::MapObject* eventObject = player.moveCharacter(currentMap, direction);
 
 		//if pointer points to a event object, handle event

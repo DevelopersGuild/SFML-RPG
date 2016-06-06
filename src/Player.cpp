@@ -265,6 +265,7 @@ bool Gameplay::Player::isBattleEncounter()
 void Gameplay::Player::joinBattle(std::shared_ptr<Battle> battle)
 {
     battlePtr = battle;
+	state = STATE::inBattle;
     std::unique_ptr<BattleCharacter> battlePlayer(new BattlePlayer(character));
     battlePlayer->loadSprite(config.texMan.get("playerSprite.png"));
     battle->addCharacter(std::move(battlePlayer));
@@ -274,4 +275,5 @@ void Gameplay::Player::joinBattle(std::shared_ptr<Battle> battle)
 void Gameplay::Player::leaveBattle()
 {
     battlePtr.reset();
+	state = STATE::normal;
 }

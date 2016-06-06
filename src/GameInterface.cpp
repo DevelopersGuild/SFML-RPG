@@ -159,6 +159,7 @@ Gameplay::CharInfoInterface::CharInfoInterface(Configuration& config)
 	std::shared_ptr<tgui::ProgressBarRenderer> pRender = hpBar->getRenderer();
 	pRender->setBackgroundColor(tgui::Color(0,0,0,40));
 	pRender->setForegroundColor(tgui::Color(sf::Color::Red));
+	pRender->setTextColor(tgui::Color(sf::Color::Black));
 	panel->add(hpBar);
 
 	text_exp = std::make_shared<tgui::Label>();
@@ -178,6 +179,7 @@ Gameplay::CharInfoInterface::CharInfoInterface(Configuration& config)
 	std::shared_ptr<tgui::ProgressBarRenderer> eRender = expBar->getRenderer();
 	eRender->setBackgroundColor(tgui::Color(0,0,0,40));
 	eRender->setForegroundColor(tgui::Color(sf::Color::Yellow));
+	eRender->setTextColor(tgui::Color(sf::Color::Black));
 	panel->add(expBar);
 
 	text_level = std::make_shared<tgui::Label>();

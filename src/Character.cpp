@@ -8,8 +8,8 @@ Character::Character(Configuration& newConfig) : config(newConfig)
 	name = "Unnamed character";
 	max_hp = 100;
 	hp = max_hp;
-	atk = 6;
-	def = 3;
+	atk = 5;
+	def = 5;
 	speed = 3;
     speed_battle = 6;
 	level = 1;

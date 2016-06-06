@@ -372,7 +372,8 @@ if the name is not found, do nothing.
 void Gameplay::Battle::moveCharacter(const std::string &charName, BattleCharacter::DIRECTION direction)
 {
     auto it = characterTree.find(charName);
-    it->second->move(direction);
+	if(it->second->getStatus() == BattleCharacter::STATUS::active)
+		it->second->move(direction);
 }
 
 /*

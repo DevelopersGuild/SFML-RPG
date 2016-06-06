@@ -12,6 +12,8 @@ namespace Gameplay
 {
 	class Player : public sf::Drawable
 	{
+	public:
+		enum STATE { normal, inBattle };
 	private:
 		Configuration& config;
 
@@ -33,7 +35,7 @@ namespace Gameplay
 		bool ready;
         
         //state of player: normal, inBattle
-        enum STATE{normal, inBattle} state;
+		STATE state;
 
 		//the function that determines whether the player will enter a battle or not.
 		bool isBattleEncounter();
@@ -65,6 +67,9 @@ namespace Gameplay
 
 		//get the name of the character
 		const std::string& getName() { return name; }
+
+		//get the state of the player
+		STATE getState() { return state; }
         
         //get the event obj that the player is facing
         //return tmx::MapObject if event object is found in player's facing direction. Return NULL is not found.
