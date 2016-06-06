@@ -137,8 +137,11 @@ namespace Gameplay
 		//reset the number of escape
 		virtual void resetEscapeBattle() { ; }
         
-        //try to leave the battle(okay anyway)
+        //try to leave the battle(success anyway)
         virtual void leaveBattle(){;}
+        
+        //fly out of the screen(for defeated character only0
+        virtual void flyOut();
         
         //take damage
         virtual void takeDamage(int value) = 0;

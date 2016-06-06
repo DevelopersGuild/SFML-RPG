@@ -121,6 +121,25 @@ void Gameplay::BattleCharacter::draw(sf::RenderTarget& target, sf::RenderStates 
 }
 
 /*
+BattleChar flyOut
+move to the right-top corner or left-top corner of the screen 
+and keep rotating!
+*/
+
+void Gameplay::BattleCharacter::flyOut()
+{
+    if(direction == right)
+    {
+        sprite.move(-10, -16);
+        sprite.rotate(20);
+    }
+    else if(direction == left)
+    {
+        sprite.move(10, -16);
+        sprite.rotate(-20);
+    }
+}
+/*
 BattlePlayer constructor
 constructor of BattlePlayer class, need a character pointer
 */
@@ -139,8 +158,10 @@ move the player right
 */
 void Gameplay::BattlePlayer::animeUpdate()
 {
-    //if(status == STATUS::active)
-        //this->move(right);
+    if(status == STATUS::non_active)
+    {
+        this->flyOut();
+    }
     BattleCharacter::animeUpdate();
 }
 
@@ -285,6 +306,10 @@ void Gameplay::BattleMonster::animeUpdate()
     if(status == BattleCharacter::STATUS::active)
     {
         this->move(left);
+    }
+    else if(status == BattleCharacter::STATUS::non_active)
+    {
+        this->flyOut();
     }
     BattleCharacter::animeUpdate();
 }
@@ -482,8 +507,8 @@ void Gameplay::Battle::_hitWallTest(std::unique_ptr<BattleCharacter>& character)
     //right wall
     if(character->getPosition().x >= background.getSize().x)
     {
-        //if it is monster, stop the monster
-        if(character->getType() == BattleCharacter::TYPE::monster)
+        //if it is active monster, stop the monster
+        if(character->getType() == BattleCharacter::TYPE::monster && character->getStatus() == BattleCharacter::STATUS::active)
             character->setPosition(sf::Vector2f(background.getSize().x, 500));
         //if it is player, the player leaves the battle
         if(character->getType() == BattleCharacter::TYPE::player)
@@ -503,6 +528,11 @@ void Gameplay::Battle::_hitWallTest(std::unique_ptr<BattleCharacter>& character)
 				character->resetEscapeBattle();
 				this->state = STATE::overed;
 			}
+            else if(character->getStatus() == BattleCharacter::STATUS::non_active)
+            {
+                //if the player has lost the battle...
+                this->state = STATE::overed;//TBD
+            }
             else if( character->escapeBattle())
             {
                 this->state = STATE::overed;
@@ -512,7 +542,7 @@ void Gameplay::Battle::_hitWallTest(std::unique_ptr<BattleCharacter>& character)
                 character->setPosition(sf::Vector2f(1, 500)); //stop the player
             }
         }
-        //well it is impossible for monster to get to the left wall
+        //the monster reaches the left wall?...
     }
 }
 
