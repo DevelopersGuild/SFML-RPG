@@ -36,7 +36,7 @@ void InGame::run()
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 					systemPtr->interact();
                 
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !systemPtr->isInBattle())
                     interfacePtr->switchInGaemMenu();
 			}
 
@@ -53,8 +53,14 @@ void InGame::run()
                 systemPtr->deleteBattle();
             }
         }
+		else if (interfacePtr->isDisplayingInGameMenu())
+		{
+			handleKeybardInput_InGameMenu();
+		}
 		else
+		{
 			handleKeyboardInput();
+		}			
 
 		//if this is server, send status update to client
 		if (networkPtr->isServer())
@@ -274,6 +280,11 @@ void InGame::handleKeyboardInput()
         else
             networkPtr->send(networkPtr->getServerIP(), packet);
 	}
+}
+
+void InGame::handleKeybardInput_InGameMenu()
+{
+
 }
 
 void InGame::handleKeyboardInput_battle()

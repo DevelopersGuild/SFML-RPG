@@ -40,6 +40,9 @@ private:
 	//handle game keyboard input
 	void handleKeyboardInput();
 
+	//handle in game menu keyboard input
+	void handleKeybardInput_InGameMenu();
+
 	//handle game keyboard input for battle
 	void handleKeyboardInput_battle();
 

@@ -77,6 +77,13 @@ void Gameplay::Player::changeMap(tmx::MapLoader * map, const std::string locatio
 	//move the player to event position
     sf::Vector2f eventPosition = eventObj->GetPosition();
 	character.setPosition(eventPosition);
+
+	//if this map is safe, record to the lastSafePlace
+	if (map->GetPropertyString("battle") == "false")
+	{
+		lastSafePlace.lastSafeMap = map;
+		lastSafePlace.lastSafePosition = locationName;
+	}
 }
 
 tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character::Direction& direction)
@@ -276,4 +283,9 @@ void Gameplay::Player::leaveBattle()
 {
     battlePtr.reset();
 	state = STATE::normal;
+}
+
+void Gameplay::Player::teleport_ToLastSafeLocation()
+{
+	changeMap(lastSafePlace.lastSafeMap, lastSafePlace.lastSafePosition);
 }

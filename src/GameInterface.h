@@ -34,28 +34,14 @@ namespace Gameplay
     class InGameMenu
     {
     private:
+		sf::Clock time_LastSwitch;
         tgui::Panel::Ptr panel;
-        tgui::Button::Ptr exitButton;
-        tgui::Button::Ptr settingButton;
     public:
         InGameMenu(Configuration& config);
         void addToGui(tgui::Gui& gui);
         void show();
         void hide();
-        
-        //connect the exitButton
-        template<typename Func, typename...Args>
-        unsigned int connectExitButton(const std::string& signalNames, Func func, Args... args)
-        {
-            return exitButton->connect(signalNames, func, args...);
-        }
-        
-        //connect the settingButton
-        template<typename Func, typename...Args>
-        unsigned int connectSettingButton(const std::string& signalNames, Func func, Args... args)
-        {
-            return settingButton->connect(signalNames, func, args...);
-        }
+		bool isDisplaying() { return panel->isVisible(); }
     };
     
 	/*
@@ -72,7 +58,6 @@ namespace Gameplay
 		tgui::Panel::Ptr transitionRect;
 		CharInfoInterface charInfo;
         InGameMenu inGameMenu;
-        bool displayInGameMenu;
 
 		void updateCamera();
 	public:
@@ -92,6 +77,9 @@ namespace Gameplay
 		
         //set on/off the in game menu
         void switchInGaemMenu();
+
+		//is the in game menu displayed?
+		bool isDisplayingInGameMenu() { return inGameMenu.isDisplaying(); }
         
 		//get the camera
 		const sf::View& getCamera() { return camera; }

@@ -31,6 +31,12 @@ namespace Gameplay
 		//the pointer to the current map
 		tmx::MapLoader* currentMap;
 
+		struct lastSafePlace
+		{
+			tmx::MapLoader* lastSafeMap;
+			std::string lastSafePosition;
+		} lastSafePlace;
+
 		//is the player joined(connected) the game
 		bool ready;
         
@@ -93,8 +99,12 @@ namespace Gameplay
         //leave the battle and change the state back to normal
         void leaveBattle();
 
+		//teleport the player to the last safe location
+		void teleport_ToLastSafeLocation();
+
 		//character attributes
 		int getCurrentHp() { return character.getCurrentHp(); }
+		void setCurrentHp(int value) { character.setCurrentHp(value); }
 		int getMaxHp() { return character.getMaxHp(); }
 		int getCurrentExp() { return character.getExp(); }
 		int getExpCap() { return character.getExpCap(); }

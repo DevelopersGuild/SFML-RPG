@@ -7,7 +7,6 @@ GameInterface::GameInterface(GameSystem* newSystem) :
     inGameMenu(newSystem->config)
 {
 	camera.setSize(500, 375);
-    displayInGameMenu = false;
 
 	//initialize the transitionRect
 	gui.setWindow(system->config.window);
@@ -140,7 +139,7 @@ void Gameplay::GameInterface::exitTransition()
 
 void Gameplay::GameInterface::switchInGaemMenu()
 {
-    if(displayInGameMenu == true)
+    if(isDisplayingInGameMenu())
     {
         inGameMenu.hide();
     }
@@ -148,7 +147,6 @@ void Gameplay::GameInterface::switchInGaemMenu()
     {
         inGameMenu.show();
     }
-    displayInGameMenu = !displayInGameMenu;
 }
 //*************************************************************
 Gameplay::CharInfoInterface::CharInfoInterface(Configuration& config)
@@ -242,16 +240,6 @@ Gameplay::InGameMenu::InGameMenu(Configuration& config)
     panel->setBackgroundColor(tgui::Color(0,0,0,140));
     panel->setFont(tgui::Font(config.fontMan.get("Carlito-Italic.ttf")));
     panel->hide();
-    
-    exitButton = std::make_shared<tgui::Button>();
-    exitButton->setText("Leave game");
-    exitButton->setPosition(50,550);
-    panel->add(exitButton);
-    
-    settingButton = std::make_shared<tgui::Button>();
-    settingButton->setText("Settings");
-    settingButton->setPosition(250, 550);
-    panel->add(settingButton);
 }
 
 void Gameplay::InGameMenu::addToGui(tgui::Gui& gui)
@@ -261,10 +249,18 @@ void Gameplay::InGameMenu::addToGui(tgui::Gui& gui)
 
 void Gameplay::InGameMenu::show()
 {
-    panel->showWithEffect(tgui::ShowAnimationType::Scale, sf::seconds(0.2));
+	if (time_LastSwitch.getElapsedTime() > sf::seconds(0.2))
+	{
+		panel->showWithEffect(tgui::ShowAnimationType::Scale, sf::seconds(0.2));
+		time_LastSwitch.restart();
+	}		
 }
 
 void Gameplay::InGameMenu::hide()
 {
-    panel->hideWithEffect(tgui::ShowAnimationType::Scale, sf::seconds(0.2));
+	if (time_LastSwitch.getElapsedTime() > sf::seconds(0.2))
+	{
+		panel->hideWithEffect(tgui::ShowAnimationType::Scale, sf::seconds(0.2));
+		time_LastSwitch.restart();
+	}
 }

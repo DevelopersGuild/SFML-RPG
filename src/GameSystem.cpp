@@ -216,6 +216,13 @@ void Gameplay::GameSystem::deleteBattle()
     interfacePtr->setTransition();
 	thisPlayerPtr->leaveBattle();
     currentBattle.reset();
+	//if the player is defeated, teleport to the last safeLocation
+	if (thisPlayerPtr->getCurrentHp() <= 0)
+	{
+		thisPlayerPtr->teleport_ToLastSafeLocation();
+		currentMap = thisPlayerPtr->getMap();
+		thisPlayerPtr->setCurrentHp(1);
+	}	
     interfacePtr->exitTransition();
 }
 
