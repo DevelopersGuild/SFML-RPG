@@ -163,6 +163,7 @@
     <ClCompile Include="..\..\src\Lobby.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\Menu.cpp" />
+    <ClCompile Include="..\..\src\NPC.cpp" />
     <ClCompile Include="..\..\src\Player.cpp" />
     <ClCompile Include="..\..\src\PreMenu.cpp" />
     <ClCompile Include="..\..\src\ResourcePathWindows.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="..\..\src\Item.h" />
     <ClInclude Include="..\..\src\Lobby.h" />
     <ClInclude Include="..\..\src\Menu.h" />
+    <ClInclude Include="..\..\src\NPC.h" />
     <ClInclude Include="..\..\src\Player.h" />
     <ClInclude Include="..\..\src\PreMenu.h" />
     <ClInclude Include="..\..\src\ResourceManager.h" />

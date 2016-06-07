@@ -18,7 +18,7 @@ namespace Gameplay
 		{
 		}
         
-		void add(sf::IntRect&& newRect)
+		void add(sf::IntRect newRect)
         {
             spriteList.push_back(newRect);
             it = spriteList.begin(); //reset the iterator to prevent error
