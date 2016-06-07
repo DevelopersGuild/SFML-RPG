@@ -263,7 +263,11 @@ bool Gameplay::Player::isBattleEncounter()
 		ss >> battle_rate;
 
 		//TBD, Sabrina's part
-		if (character.getDistance_lastBattle() / 8 > battle_rate)
+		srand(time(NULL));
+		int random_num = rand() % (101);
+		float distance = character.getDistance_lastBattle() / 100;
+		int chance_encounter = distance * distance + battle_rate * distance;
+		if (chance_encounter >= random_num)
 			return true;
 	}
 	return false;

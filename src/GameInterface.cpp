@@ -249,18 +249,18 @@ void Gameplay::InGameMenu::addToGui(tgui::Gui& gui)
 
 void Gameplay::InGameMenu::show()
 {
-	if (time_LastSwitch.getElapsedTime() > sf::seconds(0.2))
+	if (time_LastSwitch.getElapsedTime() > sf::seconds(0.2f))
 	{
-		panel->showWithEffect(tgui::ShowAnimationType::Scale, sf::seconds(0.2));
+		panel->showWithEffect(tgui::ShowAnimationType::Scale, sf::seconds(0.2f));
 		time_LastSwitch.restart();
 	}		
 }
 
 void Gameplay::InGameMenu::hide()
 {
-	if (time_LastSwitch.getElapsedTime() > sf::seconds(0.2))
+	if (time_LastSwitch.getElapsedTime() > sf::seconds(0.2f))
 	{
-		panel->hideWithEffect(tgui::ShowAnimationType::Scale, sf::seconds(0.2));
+		panel->hideWithEffect(tgui::ShowAnimationType::Scale, sf::seconds(0.2f));
 		time_LastSwitch.restart();
 	}
 }
