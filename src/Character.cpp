@@ -6,13 +6,19 @@ Character::Character(Configuration& newConfig) : config(newConfig)
 	mapCharPtr = nullptr;
 
 	name = "Unnamed character";
-	hp = 100;
-	atk = 1;
-	def = 1;
+	max_hp = 100;
+	hp = max_hp;
+	atk = 6;
+	def = 3;
 	speed = 3;
+    speed_battle = 6;
+	level = 1;
+    current_exp = 0;
+    exp_cap = 20;
 	direction = down;
 	sprite_UpdateRate = 0.08f;
 	distance_since_lastBattle = 0;
+    num_Continuous_battle_escape = 0;
 
 	//initialize the spriteLists
 	for (int i = 0; i < 3; i++)
@@ -146,4 +152,47 @@ void Gameplay::Character::setDirection(Direction newDirection)
         default:
             ;
     }
+}
+
+void Gameplay::Character::setMaxHp(const int &value)
+{
+    max_hp = value;
+    if(max_hp < hp)
+    {
+        hp = max_hp;
+    }
+}
+
+void Gameplay::Character::setCurrentHp(const int &value)
+{
+    hp = value;
+    if(max_hp < hp)
+    {
+        hp = max_hp;
+    }
+}
+
+void Gameplay::Character::gainExp(int value)
+{
+	current_exp += value;
+
+	while(current_exp >= exp_cap)
+	{
+		current_exp -= exp_cap;
+		levelUp();
+	}
+}
+
+void Gameplay::Character::levelUp()
+{
+	// TODO: test function when battle is done
+	// Update attributes
+	level++;
+	max_hp += 0;
+	atk += 0;
+	def += 0;
+	speed += 0;
+
+	// Update the exp_cap
+	exp_cap += 0;
 }
