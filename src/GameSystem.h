@@ -23,6 +23,7 @@ namespace Gameplay
 	private:
 		GameNetwork* networkPtr;
 		GameInterface* interfacePtr;
+		BattleFactory battleFactory;
 	protected:
 		Configuration& config;
 
@@ -33,6 +34,7 @@ namespace Gameplay
 		//a tree of maps(using filename as key)
 		std::map<std::string, tmx::MapLoader*> mapTree;
 		tmx::MapLoader* currentMap;	//the current map camera on this computer
+        std::shared_ptr<Battle> currentBattle;
 	public:
         GameSystem(Configuration& config, std::unique_ptr<StartInfo>& startInfo);
 		GameSystem(const GameSystem&) = delete;
@@ -75,7 +77,18 @@ namespace Gameplay
 		virtual sf::Vector2f getPlayerPosition() { return playerTree.at(config.player_name).getPosition(); }
 
 		//create battle on the map
-		//virtual void createBattle(tmx::MapLoader* map, sf::Vector2f position);
+        //if the initial plater is the one controlling this computer,
+        //set currentBattlePtr to battle
+        virtual void createBattle(const std::string& initPlayerName, tmx::MapObject* battleObject);
+        
+        //delete battle on the map
+        virtual void deleteBattle();
+
+		//is the current game in battle?
+		virtual bool isInBattle() { return currentBattle.get() != nullptr; }
+        
+        //is the current battle over?
+        bool isBattleOver();
 	};
 }
 #endif /* GameSystem_h */

@@ -114,6 +114,9 @@
     <ClCompile Include="..\..\src\ClientSystem.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Battle.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\ResourcePath.h">
@@ -180,6 +183,9 @@
       <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Player.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Battle.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
   </ItemGroup>

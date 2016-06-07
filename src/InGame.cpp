@@ -35,23 +35,38 @@ void InGame::run()
 			{
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 					systemPtr->interact();
+                
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !systemPtr->isInBattle())
+                    interfacePtr->switchInGaemMenu();
 			}
 
 			interfacePtr->updateGUI(event);
 		}
 
 		//handle keyboard input, move character, interact...etc
-		handleKeyboardInput();
+		if (systemPtr->isInBattle())
+        {
+            handleKeyboardInput_battle();
+            //if the battle is over, delete the battle
+            if(systemPtr->isBattleOver())
+            {
+                systemPtr->deleteBattle();
+            }
+        }
+		else if (interfacePtr->isDisplayingInGameMenu())
+		{
+			handleKeybardInput_InGameMenu();
+		}
+		else
+		{
+			handleKeyboardInput();
+		}			
 
 		//if this is server, send status update to client
 		if (networkPtr->isServer())
-		{
 			server_sendUpdate();
-		}
 		else //if this is client, send status update to server
-		{
 			client_sendUpdate();
-		}
 
 		config.cursor.update();
 
@@ -266,6 +281,21 @@ void InGame::handleKeyboardInput()
             networkPtr->send(networkPtr->getServerIP(), packet);
 	}
 }
+
+void InGame::handleKeybardInput_InGameMenu()
+{
+
+}
+
+void InGame::handleKeyboardInput_battle()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::left);
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+		systemPtr->movePlayer(config.player_name, Gameplay::Character::Direction::right);
+
+}
+
 
 void InGame::client_sendUpdate()
 {

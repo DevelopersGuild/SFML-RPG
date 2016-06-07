@@ -7,7 +7,8 @@
 using namespace Gameplay;
 
 GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& startInfoPtr) :
-	config(newConfig)
+	config(newConfig),
+	battleFactory(newConfig)
 {
 	//create the players
     for(StartInfo::Player& player : startInfoPtr->playerList)
@@ -25,18 +26,33 @@ GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& sta
 	{
 		addPlayertoMap(pair.second.getName(), "test.tmx", "event_start");
 	}
-	
 }
 
 void Gameplay::GameSystem::movePlayer(const std::string& playerName, const Character::Direction & direction)
 {
-    Player& player = playerTree.at(playerName);
-	tmx::MapObject* eventObject = player.moveCharacter(currentMap, direction);
-	
-	//if pointer points to a event object, handle event
-	if (eventObject && playerName == thisPlayerPtr->getName())
+	//if the player is in battle, do the input for battle only
+	Player& player = playerTree.at(playerName);
+	if (player.getState() == Player::STATE::inBattle)
 	{
-		handleGameEvent(eventObject);
+		switch (direction)
+		{
+		case Character::Direction::left:
+			currentBattle->moveCharacter(playerName, BattleCharacter::DIRECTION::left);
+			break;
+		case Character::Direction::right:
+			currentBattle->moveCharacter(playerName, BattleCharacter::DIRECTION::right);
+			break;
+		}
+	}
+	else
+	{
+		tmx::MapObject* eventObject = player.moveCharacter(currentMap, direction);
+
+		//if pointer points to a event object, handle event
+		if (eventObject && playerName == thisPlayerPtr->getName())
+		{
+			handleGameEvent(eventObject);
+		}
 	}
 }
 
@@ -91,6 +107,8 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
 	else if (eventObject->GetType() == "battle")
 	{
 		std::cout << "Battle encountered." << std::endl;
+        std::cout << "Name : " << eventObject->GetName() << std::endl;
+        createBattle(thisPlayerPtr->getName(), eventObject);
 	}
 }
 
@@ -175,4 +193,44 @@ void Gameplay::GameSystem::updateQuadTree()
 	sf::Vector2f position = camera.getCenter() - sf::Vector2f(camera.getSize().x / 2, camera.getSize().y / 2);
 	sf::FloatRect cameraRect(position, camera.getSize());
 	currentMap->UpdateQuadTree(cameraRect);
+}
+
+void Gameplay::GameSystem::createBattle( const std::string& initPlayerName, tmx::MapObject* battleObj)
+{
+    interfacePtr->setTransition();
+    //get the Player from name
+    Player& initPlayer = playerTree.at(initPlayerName);
+    //get the position of player
+    sf::Vector2f playerPos = initPlayer.getPosition();
+    //create battle
+    std::shared_ptr<Battle> battle(battleFactory.generateBattle(battleObj));
+    //the player joins the battle
+    initPlayer.joinBattle(battle);
+    if(initPlayerName == thisPlayerPtr->getName())
+        currentBattle = battle;
+    interfacePtr->exitTransition();
+}
+
+void Gameplay::GameSystem::deleteBattle()
+{
+    interfacePtr->setTransition();
+	thisPlayerPtr->leaveBattle();
+    currentBattle.reset();
+	//if the player is defeated, teleport to the last safeLocation
+	if (thisPlayerPtr->getCurrentHp() <= 0)
+	{
+		thisPlayerPtr->teleport_ToLastSafeLocation();
+		currentMap = thisPlayerPtr->getMap();
+		thisPlayerPtr->setCurrentHp(1);
+	}	
+    interfacePtr->exitTransition();
+}
+
+bool Gameplay::GameSystem::isBattleOver()
+{
+    if(currentBattle)
+    {
+        return currentBattle->getState() == Battle::STATE::overed;
+    }
+    return true;    //there is no battle, return true anyway...
 }
