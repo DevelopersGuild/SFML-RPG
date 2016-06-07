@@ -35,6 +35,9 @@ void InGame::run()
 			{
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 					systemPtr->interact();
+                
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                    interfacePtr->switchInGaemMenu();
 			}
 
 			interfacePtr->updateGUI(event);

@@ -3,9 +3,11 @@ using namespace Gameplay;
 
 GameInterface::GameInterface(GameSystem* newSystem) :
 	system(newSystem),
-	charInfo(newSystem->config)
+	charInfo(newSystem->config),
+    inGameMenu(newSystem->config)
 {
 	camera.setSize(500, 375);
+    displayInGameMenu = false;
 
 	//initialize the transitionRect
 	gui.setWindow(system->config.window);
@@ -15,6 +17,7 @@ GameInterface::GameInterface(GameSystem* newSystem) :
 	transitionRect->hide();
 
 	charInfo.addToGui(gui);
+    inGameMenu.addToGui(gui);
 	transitionRect->moveToFront();
 }
 
@@ -134,6 +137,19 @@ void Gameplay::GameInterface::exitTransition()
 		window.display();
 	}
 }
+
+void Gameplay::GameInterface::switchInGaemMenu()
+{
+    if(displayInGameMenu == true)
+    {
+        inGameMenu.hide();
+    }
+    else
+    {
+        inGameMenu.show();
+    }
+    displayInGameMenu = !displayInGameMenu;
+}
 //*************************************************************
 Gameplay::CharInfoInterface::CharInfoInterface(Configuration& config)
 {
@@ -216,4 +232,39 @@ void Gameplay::CharInfoInterface::update(Player * player)
 	expBar->setValue(currentExp);
 
 	text_level->setText("Lv " + std::to_string(level));
+}
+//**************************************************************
+Gameplay::InGameMenu::InGameMenu(Configuration& config)
+{
+    panel = std::make_shared<tgui::Panel>();
+    panel->setSize(400, 600);
+    panel->setPosition(314, 84);
+    panel->setBackgroundColor(tgui::Color(0,0,0,140));
+    panel->setFont(tgui::Font(config.fontMan.get("Carlito-Italic.ttf")));
+    panel->hide();
+    
+    exitButton = std::make_shared<tgui::Button>();
+    exitButton->setText("Leave game");
+    exitButton->setPosition(50,550);
+    panel->add(exitButton);
+    
+    settingButton = std::make_shared<tgui::Button>();
+    settingButton->setText("Settings");
+    settingButton->setPosition(250, 550);
+    panel->add(settingButton);
+}
+
+void Gameplay::InGameMenu::addToGui(tgui::Gui& gui)
+{
+    gui.add(panel);
+}
+
+void Gameplay::InGameMenu::show()
+{
+    panel->showWithEffect(tgui::ShowAnimationType::Scale, sf::seconds(0.2));
+}
+
+void Gameplay::InGameMenu::hide()
+{
+    panel->hideWithEffect(tgui::ShowAnimationType::Scale, sf::seconds(0.2));
 }
