@@ -14,31 +14,26 @@ namespace Gameplay
 		enum DIRECTION{up, right, down, left};
 	private:
 		std::string name;
-		sf::Sprite	sprite;
-		SpriteList upList;
-		SpriteList rightList;
-		SpriteList downList;
-		SpriteList leftList;
-		bool talkable;
-		std::string dialogue_content;
+		sf::Text text_name;
 		DIRECTION direction;
+		sf::Sprite sprite;
+		sf::IntRect upRect;
+		sf::IntRect rightRect;
+		sf::IntRect downRect;
+		sf::IntRect leftRect;
 		tmx::MapLoader* currentMap;
 	public:
 		NPC() = delete;
 		NPC(const NPC&) = delete;
 		NPC& operator=(const NPC&) = delete;
-		NPC(tmx::MapLoader* map, sf::Texture& texture, const std::string& name, bool talkable);
+		NPC(sf::Font& font, sf::Texture& spriteTexture, tmx::MapLoader* map, const std::string& name);
 
-		const std::string& getName() { return name; }
+		std::string getName() { return name; }
+		void setSpriteRect(const sf::IntRect& upRect, const sf::IntRect& rightRect, const sf::IntRect& downRect, const sf::IntRect& leftRect);
 		void setDirection(DIRECTION direction);
+		const tmx::MapLoader* getMap() { return currentMap; }
+		void setPosition(const sf::Vector2f& pos);
+
 		void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
-		bool isTalkable() { return talkable; }
-		void setDialogue(const std::string& dialogue) { dialogue_content = dialogue; }
-		const std::string& getDialogue() { return dialogue_content; }
-		tmx::MapLoader* getMap() { return currentMap; }
-
-		virtual void interact() { ; }
-		virtual void addToSpriteList(sf::IntRect intRect, const DIRECTION& direction);
 	};
 }

@@ -121,6 +121,9 @@ namespace Gameplay
 		//get the AABB representation in the map
 		sf::FloatRect getAABB();
 
+		//get the AABB of the sprite
+		sf::FloatRect getSpriteAABB() { return sprite.getGlobalBounds(); }
+
 		//get the colide detection area of this character
 		sf::FloatRect getDectionArea();
         

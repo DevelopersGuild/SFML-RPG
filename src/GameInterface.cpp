@@ -34,6 +34,12 @@ void Gameplay::GameInterface::draw()
 		window.draw(pair.second);
 	}
 
+	//draw every NPCs in the same map
+	for (auto& npc : system->npcRenderList)
+	{
+		window.draw(*npc);
+	}
+
     //if it is in battle, draw the battle
     if(system->currentBattle)
     {
