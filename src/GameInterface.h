@@ -3,6 +3,7 @@
 
 #include "GameSystem.h"
 #include "Configuration.h"
+#include "MiniMap.h"
 
 namespace Gameplay
 {
@@ -75,6 +76,7 @@ namespace Gameplay
 		CharInfoInterface charInfo;
         InGameMenu inGameMenu;
         Dialogue dialogue;
+		MiniMap miniMap;
 
 		void updateCamera();
 	public:
@@ -84,7 +86,7 @@ namespace Gameplay
 		void draw();
 
 		//update the gui of the interface, must be called in every frame
-		void updateGUI(sf::Event& event) { gui.handleEvent(event); }
+		void updateGUI(sf::Event& event);
 
 		//set the transition layer to block the screen
 		void setTransition();
@@ -98,6 +100,10 @@ namespace Gameplay
         //set on/off the dialogue box
         //note: string argument is only necessary when switching on.
         void switchDialogue(const std::string& str);
+
+		//set on/off the miniMap
+		void showMiniMap() { miniMap.show(); }
+		void hideMiniMap() { miniMap.hide(); }
 
 		//is the in game menu displayed?
 		bool isDisplayingInGameMenu() { return inGameMenu.isDisplaying(); }

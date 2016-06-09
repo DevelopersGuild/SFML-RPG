@@ -5,7 +5,8 @@ GameInterface::GameInterface(GameSystem* newSystem) :
 	system(newSystem),
 	charInfo(newSystem->config),
     inGameMenu(newSystem->config),
-    dialogue(newSystem->config)
+    dialogue(newSystem->config),
+	miniMap(newSystem->config)
 {
 	camera.setSize(500, 375);
 
@@ -19,6 +20,7 @@ GameInterface::GameInterface(GameSystem* newSystem) :
 	charInfo.addToGui(gui);
     inGameMenu.addToGui(gui);
     dialogue.addToGue(gui);
+	miniMap.addToGui(gui);
 	transitionRect->moveToFront();
 }
 
@@ -58,6 +60,13 @@ void Gameplay::GameInterface::draw()
 	//debug
 	
 	//system->currentMap->Draw(system->config.window, tmx::MapLayer::DrawType::Debug, true);
+}
+
+void Gameplay::GameInterface::updateGUI(sf::Event & event)
+{
+	gui.handleEvent(event);
+	//update the miniMap
+	miniMap.update(system->getPlayerPosition(), system->currentMap);
 }
 
 //Peter's function
@@ -160,14 +169,11 @@ void Gameplay::GameInterface::switchInGaemMenu()
 void Gameplay::GameInterface::switchDialogue(const std::string& str)
 {
     if(dialogue.isDisplaying())
-    {
         dialogue.hide();
-    }
     else
-    {
         dialogue.show(str);
-    }
 }
+
 //*************************************************************
 Gameplay::CharInfoInterface::CharInfoInterface(Configuration& config)
 {
@@ -291,8 +297,8 @@ Gameplay::Dialogue::Dialogue(Configuration& config)
     panel->setSize(config.window.getSize().x * 0.8, config.window.getSize().y * 0.30);
     panel->setPosition(config.window.getSize().x * 0.1, config.window.getSize().y * 0.60);
     panel->setBackgroundColor(tgui::Color(0,0,0,80));
+	panel->setFont(tgui::Font(config.fontMan.get("Carlito-Regular.ttf")));
     text = std::make_shared<tgui::Label>();
-    text->setFont(tgui::Font(config.fontMan.get("Carlito-Regular.ttf")));
     text->setTextColor(tgui::Color(sf::Color::White));
     text->setTextSize(26);
     text->setPosition(panel->getSize().x * 0.10, panel->getSize().y * 0.15);

@@ -293,8 +293,11 @@ void Gameplay::GameSystem::createBattle( const std::string& initPlayerName, tmx:
     std::shared_ptr<Battle> battle(battleFactory.generateBattle(battleObj));
     //the player joins the battle
     initPlayer.joinBattle(battle);
-    if(initPlayerName == thisPlayerPtr->getName())
-        currentBattle = battle;
+	if (initPlayerName == thisPlayerPtr->getName())
+	{
+		currentBattle = battle;
+		interfacePtr->hideMiniMap();
+	}       
     interfacePtr->exitTransition();
 }
 
@@ -311,6 +314,7 @@ void Gameplay::GameSystem::deleteBattle()
 		reloadNPCRenderLlist();
 		thisPlayerPtr->setCurrentHp(1);
 	}	
+	interfacePtr->showMiniMap();
     interfacePtr->exitTransition();
 }
 
