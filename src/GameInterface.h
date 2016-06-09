@@ -44,6 +44,22 @@ namespace Gameplay
 		bool isDisplaying() { return panel->isVisible(); }
     };
     
+    /*
+    Dialogue class
+    handling the dialogue graphics in the game.
+    */
+    class Dialogue
+    {
+    private:
+        tgui::Panel::Ptr panel;
+        tgui::Label::Ptr text;
+    public:
+        Dialogue(Configuration& config);
+        void addToGue(tgui::Gui& gui);
+        void show(const std::string& str);
+        void hide();
+        bool isDisplaying(){return panel->isVisible();}
+    };
 	/*
 	GameInterface class
 	Handles inputs from this computer
@@ -58,6 +74,7 @@ namespace Gameplay
 		tgui::Panel::Ptr transitionRect;
 		CharInfoInterface charInfo;
         InGameMenu inGameMenu;
+        Dialogue dialogue;
 
 		void updateCamera();
 	public:
@@ -77,9 +94,16 @@ namespace Gameplay
 		
         //set on/off the in game menu
         void switchInGaemMenu();
+        
+        //set on/off the dialogue box
+        //note: string argument is only necessary when switching on.
+        void switchDialogue(const std::string& str);
 
 		//is the in game menu displayed?
 		bool isDisplayingInGameMenu() { return inGameMenu.isDisplaying(); }
+        
+        //is dialogueBox displaing?
+        bool isDisplayingDialogue(){return dialogue.isDisplaying();}
         
 		//get the camera
 		const sf::View& getCamera() { return camera; }

@@ -158,7 +158,7 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
 	}
     else if(eventObject->GetType() == "dialogue")
     {
-        std::cout << eventObject->GetPropertyString("content") << std::endl;
+        interfacePtr->switchDialogue(eventObject->GetPropertyString("content"));
     }
 	else if (eventObject->GetType() == "battle")
 	{
@@ -171,7 +171,31 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
 		std::string interaction = eventObject->GetPropertyString("interaction");
 		if (interaction == "dialogue")
 		{
-			std::cout << eventObject->GetPropertyString("content") << std::endl;
+            //find the npc and change his/her direction
+            for(auto it = npcRenderList.begin(); it != npcRenderList.end(); it++)
+            {
+                if(eventObject->GetName() == (*it)->getName())
+                {
+                    if(thisPlayerPtr->getDirection() == Character::Direction::left)
+                    {
+                        (*it)->setDirection(NPC::DIRECTION::right);
+                    }
+                    else if(thisPlayerPtr->getDirection() == Character::Direction::right)
+                    {
+                        (*it)->setDirection(NPC::DIRECTION::left);
+                    }
+                    else if(thisPlayerPtr->getDirection() == Character::Direction::up)
+                    {
+                        (*it)->setDirection(NPC::DIRECTION::down);
+                    }
+                    else if(thisPlayerPtr->getDirection() == Character::Direction::down)
+                    {
+                        (*it)->setDirection(NPC::DIRECTION::up);
+                    }
+                    break;
+                }
+            }
+            interfacePtr->switchDialogue(eventObject->GetPropertyString("content"));
 		}
 	}
 }

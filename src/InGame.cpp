@@ -33,11 +33,11 @@ void InGame::run()
 
 			if (event.type == sf::Event::KeyPressed)
 			{
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-					systemPtr->interact();
-                
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !systemPtr->isInBattle())
                     interfacePtr->switchInGaemMenu();
+                
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+                    systemPtr->interact();
 			}
 
 			interfacePtr->updateGUI(event);
@@ -57,10 +57,13 @@ void InGame::run()
 		{
 			handleKeybardInput_InGameMenu();
 		}
-		else
+		else if(interfacePtr->isDisplayingDialogue())
 		{
-			handleKeyboardInput();
-		}			
+		}
+        else
+        {
+            handleKeyboardInput();
+        }
 
 		//if this is server, send status update to client
 		if (networkPtr->isServer())

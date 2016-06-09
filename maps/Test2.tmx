@@ -2,7 +2,7 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="32" tileheight="32" nextobjectid="578">
  <properties>
   <property name="battle" value="true"/>
-  <property name="battle_rate" value="5"/>
+  <property name="battle_rate" value="3"/>
  </properties>
  <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48">
   <image source="tmw_desert_spacing.png" trans="ff00ff" width="265" height="199"/>

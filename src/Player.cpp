@@ -11,6 +11,7 @@ Player::Player(Configuration& newConfig) :
 	currentMap = nullptr;
 	ready = false;
     state = normal;
+    
 }
 
 Player::Player(Configuration& newConfig, const std::string& playerName, const std::string& charName) :
@@ -299,7 +300,7 @@ bool Gameplay::Player::isBattleEncounter()
 		//TBD, Sabrina's part
 		srand(time(NULL));
 		int random_num = rand() % (101);
-		float distance = character.getDistance_lastBattle() / 100;
+		float distance = character.getDistance_lastBattle() / 200.f;
 		int chance_encounter = distance * distance + battle_rate * distance;
 		if (chance_encounter >= random_num)
 			return true;

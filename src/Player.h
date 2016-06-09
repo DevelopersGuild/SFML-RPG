@@ -101,6 +101,9 @@ namespace Gameplay
 
 		//teleport the player to the last safe location
 		void teleport_ToLastSafeLocation();
+        
+        //get the direction of the character
+        Character::Direction getDirection(){return character.getDirection();}
 
 		//character attributes
 		int getCurrentHp() { return character.getCurrentHp(); }

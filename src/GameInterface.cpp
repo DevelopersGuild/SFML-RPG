@@ -4,7 +4,8 @@ using namespace Gameplay;
 GameInterface::GameInterface(GameSystem* newSystem) :
 	system(newSystem),
 	charInfo(newSystem->config),
-    inGameMenu(newSystem->config)
+    inGameMenu(newSystem->config),
+    dialogue(newSystem->config)
 {
 	camera.setSize(500, 375);
 
@@ -17,6 +18,7 @@ GameInterface::GameInterface(GameSystem* newSystem) :
 
 	charInfo.addToGui(gui);
     inGameMenu.addToGui(gui);
+    dialogue.addToGue(gui);
 	transitionRect->moveToFront();
 }
 
@@ -154,6 +156,18 @@ void Gameplay::GameInterface::switchInGaemMenu()
         inGameMenu.show();
     }
 }
+
+void Gameplay::GameInterface::switchDialogue(const std::string& str)
+{
+    if(dialogue.isDisplaying())
+    {
+        dialogue.hide();
+    }
+    else
+    {
+        dialogue.show(str);
+    }
+}
 //*************************************************************
 Gameplay::CharInfoInterface::CharInfoInterface(Configuration& config)
 {
@@ -269,4 +283,37 @@ void Gameplay::InGameMenu::hide()
 		panel->hideWithEffect(tgui::ShowAnimationType::Scale, sf::seconds(0.2f));
 		time_LastSwitch.restart();
 	}
+}
+//****************************************************************
+Gameplay::Dialogue::Dialogue(Configuration& config)
+{
+    panel = std::make_shared<tgui::Panel>();
+    panel->setSize(config.window.getSize().x * 0.8, config.window.getSize().y * 0.30);
+    panel->setPosition(config.window.getSize().x * 0.1, config.window.getSize().y * 0.60);
+    panel->setBackgroundColor(tgui::Color(0,0,0,80));
+    text = std::make_shared<tgui::Label>();
+    text->setFont(tgui::Font(config.fontMan.get("Carlito-Regular.ttf")));
+    text->setTextColor(tgui::Color(sf::Color::White));
+    text->setTextSize(26);
+    text->setPosition(panel->getSize().x * 0.10, panel->getSize().y * 0.15);
+    text->setAutoSize(true);
+    text->setMaximumTextWidth(panel->getSize().x * 0.8);
+    panel->add(text);
+    panel->hide();
+}
+
+void Gameplay::Dialogue::show(const std::string& str)
+{
+    text->setText(str);
+    panel->show();
+}
+
+void Gameplay::Dialogue::hide()
+{
+    panel->hide();
+}
+
+void Gameplay::Dialogue::addToGue(tgui::Gui& gui)
+{
+    gui.add(panel);
 }
