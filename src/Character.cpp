@@ -186,14 +186,13 @@ void Gameplay::Character::gainExp(int value)
 
 void Gameplay::Character::levelUp()
 {
-	// TODO: test function when battle is done
 	// Update attributes
 	level++;
-	max_hp += 0;
-	atk += 0;
-	def += 0;
-	speed += 0;
+	max_hp += 10;
+	atk += 2;
+	def += 1;
+	speed += (level & 1);
 
 	// Update the exp_cap
-	exp_cap += 0;
+	exp_cap += level * 5;
 }
