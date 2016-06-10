@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="55">
+ <properties>
+  <property name="battle" value="true"/>
+  <property name="battle_rate" value="3"/>
+ </properties>
+ <tileset firstgid="1" name="tmw_desert_spacing" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48" columns="8">
+  <image source="tmw_desert_spacing.png" width="265" height="199"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="20" height="20">
+  <data encoding="base64">
+   JwAAACcAAAAnAAAAJwAAACcAAAAnAAAAJwAAACcAAAAnAAAAJwAAACcAAAAnAAAAJwAAACcAAAAnAAAAJwAAACcAAAAnAAAAJwAAACcAAAAnAAAAHgAAAB4AAAAeAAAAHgAAACcAAAABAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAMAAAAnAAAAHgAAAB4AAAAeAAAAJwAAACcAAAAeAAAAHgAAAB4AAAAeAAAAJwAAAAkAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACwAAACcAAAAeAAAAHgAAAB4AAAAnAAAAJwAAAB4AAAAeAAAAHgAAAB4AAAAnAAAACQAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAALAAAAJwAAAB4AAAAeAAAAHgAAACcAAAAnAAAAHgAAAB8AAAAfAAAAHgAAACcAAAAJAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAsAAAAnAAAAHgAAAB4AAAAeAAAAJwAAACcAAAAeAAAAHwAAAB4AAAAeAAAAJwAAABEAAAASAAAAFQAAAAoAAAAUAAAAEgAAABIAAAASAAAAEwAAACcAAAAeAAAAHgAAAB4AAAAnAAAAJwAAAB4AAAAfAAAAHgAAAB4AAAAnAAAAJwAAACcAAAAJAAAACgAAAAsAAAAnAAAAJwAAACcAAAAnAAAAJwAAAB4AAAAeAAAAHgAAACcAAAAnAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAJwAAAAkAAAAKAAAACwAAACcAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAJwAAACcAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAgAAAACQAAAAoAAAALAAAAHgAAAB4AAAAeAAAAHgAAAB8AAAAeAAAAHgAAAB4AAAAnAAAAJwAAACAAAAAeAAAAIAAAAB4AAAAeAAAAHgAAAC4AAAAJAAAACgAAAAsAAAAeAAAAHwAAAB8AAAAeAAAAHgAAAB4AAAAeAAAAHgAAACcAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAB0AAAAKAAAAHAAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAnAAAAHgAAAB4AAAAeAAAAHgAAAB8AAAAfAAAAHwAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAACAAAAAeAAAAJwAAACcAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAgAAAAHgAAAB4AAAAnAAAAJwAAAB4AAAAeAAAAHwAAAB4AAAAfAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAACcAAAAnAAAAHgAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAHgAAAB4AAAAeAAAAIAAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHwAAAB4AAAAeAAAAJwAAACcAAAAeAAAAHgAAAB8AAAAeAAAAHwAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAIAAAACAAAAAeAAAAHgAAAB4AAAAfAAAAHwAAAB4AAAAnAAAAJwAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAACcAAAAnAAAAJwAAACcAAAAnAAAAJwAAACcAAAAnAAAAJwAAACcAAAAnAAAAJwAAACcAAAAnAAAAJwAAACcAAAAnAAAAJwAAACcAAAAnAAAAJwAAAA==
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="7" x="0" y="0" width="32" height="320"/>
+  <object id="8" x="32" y="0" width="576" height="32"/>
+  <object id="9" x="608" y="0" width="32" height="320"/>
+  <object id="10" x="0" y="416" width="32" height="224"/>
+  <object id="11" x="32" y="608" width="576" height="32"/>
+  <object id="12" x="608" y="416" width="32" height="224"/>
+  <object id="14" x="160" y="32" width="32" height="192"/>
+  <object id="15" x="192" y="192" width="64" height="32"/>
+  <object id="16" x="224" y="224" width="32" height="32"/>
+  <object id="18" x="480" y="32" width="32" height="192"/>
+  <object id="19" x="352" y="192" width="128" height="32"/>
+  <object id="20" x="352" y="224" width="32" height="32"/>
+  <object id="21" x="64" y="128" width="64" height="32"/>
+  <object id="22" x="64" y="160" width="32" height="64"/>
+  <object id="23" x="384" y="288" width="64" height="32"/>
+  <object id="24" x="480" y="256" width="32" height="32"/>
+  <object id="25" x="96" y="288" width="32" height="32"/>
+  <object id="26" x="32" y="288" width="32" height="32"/>
+  <object id="27" x="224" y="256" width="32" height="32"/>
+  <object id="28" x="224" y="288" width="32" height="32"/>
+  <object id="29" x="160" y="416" width="96" height="32"/>
+  <object id="30" x="64" y="512" width="160" height="32"/>
+  <object id="31" x="96" y="480" width="32" height="32"/>
+  <object id="32" x="160" y="480" width="32" height="32"/>
+  <object id="33" x="96" y="544" width="32" height="32"/>
+  <object id="34" x="160" y="544" width="32" height="32"/>
+  <object id="35" x="320" y="512" width="32" height="32"/>
+  <object id="36" x="352" y="544" width="64" height="32"/>
+  <object id="37" x="544" y="416" width="32" height="32"/>
+  <object id="38" x="512" y="448" width="32" height="32"/>
+  <object id="39" x="512" y="512" width="32" height="64"/>
+  <object id="40" x="544" y="544" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="NPC">
+  <object id="43" name="Cactus Dude" type="NPC" x="128" y="544" width="32" height="32">
+   <properties>
+    <property name="content" value="Have some cactus juice!"/>
+    <property name="default_direction" value="down"/>
+    <property name="downRect" value="32 128"/>
+    <property name="interaction" value="dialogue"/>
+    <property name="leftRect" value="32 160"/>
+    <property name="rightRect" value="32 192"/>
+    <property name="source" value="People4.png"/>
+    <property name="upRect" value="32 228"/>
+   </properties>
+  </object>
+  <object id="54" name="dummy" x="640" y="672"/>
+ </objectgroup>
+ <objectgroup name="Player">
+  <object id="53" name="dummy" x="608" y="640"/>
+ </objectgroup>
+ <objectgroup name="Event">
+  <object id="44" name="sign_tips" type="dialogue" x="224" y="288" width="32" height="32">
+   <properties>
+    <property name="content" value="Low on health? Drink some cactus juice!"/>
+   </properties>
+  </object>
+  <object id="45" name="event_start" type="position" x="32" y="352" width="32" height="32"/>
+  <object id="46" type="teleport" x="608" y="320" width="32" height="96"/>
+  <object id="47" type="teleport" x="0" y="320" width="32" height="96"/>
+  <object id="48" name="event_start_2" type="position" x="576" y="352" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Battle">
+  <object id="42" name="battlezone1" type="battle" x="192" y="32" width="288" height="160">
+   <properties>
+    <property name="background" value="desert_bg.png"/>
+    <property name="monster_set" value=""/>
+   </properties>
+  </object>
+  <object id="52" name="event_battle" type="battle" x="640" y="640">
+   <properties>
+    <property name="background" value="desert_bg.png"/>
+    <property name="monster_set" value=""/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
