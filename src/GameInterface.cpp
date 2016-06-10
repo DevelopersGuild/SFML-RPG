@@ -1,4 +1,5 @@
 #include "GameInterface.h"
+#include <iomanip>
 using namespace Gameplay;
 
 GameInterface::GameInterface(GameSystem* newSystem) :
@@ -162,6 +163,7 @@ void Gameplay::GameInterface::switchInGaemMenu()
     }
     else
     {
+        inGameMenu.updateData(system->thisPlayerPtr);
         inGameMenu.show();
     }
 }
@@ -280,11 +282,115 @@ Gameplay::InGameMenu::InGameMenu(Configuration& config)
     panel->setBackgroundColor(tgui::Color(0,0,0,140));
     panel->setFont(tgui::Font(config.fontMan.get("Carlito-Italic.ttf")));
     panel->hide();
+    
+    player_characterName = std::make_shared<tgui::Label>();
+    player_characterName->setText("Player");
+    player_characterName->setTextColor(tgui::Color(sf::Color::White));
+    player_characterName->setPosition(5,15);
+    player_characterName->setTextSize(30);
+    panel->add(player_characterName);
+    
+    player_level = std::make_shared<tgui::Label>();
+    player_level->setText("Level: ");
+    player_level->setTextColor(tgui::Color(sf::Color::White));
+    player_level->setPosition(200,15);
+    player_level->setTextSize(30);
+    panel->add(player_level);
+    
+
+    player_hp = std::make_shared<tgui::Label>();
+    player_hp->setText("HP: ");
+    player_hp->setTextColor(tgui::Color(sf::Color::White));
+    player_hp->setPosition(20, 90);
+    player_hp->setTextSize(30);
+    panel->add(player_hp);
+    
+    player_exp = std::make_shared<tgui::Label>();
+    player_exp->setText("EXP: ");
+    player_exp->setTextColor(tgui::Color(sf::Color::White));
+    player_exp->setPosition(20,140);
+    player_exp->setTextSize(30);
+    panel->add(player_exp);
+    
+    player_attack = std::make_shared<tgui::Label>();
+    player_attack->setText("ATTACK: ");
+    player_attack->setTextColor(tgui::Color(sf::Color::White));
+    player_attack->setPosition(20,190);
+    player_attack->setTextSize(30);
+    panel->add(player_attack);
+    
+    player_defense = std::make_shared<tgui::Label>();
+    player_defense->setText("DEFENSE: ");
+    player_defense->setTextColor(tgui::Color(sf::Color::White));
+    player_defense->setPosition(20,240);
+    player_defense->setTextSize(30);
+    panel->add(player_defense);
+    
+    player_speed = std::make_shared<tgui::Label>();
+    player_speed->setText("SPEED: ");
+    player_speed->setTextColor(tgui::Color(sf::Color::White));
+    player_speed->setPosition(20,290);
+    player_speed->setTextSize(30);
+    panel->add(player_speed);
+    
+    player_battle_speed = std::make_shared<tgui::Label>();
+    player_battle_speed->setText("BATTLE SPEED: ");
+    player_battle_speed->setTextColor(tgui::Color(sf::Color::White));
+    player_battle_speed->setPosition(20,340);
+    player_battle_speed->setTextSize(30);
+    panel->add(player_battle_speed);
+    
+    player_money = std::make_shared<tgui::Label>();
+    player_money->setText("MONEY: ");
+    player_money->setTextColor(tgui::Color(sf::Color::White));
+    player_money->setPosition(20,390);
+    player_money->setTextSize(30);
+    panel->add(player_money);
+    
+    
+    button_settings = std::make_shared<tgui::Label>();
+    button_settings->setText("Settings");
+    button_settings->setTextColor(tgui::Color(sf::Color::White));
+    button_settings->setPosition(50,500);
+    button_settings->setTextSize(20);
+    panel->add(button_settings);
+    
+    button_leave = std::make_shared<tgui::Label>();
+    button_leave->setText("Leave");
+    button_leave->setTextColor(tgui::Color(sf::Color::White));
+    button_leave->setPosition(250,500);
+    button_leave->setTextSize(20);
+    panel->add(button_leave);
+    
+
 }
 
 void Gameplay::InGameMenu::addToGui(tgui::Gui& gui)
 {
     gui.add(panel);
+}
+
+void Gameplay::InGameMenu::updateData(Gameplay::Player *player)
+{
+    player_characterName->setText(player->getName());
+    player_level->setText("Lv. " + std::to_string(player->getLevel()));
+    player_hp->setText("HP: " + std::to_string(player->getCurrentHp()) + "/" + std::to_string(player->getMaxHp()));
+    player_exp->setText("EXP: " + std::to_string(player->getCurrentExp()) + "/" + std::to_string(player->getExpCap()));
+    player_attack->setText("Attack: " + std::to_string(player->getAtk()));
+    player_defense->setText("Defense: " + std::to_string(player->getDef()));
+    player_money->setText("Money: " + std::to_string(player->getMoney()));
+    
+
+    std::stringstream stream;
+    stream << std::fixed << std::setprecision(2) << player->getSpeed();
+    std::string s = stream.str();
+    player_speed->setText("Speed: " + s);
+    stream.clear();
+    
+    stream << std::fixed << std::setprecision(2) << player->getBattleSpeed();
+    
+    player_battle_speed->setText("Battle speed: " + s);
+    
 }
 
 void Gameplay::InGameMenu::show()

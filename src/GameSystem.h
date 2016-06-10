@@ -27,6 +27,7 @@ namespace Gameplay
 		BattleFactory battleFactory;
 
 		void reloadNPCRenderLlist();
+        void changeNPCDirection(const std::string& name);
 	protected:
 		Configuration& config;
 

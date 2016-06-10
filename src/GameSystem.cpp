@@ -171,33 +171,45 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
 		std::string interaction = eventObject->GetPropertyString("interaction");
 		if (interaction == "dialogue")
 		{
-            //find the npc and change his/her direction
-            for(auto it = npcRenderList.begin(); it != npcRenderList.end(); it++)
-            {
-                if(eventObject->GetName() == (*it)->getName())
-                {
-                    if(thisPlayerPtr->getDirection() == Character::Direction::left)
-                    {
-                        (*it)->setDirection(NPC::DIRECTION::right);
-                    }
-                    else if(thisPlayerPtr->getDirection() == Character::Direction::right)
-                    {
-                        (*it)->setDirection(NPC::DIRECTION::left);
-                    }
-                    else if(thisPlayerPtr->getDirection() == Character::Direction::up)
-                    {
-                        (*it)->setDirection(NPC::DIRECTION::down);
-                    }
-                    else if(thisPlayerPtr->getDirection() == Character::Direction::down)
-                    {
-                        (*it)->setDirection(NPC::DIRECTION::up);
-                    }
-                    break;
-                }
-            }
+            changeNPCDirection(eventObject->GetName());
             interfacePtr->switchDialogue(eventObject->GetPropertyString("content"));
 		}
+        else if(interaction == "heal")
+        {
+            int max_hp = thisPlayerPtr->getMaxHp();
+            thisPlayerPtr->setCurrentHp(max_hp);
+            changeNPCDirection(eventObject->GetName());
+            interfacePtr->switchDialogue("This is free healing service");
+        }
 	}
+}
+
+void Gameplay::GameSystem::changeNPCDirection(const std::string& name)
+{
+    //find the npc and change his/her direction
+    for(auto it = npcRenderList.begin(); it != npcRenderList.end(); it++)
+    {
+        if(name == (*it)->getName())
+        {
+            if(thisPlayerPtr->getDirection() == Character::Direction::left)
+            {
+                (*it)->setDirection(NPC::DIRECTION::right);
+            }
+            else if(thisPlayerPtr->getDirection() == Character::Direction::right)
+            {
+                (*it)->setDirection(NPC::DIRECTION::left);
+            }
+            else if(thisPlayerPtr->getDirection() == Character::Direction::up)
+            {
+                (*it)->setDirection(NPC::DIRECTION::down);
+            }
+            else if(thisPlayerPtr->getDirection() == Character::Direction::down)
+            {
+                (*it)->setDirection(NPC::DIRECTION::up);
+            }
+            break;
+        }
+    }
 }
 
 void Gameplay::GameSystem::loadMap(const std::string & filename)

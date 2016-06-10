@@ -39,11 +39,23 @@ namespace Gameplay
     private:
 		sf::Clock time_LastSwitch;
         tgui::Panel::Ptr panel;
+        tgui::Label::Ptr player_characterName;
+        tgui::Label::Ptr player_level;
+        tgui::Label::Ptr player_hp;
+        tgui::Label::Ptr player_exp;
+        tgui::Label::Ptr player_attack;
+        tgui::Label::Ptr player_defense;
+        tgui::Label::Ptr player_speed;
+        tgui::Label::Ptr player_battle_speed;
+        tgui::Label::Ptr player_money;
+        tgui::Label::Ptr button_settings;
+        tgui::Label::Ptr button_leave;
     public:
         InGameMenu(Configuration& config);
         void addToGui(tgui::Gui& gui);
         void show();
         void hide();
+        void updateData(Player* player);
 		bool isDisplaying() { return panel->isVisible(); }
     };
     

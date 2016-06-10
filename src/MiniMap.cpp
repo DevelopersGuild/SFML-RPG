@@ -41,7 +41,7 @@ void Gameplay::MiniMap::update(const sf::Vector2f playerPosition, tmx::MapLoader
 	float y_portion = playerPosition.y / map->GetMapSize().y;
 	float x_portion = playerPosition.x / map->GetMapSize().x;
 
-	pin->setPosition(minimapPic->getSize().x * x_portion, minimapPic->getSize().y * y_portion);
+	pin->setPosition(minimapPic->getSize().x * x_portion - 15, minimapPic->getSize().y * y_portion - 30);
 }
 
 void Gameplay::MiniMap::addToGui(tgui::Gui & gui)

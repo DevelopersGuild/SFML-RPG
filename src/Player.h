@@ -114,5 +114,10 @@ namespace Gameplay
 		int getLevel() { return character.getLevel(); }
         int getMoney(){return character.getMoney();}
         void setMoney(int value){return character.setMoney(value);}
+        int getAtk(){return character.getAtk();}
+        int getDef(){return character.getDef();}
+        float getSpeed(){return character.getSpeed();}
+        float getBattleSpeed(){return character.getBattleSpeed();}
+        
 	};
 }

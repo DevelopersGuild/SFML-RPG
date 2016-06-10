@@ -135,6 +135,7 @@
 		FA54D5651D08CB02001EFDA8 /* NPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPC.h; path = ../src/NPC.h; sourceTree = SOURCE_ROOT; };
 		FA54D5681D097DD3001EFDA8 /* MiniMap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MiniMap.cpp; path = ../src/MiniMap.cpp; sourceTree = SOURCE_ROOT; };
 		FA54D5691D097DD3001EFDA8 /* MiniMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MiniMap.h; path = ../src/MiniMap.h; sourceTree = SOURCE_ROOT; };
+		FA54D56B1D0ABFDE001EFDA8 /* Item.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Item.h; path = ../src/Item.h; sourceTree = SOURCE_ROOT; };
 		FAA25A671CF3B8EF0002ED19 /* Battle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Battle.h; path = ../src/Battle.h; sourceTree = SOURCE_ROOT; };
 		FAA25A681CF3C9850002ED19 /* Battle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Battle.cpp; path = ../src/Battle.cpp; sourceTree = SOURCE_ROOT; };
 		FAAA79991C7E8BA300683E22 /* ResourceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ResourceManager.h; path = ../src/ResourceManager.h; sourceTree = SOURCE_ROOT; };
@@ -255,6 +256,7 @@
 				FA1285221CC78DC70066AF05 /* StartInfo.h */,
 				FACCE24E1CD452EC00327C9F /* GameSystem.h */,
 				FACCE24F1CD4866100327C9F /* GameSystem.cpp */,
+				FA54D56B1D0ABFDE001EFDA8 /* Item.h */,
 				FACCE2551CD4A8A700327C9F /* GameNetwork.h */,
 				FACCE2561CD4A8FC00327C9F /* GameNetwork.cpp */,
 				FACCE2581CD4A94E00327C9F /* GameInterface.h */,

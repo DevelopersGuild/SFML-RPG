@@ -87,10 +87,9 @@
   </object>
   <object id="103" name="Healer" type="NPC" x="160" y="224" width="32" height="32">
    <properties>
-    <property name="content" value="Waht's up?"/>
     <property name="default_direction" value="down"/>
     <property name="downRect" value="320 0"/>
-    <property name="interaction" value="dialogue"/>
+    <property name="interaction" value="heal"/>
     <property name="leftRect" value="320 32"/>
     <property name="rightRect" value="320 64"/>
     <property name="source" value="People4.png"/>
