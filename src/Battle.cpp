@@ -222,6 +222,7 @@ Gameplay::BattleMonster::BattleMonster()
     type = monster;
 	status = active;
 	exp = 1;
+    money = 0;
 }
 
 /*
@@ -241,6 +242,7 @@ Gameplay::BattleMonster::BattleMonster(float newMaxSpeed, int newAtk, int newDef
     type = monster;
 	status = active;
 	exp = 1;
+    money = 0;
 }
 
 /*
@@ -260,6 +262,7 @@ Gameplay::BattleMonster::BattleMonster(const BattleMonster& newMonster)
     type = monster;
 	status = newMonster.status;
 	exp = newMonster.exp;
+    money = newMonster.money;
     const sf::Texture* texture = newMonster.sprite.getTexture();
     sf::Vector2u textureSize = texture->getSize();
     int num_frame = textureSize.x / 320;
@@ -287,6 +290,7 @@ Gameplay::BattleMonster& Gameplay::BattleMonster::operator=(const BattleMonster&
     type = monster;
 	status = newMonster.status;
 	exp = newMonster.exp;
+    money = newMonster.money;
     const sf::Texture* texture = newMonster.sprite.getTexture();
     sf::Vector2u textureSize = texture->getSize();
     int num_frame = textureSize.x / 320;
@@ -599,7 +603,7 @@ void Gameplay::Battle::_dealDamage(std::unique_ptr<BattleCharacter>& player, std
     player->takeDamage(damage_monsterToPlayer);
     monster->takeDamage(damage_playerToMonster);
     
-    //player may gain exp if the monster is defeated
+    //player may gain exp and money if the monster is defeated
     if(monster->getStatus() == BattleCharacter::STATUS::non_active)
     {
         player->setExp(monster->getExp());
@@ -607,6 +611,9 @@ void Gameplay::Battle::_dealDamage(std::unique_ptr<BattleCharacter>& player, std
         expgain->setTextColor(sf::Color::Yellow);
         expgain->setPosition(player->getPosition() - sf::Vector2f(0, 170));
         damageRenderList.push_back(std::move(expgain));
+        
+        int newMoney = player->getMoney() + monster->getMoney();
+        player->setMoney(newMoney);
     }
     
     //put the damage number to render list
@@ -663,12 +670,13 @@ Gameplay::BattleFactory::BattleFactory(Configuration& newConfig) : config(newCon
 	while (!input.eof())
 	{
 		std::string name, spriteName, line;
-		int max_speed, atk, def, max_hp, exp;
+        int max_speed, atk, def, max_hp, exp, money;
 		std::getline(input, line);
 		std::stringstream ss(line);
-		ss >> name >> max_speed >> atk >> def >> max_hp >> exp >> spriteName;
+		ss >> name >> max_speed >> atk >> def >> max_hp >> exp >> money >>spriteName;
         BattleMonster newMonster(max_speed, atk, def, max_hp);
 		newMonster.setExp(exp);
+        newMonster.setMoney(money);
         newMonster.loadSprite(config.texMan.get(spriteName));
         monsterTree.emplace(name, newMonster);
 	}

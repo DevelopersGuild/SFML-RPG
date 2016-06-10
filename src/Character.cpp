@@ -19,6 +19,7 @@ Character::Character(Configuration& newConfig) : config(newConfig)
 	sprite_UpdateRate = 0.08f;
 	distance_since_lastBattle = 0;
     num_Continuous_battle_escape = 0;
+    money = 10;
 
 	//initialize the spriteLists
 	for (int i = 0; i < 3; i++)

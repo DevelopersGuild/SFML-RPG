@@ -18,6 +18,7 @@ Gameplay::MiniMap::MiniMap(Configuration & newConfig) : config(newConfig)
 	pin->setPosition(0, 0);
 	pin->setTexture(config.texMan.get("miniPin.png"));
 	panel->add(pin);
+    panel->hide();
 	currentMap = nullptr;
 }
 

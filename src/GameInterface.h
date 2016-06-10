@@ -21,6 +21,8 @@ namespace Gameplay
 		tgui::Label::Ptr text_exp;
 		tgui::ProgressBar::Ptr expBar;
 		tgui::Label::Ptr text_level;
+        tgui::Picture::Ptr coin;
+        tgui::Label::Ptr text_money;
 	public:
 		CharInfoInterface(Configuration& config);
 		void addToGui(tgui::Gui& gui);

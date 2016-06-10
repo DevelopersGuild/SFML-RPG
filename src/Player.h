@@ -112,5 +112,7 @@ namespace Gameplay
 		int getCurrentExp() { return character.getExp(); }
 		int getExpCap() { return character.getExpCap(); }
 		int getLevel() { return character.getLevel(); }
+        int getMoney(){return character.getMoney();}
+        void setMoney(int value){return character.setMoney(value);}
 	};
 }

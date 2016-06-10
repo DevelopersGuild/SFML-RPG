@@ -99,7 +99,7 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	//collision Test
 	//1.create a temporary float rect from player's rect
 	sf::FloatRect charRect = character.getAABB();
-	sf::FloatRect charSpriteRect = character.getSpriteAABB();
+	sf::FloatRect charRect_NPC = character.getAABB();
 
 	//2.shift the temmporary rect to the direction
 	//get the speed of the player
@@ -110,19 +110,19 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	{
 	case Character::Direction::up:
 		charRect.top -= speed;
-		charSpriteRect.top -= speed;
+		charRect_NPC.top -= (speed + 3);
 		break;
 	case Character::Direction::down:
 		charRect.top += speed;
-		charSpriteRect.top += speed;
+		charRect_NPC.top += (speed + 3);
 		break;
 	case Character::Direction::left:
 		charRect.left -= speed;
-		charSpriteRect.left -= speed;
+		charRect_NPC.left -= (speed + 3);
 		break;
 	case Character::Direction::right:
 		charRect.left += speed;
-		charSpriteRect.left += speed;
+		charRect_NPC.left += (speed + 3);
 		break;
 	default:
 		;
@@ -150,7 +150,7 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 			collided = true;	//collision found, stop further searching
 			break;
 		}		
-		if (obj->GetParent() == "NPC" && charSpriteRect.intersects(obj->GetAABB()))
+		if (obj->GetParent() == "NPC" && charRect_NPC.intersects(obj->GetAABB()))
 		{
 			collided = true;	//collision found, stop further searching
 			break;
@@ -219,26 +219,26 @@ tmx::MapObject* Gameplay::Player::interact()
     
     //1.create a temporary float rect from player's rect
     sf::FloatRect charRect = character.getAABB();
-	sf::FloatRect charSpriteRect = character.getSpriteAABB();
+	sf::FloatRect charRect_NPC = character.getAABB();
     
     //2.slightly move the charRect along the character's direction
     switch (direction)
     {
         case Character::Direction::up:
             charRect.top -= 5;
-			charSpriteRect.top -= 5;
+			charRect_NPC.top -= 8;
             break;
         case Character::Direction::down:
             charRect.top += 5;
-			charSpriteRect.top += 5;
+			charRect_NPC.top += 8;
             break;
         case Character::Direction::left:
             charRect.left -= 5;
-			charSpriteRect.left -= 5;
+			charRect_NPC.left -= 8;
             break;
         case Character::Direction::right:
             charRect.left += 5;
-			charSpriteRect.left += 5;
+			charRect_NPC.left += 8;
             break;
         default:
             ;
@@ -274,7 +274,7 @@ tmx::MapObject* Gameplay::Player::interact()
 	{
 		//if the player collides with any npc, return that npc
 		auto npcObject = find_if(npcLayer->objects.begin(), npcLayer->objects.end(), [&](tmx::MapObject& obj) {
-			return obj.GetAABB().intersects(charSpriteRect);
+			return obj.GetAABB().intersects(charRect_NPC);
 		});
 
 		//6.if found, set the pointer to that npc

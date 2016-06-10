@@ -32,16 +32,16 @@ void Gameplay::GameInterface::draw()
 	//draw the map
 	window.draw(*system->currentMap);
 
+    //draw every NPCs in the same map
+    for (auto& npc : system->npcRenderList)
+    {
+        window.draw(*npc);
+    }
+    
 	//draw every player in the map
 	for (auto& pair : system->playerTree)
 	{
 		window.draw(pair.second);
-	}
-
-	//draw every NPCs in the same map
-	for (auto& npc : system->npcRenderList)
-	{
-		window.draw(*npc);
 	}
 
     //if it is in battle, draw the battle
@@ -228,6 +228,18 @@ Gameplay::CharInfoInterface::CharInfoInterface(Configuration& config)
 	text_level->setTextColor(tgui::Color(sf::Color::Black));
 	text_level->setPosition(5, 5);
 	panel->add(text_level);
+    
+    coin = std::make_shared<tgui::Picture>();
+    coin->setSize(30,30);
+    coin->setPosition(5, 135);
+    coin->setTexture(config.texMan.get("coin.png"));
+    panel->add(coin);
+    
+    text_money = std::make_shared<tgui::Label>();
+    text_money->setTextSize(30);
+    text_money->setPosition(40, 127);
+    text_money->setText("10");
+    panel->add(text_money);
 }
 
 void Gameplay::CharInfoInterface::addToGui(tgui::Gui & gui)
@@ -242,6 +254,7 @@ void Gameplay::CharInfoInterface::update(Player * player)
 	int currentExp = player->getCurrentExp();
 	int expCap = player->getExpCap();
 	int level = player->getLevel();
+    int money = player->getMoney();
 
 	hpBar->setText(sf::String(std::to_string(currentHp) + " / " + std::to_string(maxHp)));
 	hpBar->setMaximum(maxHp);
@@ -256,6 +269,7 @@ void Gameplay::CharInfoInterface::update(Player * player)
 	expBar->setValue(currentExp);
 
 	text_level->setText("Lv " + std::to_string(level));
+    text_money->setText(std::to_string(money));
 }
 //**************************************************************
 Gameplay::InGameMenu::InGameMenu(Configuration& config)

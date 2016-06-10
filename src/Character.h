@@ -90,6 +90,9 @@ namespace Gameplay
         
         //character's name
         sf::Text nameText;
+        
+        //character's money
+        int money;
 
 		//the clock to update sprite
 		sf::Clock spriteClock;
@@ -175,6 +178,12 @@ namespace Gameplay
         
         //get the maximum hp of character
         int getMaxHp(){return max_hp;}
+        
+        //get the amount of money of character
+        int getMoney(){return money;}
+        
+        //set the amount of money of character
+        void setMoney(int value){money = value;}
 
 		//get (not gain)the current exp value of the player
 		int getExp() { return current_exp; }
