@@ -116,7 +116,7 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 	panel->add(tips);
 	tips->setPosition(20, 20);
 	tips->setTextSize(24);
-	tips->setText("Tips : I have nothing to say :(");
+	tips->setText("Tips : You can find Burny Sanders in the deep of the desert ruin.");
 	
 	//*************************************************************************
 	//the render loop
