@@ -103,6 +103,15 @@ public:
 		}
 	}
 
+	//stop all musics
+	void stopAll()
+	{
+		for (auto it = _Map.begin(); it != _Map.end(); it++)
+		{
+			it->second->stop();
+		}
+	}
+
 	//get the global music volume
 	float getVolume() { return musicVolume; }
 };

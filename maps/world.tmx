@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="161">
+ <properties>
+  <property name="battle" value="true"/>
+  <property name="battle_rate" value="1"/>
+  <property name="miniMap" value="world.png"/>
+  <property name="music" value="Field1.ogg"/>
+ </properties>
+ <tileset firstgid="1" name="World_A2" tilewidth="32" tileheight="32" tilecount="192">
+  <image source="World_A2.png" trans="ff00ff" width="512" height="384"/>
+ </tileset>
+ <tileset firstgid="193" name="terrain" tilewidth="32" tileheight="32" tilecount="1024">
+  <image source="terrain.png" trans="ff00ff" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="1217" name="World_B" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="World_B.png" trans="ff00ff" width="512" height="512"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1UEORTAQgGFcCRdy/0gkDmBjJdN2qjOmiX/xrZ5486vWPg7DDgAAAAAAAABAkOOW+v0siJ7/2ZFS6uil6zlHa0dUT24W75bU/a07LFpaWHZI75pHV+0933RIPV+vzTzZP7fajprrpWsX44badSmd6ZF7T5pPM/ebtZF4rE2vzxlosTqdY1/Ygv7X+vu1BbZo+7RnXW8tEu2Z3UtLbo9qv0NeLZZ74a/v2AVa/iY6
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmbFuE0EQhi+2j4IKyVEkaEFICU8Q0iERBFROE2reIHkLupA3QHmBGN4hElR2OngHaIASxIziEZNhZnZ2bw/biF8anWT5rPn23/1v9zxum2YTarzm17tQ9/6B67LH8b8fMT+GUKOK12X5kdLJoGleO3U6uP79v+0HjV9K59Dn1Km3gqNvX7XvRnw4XvQ7gZqzOjA4SK+GVxXRTVEoy4/InPB84P2eMD6NA/t/1MZYbiscWJYvc2U8j5x5L324ZP2eG3xcLzfKGTxfvo2a5uvo93U2+JNNq0ulT48D+6cq7d/zRXLR+ngTWOtcfE5NF57S/JT9837vFDBovsh5hr6gpu31MUyNpZZfxCLv2y7o2fPF84NL45G9EceEZZb0pSuL98yy/PCk8dC6wnUz64FFzluZ9xE/UkyaZsoc857/qToe6HmfWh85HJxlG35jB+pBm37mlxTPe8zXVF6VsuzC/Q+h9tpYhh8k+vXyfujsr3L9kCxP4TeeQT1vYzlnsWK/WhZjTnMfavohWXLympT7DEztd0v9sHiiys3h1PO8NkuOcllQlh9d55bk6JPFy6saXkiWXEVZvLyq4QVXn75Yfox74ED1xcL94Gfa6Nm8RH2wcD9yzuZdxVluBc/oKIuF+0H7MO9MXlPY/3sYxw+ZeeKx4Pin9qO1+ZDjIzB8KsxFyUPnydT+0npfUCrkKM1jEmfZWXyW2nseOb68AD/3oS467vVLRO9GNM0yeB63V/UE6jCQD132kJoiuSTPpRaP11uk564slif8dz1vaN3UGNcu93NPUr1Y3njrhmS935D3dB2L78H16Xkj84z3Lt8NWBmvzdEchvuZz2/NG9mT1Xs023M5WmDYKtiHlL4DmSSy41SwfIZx/uLMF8r6Ej9QXpZpvfP3Bjnz8wf093OU9qbUD2KZB0p7J2+NhZUbqXlW6kctWb5q+yCPBf24sUQOVE1flq1avqyCNBbvf7lVZvH+PyWdiT3IKkr7z0TuY96x9bxOLOs8x3LWCmqVWSJrhQs5fgGXCcNi
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt10EKg0AMhWHB6d5T9Qb1wvZG9QBtEEHc1MBLNO3/weAuTMi8UbsOgNfcdLVewlpe7aar1QtrHaWcg5pnrso5qJ0x10hn5k3pyFyunI+9f5pLBUO/rCzPoPln9mCi+rB8WJ6zchLVR3Y+ovrIFtHHeqYANd7ndVz5/8PjF+6yynfy9hvFnlXPlWXe9r4+AWg8PnkaC2fqXnjvVU3t+wIAAAAAjzdE5R/s
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="13" x="0" y="992" width="10" height="608"/>
+  <object id="14" x="0" y="1591" width="1632" height="9"/>
+  <object id="15" x="1592" y="1344" width="8" height="288"/>
+  <object id="91" x="0" y="0" width="160" height="864"/>
+  <object id="92" x="0" y="864" width="128" height="32"/>
+  <object id="93" x="0" y="896" width="96" height="128"/>
+  <object id="94" x="160" y="672" width="32" height="64"/>
+  <object id="96" x="160" y="0" width="313" height="337"/>
+  <object id="98" x="474" y="228" width="62" height="75.3333"/>
+  <object id="99" x="526" y="218.667" width="144.667" height="30"/>
+  <object id="100" x="639.333" y="159.333" width="90" height="147.333"/>
+  <object id="101" x="622.667" y="265.333" width="24.6667" height="104"/>
+  <object id="102" x="590.667" y="356.667" width="73.3333" height="107.333"/>
+  <object id="103" x="644" y="298" width="89.3333" height="138"/>
+  <object id="104" x="730" y="368" width="30" height="126.667"/>
+  <object id="105" x="686.667" y="430.667" width="44.6667" height="29.3333"/>
+  <object id="106" x="709.333" y="454.667" width="29.3333" height="20.6667"/>
+  <object id="107" x="758.667" y="396.667" width="30.6667" height="164.667"/>
+  <object id="108" x="786.667" y="433.333" width="14" height="125.333"/>
+  <object id="109" x="736.667" y="490.667" width="26" height="20"/>
+  <object id="110" x="834" y="464.667" width="25.3333" height="99.3333"/>
+  <object id="111" x="855.333" y="486.667" width="570.667" height="74.6667"/>
+  <object id="112" x="1030.67" y="555.333" width="206.667" height="35.3333"/>
+  <object id="113" x="1360.67" y="461.333" width="137.333" height="27.3333"/>
+  <object id="114" x="1422" y="481.333" width="82.6667" height="46.6667"/>
+  <object id="115" x="1386.67" y="421.333" width="216.667" height="50.6667"/>
+  <object id="116" x="86.6667" y="934" width="194" height="80"/>
+  <object id="117" x="110.667" y="1002.67" width="232" height="38.6667"/>
+  <object id="118" x="173.333" y="1033.33" width="238.667" height="35.3333"/>
+  <object id="119" x="202.667" y="1062.67" width="266.667" height="21.3333"/>
+  <object id="120" x="276" y="1119.33" width="204.667" height="32.6667"/>
+  <object id="121" x="308.667" y="1130" width="222" height="34.6667"/>
+  <object id="122" x="363.333" y="1156.67" width="169.333" height="44.6667"/>
+  <object id="123" x="398.667" y="1194.67" width="139.333" height="60"/>
+  <object id="124" x="431.333" y="1198" width="320.667" height="97.3333"/>
+  <object id="125" x="414" y="1252" width="28.6667" height="13.3333"/>
+  <object id="126" x="652.667" y="1166.67" width="423.333" height="45.3333"/>
+  <object id="127" x="746.667" y="1131.33" width="198" height="38.6667"/>
+  <object id="128" x="746" y="1209.33" width="100" height="52.6667"/>
+  <object id="129" x="836.667" y="1210.67" width="240.667" height="26.6667"/>
+  <object id="130" x="878.667" y="1228" width="230" height="35.3333"/>
+  <object id="131" x="934" y="1258.67" width="176" height="33.3333"/>
+  <object id="132" x="966.667" y="1288" width="202" height="39.3333"/>
+  <object id="133" x="1005.33" y="1322.67" width="171.333" height="33.3333"/>
+  <object id="134" x="1038" y="1354.67" width="197.333" height="36"/>
+  <object id="135" x="1065.33" y="1384" width="169.333" height="44"/>
+  <object id="136" x="1096.67" y="1424" width="140" height="61.3333"/>
+  <object id="137" x="1130" y="1482" width="200" height="33.3333"/>
+  <object id="138" x="1158.67" y="1511.33" width="170.667" height="33.3333"/>
+  <object id="139" x="1192" y="1538.67" width="139.333" height="65.3333"/>
+  <object id="140" x="480" y="0" width="1152" height="160"/>
+  <object id="141" x="800" y="160" width="800" height="32"/>
+  <object id="142" x="832" y="192" width="768" height="32"/>
+  <object id="143" x="1376" y="224" width="224" height="32"/>
+  <object id="144" x="1408" y="256" width="192" height="32"/>
+  <object id="145" x="1440" y="288" width="160" height="32"/>
+  <object id="146" x="1472" y="320" width="128" height="32"/>
+  <object id="147" x="1504" y="352" width="96" height="32"/>
+  <object id="148" x="1536" y="384" width="64" height="32"/>
+  <object id="149" x="1440" y="544" width="160" height="96"/>
+  <object id="150" x="1472" y="640" width="128" height="32"/>
+  <object id="151" x="1504" y="672" width="96" height="224"/>
+  <object id="152" x="1536" y="896" width="64" height="32"/>
+  <object id="153" x="1472" y="992" width="64" height="64"/>
+  <object id="154" x="1504" y="1056" width="64" height="64"/>
+  <object id="155" x="1536" y="1120" width="64" height="224"/>
+  <object id="156" x="1536" y="928" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup name="Player">
+  <object id="17" name="dummy" x="1536" y="96" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Event">
+  <object id="18" name="to_town.tmx" type="teleport" x="928" y="896" width="64" height="64">
+   <properties>
+    <property name="destination" value="town.tmx"/>
+    <property name="destination_point" value="point_entrance"/>
+   </properties>
+  </object>
+  <object id="19" name="point_outsideTown" type="position" x="960" y="960" width="32" height="32"/>
+  <object id="157" name="to_desertRuin" type="teleport" x="1216" y="1216" width="64" height="64">
+   <properties>
+    <property name="destination" value="test.tmx"/>
+    <property name="destination_point" value="point_entrance"/>
+   </properties>
+  </object>
+  <object id="158" name="point_outsideDesertRuin" type="position" x="1184" y="1216" width="32" height="32"/>
+  <object id="159" name="to_desertTower" type="teleport" x="1376" y="1440" width="32" height="64">
+   <properties>
+    <property name="destination" value="dungeon_1.tmx"/>
+    <property name="destination_point" value="event_start"/>
+   </properties>
+  </object>
+  <object id="160" name="point_outsideDesertTower" type="point" x="1408" y="1408" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Battle">
+  <object id="21" name="event_battle" type="battle" x="1440" y="32" width="32" height="32">
+   <properties>
+    <property name="background" value="Plain.png"/>
+    <property name="monster_set" value="snail"/>
+    <property name="snail" value="100"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

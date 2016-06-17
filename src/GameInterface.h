@@ -102,6 +102,9 @@ namespace Gameplay
 		//update the gui of the interface, must be called in every frame
 		void updateGUI(sf::Event& event);
 
+		//update the mini map
+		void updateMiniMap();
+
 		//set the transition layer to block the screen
 		void setTransition();
 

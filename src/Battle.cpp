@@ -636,6 +636,10 @@ void Gameplay::Battle::_dealDamage(std::unique_ptr<BattleCharacter>& player, std
     //set the speed
 	player->setSpeed((-4 * damage_ratio) - r1);
 	monster->setSpeed((4 *  (1.f / damage_ratio)) + r2);
+
+	//player sound
+	sf::Sound& sound = config.soundMan.get("Blow1.ogg");
+	sound.play();
 }
 
 /*

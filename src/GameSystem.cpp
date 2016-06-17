@@ -63,7 +63,8 @@ void Gameplay::GameSystem::reloadNPCRenderLlist()
 
 GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& startInfoPtr) :
 	config(newConfig),
-	battleFactory(newConfig)
+	battleFactory(newConfig),
+	itemLoader(newConfig)
 {
 	//create the players
     for(StartInfo::Player& player : startInfoPtr->playerList)
@@ -76,10 +77,13 @@ GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& sta
 	//TBD, load every map needed
 	loadMap("test.tmx");
     loadMap("Test2.tmx");
+	loadMap("town.tmx");
+	loadMap("world.tmx");
+	loadMap("dungeon_1.tmx");
 
 	for (auto& pair : playerTree)
 	{
-		addPlayertoMap(pair.second.getName(), "test.tmx", "event_start");
+		addPlayertoMap(pair.second.getName(), "town.tmx", "event_start");
 	}
 }
 
@@ -122,6 +126,11 @@ void Gameplay::GameSystem::addPlayertoMap(const std::string& playerName, const s
 		Player& player = playerTree.at(playerName);
 		player.changeMap(currentMap, location);
 		reloadNPCRenderLlist();
+		//load music
+		config.musMan.stopAll();
+		std::string musicName = currentMap->GetPropertyString("music");
+		sf::Music& music = config.musMan.get(musicName);
+		music.play();
 	}
 	else //if it is another player...
 	{

@@ -191,7 +191,8 @@ void Gameplay::Character::levelUp()
 	max_hp += 10;
 	atk += 2;
 	def += 1;
-	speed += (level & 1);
+	speed += 0.4 * (level & 1);
+	speed_battle += 0.4 * (level & 1);
 
 	// Update the exp_cap
 	exp_cap += level * 5;

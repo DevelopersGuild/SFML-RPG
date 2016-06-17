@@ -51,7 +51,8 @@ void Gameplay::MiniMap::addToGui(tgui::Gui & gui)
 
 void Gameplay::MiniMap::show()
 {
-	panel->show();
+	if(currentMap->GetPropertyString("miniMap") != "")
+		panel->show();
 }
 
 void Gameplay::MiniMap::hide()

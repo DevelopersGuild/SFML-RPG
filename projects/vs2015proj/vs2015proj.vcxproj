@@ -160,6 +160,7 @@
     <ClCompile Include="..\..\src\GameNetwork.cpp" />
     <ClCompile Include="..\..\src\GameSystem.cpp" />
     <ClCompile Include="..\..\src\InGame.cpp" />
+    <ClCompile Include="..\..\src\Item.cpp" />
     <ClCompile Include="..\..\src\Lobby.cpp" />
     <ClCompile Include="..\..\src\main.cpp" />
     <ClCompile Include="..\..\src\Menu.cpp" />

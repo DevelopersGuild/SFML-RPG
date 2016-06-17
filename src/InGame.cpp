@@ -43,6 +43,8 @@ void InGame::run()
 			interfacePtr->updateGUI(event);
 		}
 
+		interfacePtr->updateMiniMap();
+
 		//handle keyboard input, move character, interact...etc
 		if (systemPtr->isInBattle())
         {

@@ -66,6 +66,10 @@ void Gameplay::GameInterface::draw()
 void Gameplay::GameInterface::updateGUI(sf::Event & event)
 {
 	gui.handleEvent(event);
+}
+
+void Gameplay::GameInterface::updateMiniMap()
+{
 	//update the miniMap
 	miniMap.update(system->getPlayerPosition(), system->currentMap);
 }

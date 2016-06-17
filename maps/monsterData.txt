@@ -1,1 +1,4 @@
 sanders 5 6 3 20 10 10 sanders.png
+burny_sanders 5 14 6 50 50 50 burny_sanders.png
+snail 4 6 3 20 10 10 snail.png
+slime 4 12 8 35 28 28 slime.png

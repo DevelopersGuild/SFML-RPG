@@ -25,7 +25,8 @@ namespace Gameplay
 		GameNetwork* networkPtr;
 		GameInterface* interfacePtr;
 		BattleFactory battleFactory;
-
+		ItemLoader itemLoader;
+		
 		void reloadNPCRenderLlist();
         void changeNPCDirection(const std::string& name);
 	protected:
