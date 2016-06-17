@@ -116,7 +116,7 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 	panel->add(tips);
 	tips->setPosition(20, 20);
 	tips->setTextSize(24);
-	tips->setText("This is testing. Click cross button to leave.");
+	tips->setText("Tips : I have nothing to say :(");
 	
 	//*************************************************************************
 	//the render loop
@@ -141,7 +141,7 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 		config.cursor.update();
 
 		//if still loading, update percent
-		if (percent < 0)
+		if (percent < 99)
 		{
 			if (clock.getElapsedTime() > sf::seconds(0.05))
 			{
