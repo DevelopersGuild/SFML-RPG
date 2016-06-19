@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="101">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="110">
  <properties>
   <property name="battle" value="false"/>
+  <property name="music" value="DesertRuin1.ogg"/>
  </properties>
  <tileset firstgid="1" name="desert" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48">
   <image source="tmw_desert_spacing.png" trans="ff00ff" width="265" height="199"/>
@@ -32,7 +33,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="20" height="20">
   <data encoding="base64" compression="zlib">
-   eJytlLEOwyAMRGk7NZ3arm3iDaaS//+6emBAJ/viJAxPSICeLwSzppRWwl2ZlMfGvp6Z0Pu8PaWNzFccXyFe9GWlBvPlNi7Ed/R7q+ETpz76quGJ5hPw/Ug2MXwX5Qp8m+9jrN1IvtpliYL/HPMd9XnnN9Ing31n82XD91ReO3iTfBnWthBjzrvP2PPYB5F+QyJ5sW7kPVh21EEfe9vYuaFvJH/ZdCyr
+   eJytlLsSwyAMBElSOansOF0e6qAK/v+viwoK5uYkGEKxQyF5OWOjI4RwOCzKVbk1+mreDrXP6kll9XzJ8CXHi76o5M58sawfxzf6vpn4xNgffZl4evMJ+L5ONiG+k3IGXsX3JLWLky9XWXrBb475Rn3W+c30yWTfv/ki8a3KBjzKszup3Z18EWqt+yGk1/qfU4evdd8Q675Z+47OA+tcmI/NNvSxc0PfzHn/A1mxKvg=
   </data>
  </layer>
  <objectgroup name="Objects">
@@ -41,7 +42,6 @@
   <object id="57" x="0" y="32" width="32" height="608"/>
   <object id="58" x="352" y="0" width="288" height="32"/>
   <object id="60" name="check" x="608" y="32" width="32" height="640"/>
-  <object id="61" x="32" y="608" width="576" height="32"/>
   <object id="62" x="64" y="160" width="32" height="32"/>
   <object id="63" x="64" y="256" width="32" height="32"/>
   <object id="64" x="64" y="352" width="32" height="32"/>
@@ -49,8 +49,6 @@
   <object id="66" x="160" y="480" width="32" height="32"/>
   <object id="67" x="96" y="576" width="32" height="32"/>
   <object id="68" x="192" y="512" width="32" height="32"/>
-  <object id="69" x="256" y="544" width="32" height="32"/>
-  <object id="70" x="288" y="480" width="32" height="32"/>
   <object id="71" x="384" y="544" width="32" height="64"/>
   <object id="72" x="448" y="448" width="32" height="32"/>
   <object id="73" x="480" y="512" width="32" height="32"/>
@@ -70,6 +68,34 @@
   <object id="88" x="192" y="160" width="32" height="32"/>
   <object id="89" x="192" y="64" width="32" height="32"/>
   <object id="100" x="352" y="192" width="32" height="32"/>
+  <object id="105" x="32" y="608" width="224" height="32"/>
+  <object id="106" x="352" y="608" width="256" height="32"/>
+ </objectgroup>
+ <objectgroup name="NPC">
+  <object id="101" name="dummy" x="-96" y="-96" width="32" height="32"/>
+  <object id="102" name="Tin" type="NPC" x="224" y="64" width="32" height="32">
+   <properties>
+    <property name="content" value="Hello! I love DG!"/>
+    <property name="default_direction" value="right"/>
+    <property name="downRect" value="224 0"/>
+    <property name="interaction" value="dialogue"/>
+    <property name="leftRect" value="224 32"/>
+    <property name="rightRect" value="224 64"/>
+    <property name="source" value="People4.png"/>
+    <property name="upRect" value="224 96"/>
+   </properties>
+  </object>
+  <object id="103" name="Healer" type="NPC" x="160" y="224" width="32" height="32">
+   <properties>
+    <property name="default_direction" value="down"/>
+    <property name="downRect" value="320 0"/>
+    <property name="interaction" value="heal"/>
+    <property name="leftRect" value="320 32"/>
+    <property name="rightRect" value="320 64"/>
+    <property name="source" value="People4.png"/>
+    <property name="upRect" value="320 96"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="Player">
   <object id="98" name="dummy" x="-96" y="-96" width="32" height="32"/>
@@ -87,5 +113,12 @@
     <property name="content" value="Hello world!"/>
    </properties>
   </object>
+  <object id="108" name="to_world.tmx" type="teleport" x="256" y="608" width="96" height="32">
+   <properties>
+    <property name="destination" value="world.tmx"/>
+    <property name="destination_point" value="point_outsideDesertRuin"/>
+   </properties>
+  </object>
+  <object id="109" name="point_entrance" type="position" x="288" y="544" width="32" height="32"/>
  </objectgroup>
 </map>

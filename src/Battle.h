@@ -145,6 +145,12 @@ namespace Gameplay
         
         //take damage
         virtual void takeDamage(int value) = 0;
+        
+        //get the money of character
+        virtual int getMoney(){return 1;}
+        
+        //set the monsyer of character
+        virtual void setMoney(int value){;}
 
 		//the attributes
 		virtual int getAtk() = 0;
@@ -179,12 +185,14 @@ namespace Gameplay
 		int getMaxHP() { return character.getMaxHp(); }
 		int getCurrent_hp() { return character.getCurrentHp(); }
 		int getExp(){ return character.getExp(); }
+        int getMoney(){return character.getMoney();}
 
 		void setAtk(int value) { character.setAtk(value); }
 		void setDef(int value) { character.setDef(value); }
 		void setMaxHP(int value) { character.setMaxHp(value); }
 		void setCurrentHP(int value) { character.setCurrentHp(value); }
 		void setExp(int value) {character.gainExp(value);} //gain exp instead
+        void setMoney(int value){character.setMoney(value);}
 
 		void resetEscapeBattle() { character.resetBattleEscaped(); }
     };
@@ -200,6 +208,7 @@ namespace Gameplay
         int max_hp; //maximum hp of monster
         int current_hp; //current hp of monster
 		int exp; //exp gained if the monster is defeated
+        int money; //money gained if the monster is defeated
     public:
         BattleMonster();
         BattleMonster(float max_speed, int atk, int def, int max_hp);
@@ -212,6 +221,7 @@ namespace Gameplay
 		int getMaxHP() { return max_hp; }
 		int getCurrent_hp() { return current_hp; }
 		int getExp() { return exp; }
+        int getMoney(){return money;}
 
 		void setMaxSpeed(float value) { max_speed = value; }
 		void setAtk(int value) { atk = value; }
@@ -219,6 +229,7 @@ namespace Gameplay
 		void setMaxHP(int value) { max_hp = value; }
 		void setCurrentHP(int value) { current_hp = value; }
 		void setExp(int value) { exp = value; }
+        void setMoney(int value){money = value;}
 
         void animeUpdate();
         void takeDamage(int value);

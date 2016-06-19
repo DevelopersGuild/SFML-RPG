@@ -18,7 +18,7 @@ namespace Gameplay
 		{
 		}
         
-		void add(sf::IntRect&& newRect)
+		void add(sf::IntRect newRect)
         {
             spriteList.push_back(newRect);
             it = spriteList.begin(); //reset the iterator to prevent error
@@ -90,6 +90,9 @@ namespace Gameplay
         
         //character's name
         sf::Text nameText;
+        
+        //character's money
+        int money;
 
 		//the clock to update sprite
 		sf::Clock spriteClock;
@@ -120,6 +123,9 @@ namespace Gameplay
 
 		//get the AABB representation in the map
 		sf::FloatRect getAABB();
+
+		//get the AABB of the sprite
+		sf::FloatRect getSpriteAABB() { return sprite.getGlobalBounds(); }
 
 		//get the colide detection area of this character
 		sf::FloatRect getDectionArea();
@@ -172,6 +178,12 @@ namespace Gameplay
         
         //get the maximum hp of character
         int getMaxHp(){return max_hp;}
+        
+        //get the amount of money of character
+        int getMoney(){return money;}
+        
+        //set the amount of money of character
+        void setMoney(int value){money = value;}
 
 		//get (not gain)the current exp value of the player
 		int getExp() { return current_exp; }

@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "Configuration.h"
 #include "StartInfo.h"
+#include "NPC.h"
 
 namespace Gameplay
 {
@@ -24,12 +25,19 @@ namespace Gameplay
 		GameNetwork* networkPtr;
 		GameInterface* interfacePtr;
 		BattleFactory battleFactory;
+		ItemLoader itemLoader;
+		
+		void reloadNPCRenderLlist();
+        void changeNPCDirection(const std::string& name);
 	protected:
 		Configuration& config;
 
 		Player* thisPlayerPtr;
 		//a tree of players(every player should have unique name)
 		std::map<std::string, Player> playerTree;
+		
+		//npc render list, refresh when map is changed
+		std::list<std::unique_ptr<NPC>> npcRenderList;
 
 		//a tree of maps(using filename as key)
 		std::map<std::string, tmx::MapLoader*> mapTree;

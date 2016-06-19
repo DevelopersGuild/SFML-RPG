@@ -6,9 +6,65 @@
 
 using namespace Gameplay;
 
+void Gameplay::GameSystem::reloadNPCRenderLlist()
+{
+	//find and load every NPC into the tree
+	npcRenderList.clear();
+	auto& layerVector = currentMap->GetLayers();
+	auto NPCLayer = find_if(layerVector.begin(), layerVector.end(), [&](tmx::MapLayer& layer)
+	{
+		return layer.name == "NPC";
+	});
+	if (NPCLayer != layerVector.end())
+	{
+		for (tmx::MapObject& npc : NPCLayer->objects)
+		{
+			if (npc.GetType() == "NPC")
+			{
+				std::string name = npc.GetName();
+				assert(name != "");
+				std::string spriteFile = npc.GetPropertyString("source");
+				std::unique_ptr<NPC> npcPtr(new NPC(config.fontMan.get("Carlito-Regular.ttf"), config.texMan.get(spriteFile), currentMap, name));
+				npcPtr->setPosition(npc.GetPosition());
+
+				std::stringstream ss;
+				int x, y;
+				ss.str(npc.GetPropertyString("upRect"));
+				ss >> x >> y;
+				sf::IntRect upRect(x, y, 32, 32);
+				ss.clear();
+				ss.str(npc.GetPropertyString("rightRect"));
+				ss >> x >> y;
+				sf::IntRect rightRect(x, y, 32, 32);
+				ss.clear();
+				ss.str(npc.GetPropertyString("downRect"));
+				ss >> x >> y;
+				sf::IntRect downRect(x, y, 32, 32);
+				ss.clear();
+				ss.str(npc.GetPropertyString("leftRect"));
+				ss >> x >> y;
+				sf::IntRect leftRect(x, y, 32, 32);
+				npcPtr->setSpriteRect(upRect, rightRect, downRect, leftRect);
+				std::string strBuff = npc.GetPropertyString("default_direction");
+				if (strBuff == "up")
+					npcPtr->setDirection(NPC::DIRECTION::up);
+				else if (strBuff == "right")
+					npcPtr->setDirection(NPC::DIRECTION::right);
+				else if (strBuff == "left")
+					npcPtr->setDirection(NPC::DIRECTION::left);
+				else
+					npcPtr->setDirection(NPC::DIRECTION::down);
+
+				npcRenderList.push_back(std::move(npcPtr));
+			}
+		}
+	}
+}
+
 GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& startInfoPtr) :
 	config(newConfig),
-	battleFactory(newConfig)
+	battleFactory(newConfig),
+	itemLoader(newConfig)
 {
 	//create the players
     for(StartInfo::Player& player : startInfoPtr->playerList)
@@ -21,10 +77,13 @@ GameSystem::GameSystem(Configuration& newConfig, std::unique_ptr<StartInfo>& sta
 	//TBD, load every map needed
 	loadMap("test.tmx");
     loadMap("Test2.tmx");
+	loadMap("town.tmx");
+	loadMap("world.tmx");
+	loadMap("dungeon_1.tmx");
 
 	for (auto& pair : playerTree)
 	{
-		addPlayertoMap(pair.second.getName(), "test.tmx", "event_start");
+		addPlayertoMap(pair.second.getName(), "town.tmx", "event_start");
 	}
 }
 
@@ -66,6 +125,12 @@ void Gameplay::GameSystem::addPlayertoMap(const std::string& playerName, const s
 		currentMap = mapTree.at(mapName);
 		Player& player = playerTree.at(playerName);
 		player.changeMap(currentMap, location);
+		reloadNPCRenderLlist();
+		//load music
+		config.musMan.stopAll();
+		std::string musicName = currentMap->GetPropertyString("music");
+		sf::Music& music = config.musMan.get(musicName);
+		music.play();
 	}
 	else //if it is another player...
 	{
@@ -102,7 +167,7 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
 	}
     else if(eventObject->GetType() == "dialogue")
     {
-        std::cout << eventObject->GetPropertyString("content") << std::endl;
+        interfacePtr->switchDialogue(eventObject->GetPropertyString("content"));
     }
 	else if (eventObject->GetType() == "battle")
 	{
@@ -110,6 +175,50 @@ void Gameplay::GameSystem::handleGameEvent(tmx::MapObject* eventObject)
         std::cout << "Name : " << eventObject->GetName() << std::endl;
         createBattle(thisPlayerPtr->getName(), eventObject);
 	}
+	else if (eventObject->GetType() == "NPC")
+	{
+		std::string interaction = eventObject->GetPropertyString("interaction");
+		if (interaction == "dialogue")
+		{
+            changeNPCDirection(eventObject->GetName());
+            interfacePtr->switchDialogue(eventObject->GetPropertyString("content"));
+		}
+        else if(interaction == "heal")
+        {
+            int max_hp = thisPlayerPtr->getMaxHp();
+            thisPlayerPtr->setCurrentHp(max_hp);
+            changeNPCDirection(eventObject->GetName());
+            interfacePtr->switchDialogue("This is free healing service");
+        }
+	}
+}
+
+void Gameplay::GameSystem::changeNPCDirection(const std::string& name)
+{
+    //find the npc and change his/her direction
+    for(auto it = npcRenderList.begin(); it != npcRenderList.end(); it++)
+    {
+        if(name == (*it)->getName())
+        {
+            if(thisPlayerPtr->getDirection() == Character::Direction::left)
+            {
+                (*it)->setDirection(NPC::DIRECTION::right);
+            }
+            else if(thisPlayerPtr->getDirection() == Character::Direction::right)
+            {
+                (*it)->setDirection(NPC::DIRECTION::left);
+            }
+            else if(thisPlayerPtr->getDirection() == Character::Direction::up)
+            {
+                (*it)->setDirection(NPC::DIRECTION::down);
+            }
+            else if(thisPlayerPtr->getDirection() == Character::Direction::down)
+            {
+                (*it)->setDirection(NPC::DIRECTION::up);
+            }
+            break;
+        }
+    }
 }
 
 void Gameplay::GameSystem::loadMap(const std::string & filename)
@@ -156,7 +265,6 @@ void Gameplay::GameSystem::loadMap(const std::string & filename)
         
         playerLayer->objects.push_back(std::move(playerObj));
     }
-
 
 	//push the map into the tree
 	mapTree.emplace(filename, std::move(newMap));
@@ -206,8 +314,11 @@ void Gameplay::GameSystem::createBattle( const std::string& initPlayerName, tmx:
     std::shared_ptr<Battle> battle(battleFactory.generateBattle(battleObj));
     //the player joins the battle
     initPlayer.joinBattle(battle);
-    if(initPlayerName == thisPlayerPtr->getName())
-        currentBattle = battle;
+	if (initPlayerName == thisPlayerPtr->getName())
+	{
+		currentBattle = battle;
+		interfacePtr->hideMiniMap();
+	}       
     interfacePtr->exitTransition();
 }
 
@@ -221,8 +332,10 @@ void Gameplay::GameSystem::deleteBattle()
 	{
 		thisPlayerPtr->teleport_ToLastSafeLocation();
 		currentMap = thisPlayerPtr->getMap();
+		reloadNPCRenderLlist();
 		thisPlayerPtr->setCurrentHp(1);
 	}	
+	interfacePtr->showMiniMap();
     interfacePtr->exitTransition();
 }
 

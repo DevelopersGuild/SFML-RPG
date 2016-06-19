@@ -11,6 +11,7 @@ Player::Player(Configuration& newConfig) :
 	currentMap = nullptr;
 	ready = false;
     state = normal;
+    
 }
 
 Player::Player(Configuration& newConfig, const std::string& playerName, const std::string& charName) :
@@ -98,6 +99,7 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	//collision Test
 	//1.create a temporary float rect from player's rect
 	sf::FloatRect charRect = character.getAABB();
+	sf::FloatRect charRect_NPC = character.getAABB();
 
 	//2.shift the temmporary rect to the direction
 	//get the speed of the player
@@ -108,15 +110,19 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	{
 	case Character::Direction::up:
 		charRect.top -= speed;
+		charRect_NPC.top -= (speed + 3);
 		break;
 	case Character::Direction::down:
 		charRect.top += speed;
+		charRect_NPC.top += (speed + 3);
 		break;
 	case Character::Direction::left:
 		charRect.left -= speed;
+		charRect_NPC.left -= (speed + 3);
 		break;
 	case Character::Direction::right:
 		charRect.left += speed;
+		charRect_NPC.left += (speed + 3);
 		break;
 	default:
 		;
@@ -125,11 +131,11 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 	auto& layer = currentMap->GetLayers();
 
 	//3.get object Layer
-	const auto& objLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
-		return mapLayer.name == "Objects";
-	});
+	//const auto& objLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
+		//return mapLayer.name == "Objects";
+	//});
 
-	assert(objLayer != layer.end()); //if not found, terminate the program
+	//assert(objLayer != layer.end()); //if not found, terminate the program
 
 	//4.for each map obj check if there is intersection, perform collision test if the current map is same as character's map
 	//assume no collided
@@ -139,11 +145,16 @@ tmx::MapObject* Player::moveCharacter(tmx::MapLoader* cameraMap, const Character
 		
 	for (tmx::MapObject* obj : objVector)
 	{
-		if (obj->GetParent() == "Objects" && charRect.intersects(obj->GetAABB()))
+		if ((obj->GetParent() == "Objects" && charRect.intersects(obj->GetAABB())))
 		{
 			collided = true;	//collision found, stop further searching
 			break;
 		}		
+		if (obj->GetParent() == "NPC" && charRect_NPC.intersects(obj->GetAABB()))
+		{
+			collided = true;	//collision found, stop further searching
+			break;
+		}
 	}
 	
 	//5.if no collision, move the player. if collision, just change the direction
@@ -208,21 +219,26 @@ tmx::MapObject* Gameplay::Player::interact()
     
     //1.create a temporary float rect from player's rect
     sf::FloatRect charRect = character.getAABB();
+	sf::FloatRect charRect_NPC = character.getAABB();
     
     //2.slightly move the charRect along the character's direction
     switch (direction)
     {
         case Character::Direction::up:
             charRect.top -= 5;
+			charRect_NPC.top -= 8;
             break;
         case Character::Direction::down:
             charRect.top += 5;
+			charRect_NPC.top += 8;
             break;
         case Character::Direction::left:
             charRect.left -= 5;
+			charRect_NPC.left -= 8;
             break;
         case Character::Direction::right:
             charRect.left += 5;
+			charRect_NPC.left += 8;
             break;
         default:
             ;
@@ -246,9 +262,28 @@ tmx::MapObject* Gameplay::Player::interact()
     if(eventObject != eventLayer->objects.end())
     {
         temp = &(*eventObject);
+		return temp;
     }
     
-    return temp;
+	//5.perform npc check
+	auto npcLayer = find_if(layer.begin(), layer.end(), [&](tmx::MapLayer& mapLayer) {
+		return mapLayer.name == "NPC";
+	});
+    
+	if (npcLayer != layer.end())
+	{
+		//if the player collides with any npc, return that npc
+		auto npcObject = find_if(npcLayer->objects.begin(), npcLayer->objects.end(), [&](tmx::MapObject& obj) {
+			return obj.GetAABB().intersects(charRect_NPC);
+		});
+
+		//6.if found, set the pointer to that npc
+		if (npcObject != npcLayer->objects.end())
+		{
+			temp = &(*npcObject);
+		}
+	}
+	return temp;
 }
 
 bool Gameplay::Player::isBattleEncounter()
@@ -265,7 +300,7 @@ bool Gameplay::Player::isBattleEncounter()
 		//TBD, Sabrina's part
 		srand(time(NULL));
 		int random_num = rand() % (101);
-		float distance = character.getDistance_lastBattle() / 100;
+		float distance = character.getDistance_lastBattle() / 200.f;
 		int chance_encounter = distance * distance + battle_rate * distance;
 		if (chance_encounter >= random_num)
 			return true;

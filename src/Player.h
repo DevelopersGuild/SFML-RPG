@@ -101,6 +101,9 @@ namespace Gameplay
 
 		//teleport the player to the last safe location
 		void teleport_ToLastSafeLocation();
+        
+        //get the direction of the character
+        Character::Direction getDirection(){return character.getDirection();}
 
 		//character attributes
 		int getCurrentHp() { return character.getCurrentHp(); }
@@ -109,5 +112,12 @@ namespace Gameplay
 		int getCurrentExp() { return character.getExp(); }
 		int getExpCap() { return character.getExpCap(); }
 		int getLevel() { return character.getLevel(); }
+        int getMoney(){return character.getMoney();}
+        void setMoney(int value){return character.setMoney(value);}
+        int getAtk(){return character.getAtk();}
+        int getDef(){return character.getDef();}
+        float getSpeed(){return character.getSpeed();}
+        float getBattleSpeed(){return character.getBattleSpeed();}
+        
 	};
 }

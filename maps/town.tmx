@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="32" tileheight="32" nextobjectid="35">
+ <properties>
+  <property name="battle" value="false"/>
+  <property name="music" value="Town2.ogg"/>
+ </properties>
+ <tileset firstgid="1" name="Castle" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="Castle.png" trans="ff00ff" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="257" name="terrain" tilewidth="32" tileheight="32" tilecount="1024">
+  <image source="terrain.png" trans="ff00ff" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="1281" name="hyptosis_tile-art-batch-1" tilewidth="32" tileheight="32" tilecount="900">
+  <image source="hyptosis_tile-art-batch-1.png" trans="ff00ff" width="960" height="960"/>
+ </tileset>
+ <tileset firstgid="2181" name="forest_tiles" tilewidth="32" tileheight="32" tilecount="256">
+  <image source="forest_tiles.png" trans="ff00ff" width="512" height="512"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzTY2Jg0KMQH2VgYFjFgEqjY3LMJEcfPvetwuE+athBCV7FgIkH2k30cB+1wn7UfaPuG0zu2wHEK5DwHTYGhrtQfI9tcLgPhE9A8U+gm9ayQ/BvIt1HzbKTUPyC3PcLigej+8SB4SYBxZLsg899A41HovsGe/zC3IfN7MGCR903fPFQSX+DPf+SoicYR9002NyH7s6Bcl8RO8Qt+HAx+6j7Rt036r6Bch8ATwmtgw==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztlrtOwzAUhi2GJjsD8BJIVMAOouyglueA9gmQEHMDA2O5LF1Qy1QqbiuCN+C2gYAdRGDht4gVyxwnduIUCTjSpzZua3/nJNU5ZcZY2QGTYApMO9qPw2PWkhkwQazPgQqYT/n9sLJX0nd5LFqyQKz1QBXUwBLoZ9iXwlX0lOu+cl31GFuOqHkODzaMNL+65Nf4w343JcbeFe5KtN8FuCzQr+V/Xwvhsu/Fbvz9h8bvClyDdQO/Y5x1QpyXFB2Nn1o/yu8QtKXrpuQUFHh/TevH/e6R34NlTVz4mdSP398XuL0O2G8E9RpVGPPS/7+uo4u8Dyxyp/w2B1y7pKD89hz5tcA2CMBGtPYIniz2yHp/xZny2epnHdAFO2AXrII3EBbsV/HjM8XrFliLEGttB1BRxJ7/8fvinED0Jj5XrqSgmzepfW0QcQqPMz9+PfLj3lQ38Gto+ofIUcwmpv34OWJ86IukyOOn9l/bfqz6Ufnl8dP1Nz7j3mrgs67Oj8qvqXm25Ag0fnJ/k3OnZiB5FtL55Ym0+sm5h9LsKLuJWTLNL8tcaTMf2NZP9ckyV9r0X2qGlGdJ1e8n5lyTcPn8FRHC7xOAwwTc
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="40" height="30">
+  <data encoding="base64" compression="zlib">
+   eJztl79OAkEQxhcLjkfQZ/BxhBfByhINBZ2HhbHyX0MHJS/hY2gQCmw0IoXMJUyyTHZ2hlv29hL9ko/NsDvML3c7x54x4boQ4qrUzow5I+6AB2QdjV9bxry14vN1HXzn4DuyjsafwPaVkC9Evmt7erRfTgw+7toWbBwflxODjxPy0XpjT71rx1xeMd9LpHpUUk8j309z1+tmNXxST4fwXR0Ok1UI342yxgz8Lqzh7jPyHWe7Psnk/OftuAR/eGp/g1cCH73PWM/3fPHl2/otPhryb+wjrKflSymJ7x78QL7LwUNr7DG5OE9jzZ505bs0Bk/Aa/ACPAc/gp+s8ZbJxfk++NKKNXvSzq+rRlvXWdPUAILqzDc1YXzDkucI1zuC/a6A0vSvT5OSfK4zpOssmap/tXyp/j9cZ1xUXgM+rf46X5vpS61i83WZfa/VP195PmQrvAH2MX1S
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="4" x="0" y="0" width="544" height="512"/>
+  <object id="5" x="800" y="0" width="480" height="512"/>
+  <object id="6" x="704" y="192" width="96" height="64"/>
+  <object id="7" x="704" y="320" width="96" height="192"/>
+  <object id="8" x="0" y="672" width="544" height="288"/>
+  <object id="9" x="704" y="672" width="576" height="288"/>
+  <object id="11" x="544" y="0" width="47" height="96"/>
+  <object id="13" x="658" y="0" width="46" height="96"/>
+  <object id="14" x="707" y="3" width="91" height="77"/>
+  <object id="23" x="160" y="640" width="384" height="32"/>
+  <object id="24" x="896" y="640" width="256" height="32"/>
+  <object id="25" x="1216" y="640" width="64" height="32"/>
+  <object id="26" x="1280" y="512" width="32" height="128"/>
+  <object id="27" x="-32" y="512" width="32" height="160"/>
+  <object id="28" x="544" y="960" width="160" height="32"/>
+  <object id="30" x="0" y="512" width="9" height="160"/>
+  <object id="31" x="1274" y="512" width="6" height="160"/>
+  <object id="32" x="544" y="950" width="160" height="10"/>
+ </objectgroup>
+ <objectgroup name="NPC">
+  <object id="17" name="dummy" x="0" y="0" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Player">
+  <object id="18" name="dummy" x="32" y="0" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Event">
+  <object id="20" name="to_worldMap.tmx" type="teleport" x="592" y="64" width="66" height="32">
+   <properties>
+    <property name="destination" value="world.tmx"/>
+    <property name="destination_point" value="point_outsideTown"/>
+   </properties>
+  </object>
+  <object id="22" name="event_start" type="position" x="608" y="544" width="32" height="32"/>
+  <object id="34" name="point_entrance" type="position" x="608" y="128" width="32" height="32"/>
+ </objectgroup>
+</map>

@@ -33,15 +33,17 @@ void InGame::run()
 
 			if (event.type == sf::Event::KeyPressed)
 			{
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-					systemPtr->interact();
-                
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && !systemPtr->isInBattle())
                     interfacePtr->switchInGaemMenu();
+                
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+                    systemPtr->interact();
 			}
 
 			interfacePtr->updateGUI(event);
 		}
+
+		interfacePtr->updateMiniMap();
 
 		//handle keyboard input, move character, interact...etc
 		if (systemPtr->isInBattle())
@@ -57,10 +59,13 @@ void InGame::run()
 		{
 			handleKeybardInput_InGameMenu();
 		}
-		else
+		else if(interfacePtr->isDisplayingDialogue())
 		{
-			handleKeyboardInput();
-		}			
+		}
+        else
+        {
+            handleKeyboardInput();
+        }
 
 		//if this is server, send status update to client
 		if (networkPtr->isServer())
@@ -111,7 +116,7 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 	panel->add(tips);
 	tips->setPosition(20, 20);
 	tips->setTextSize(24);
-	tips->setText("This is testing. Click cross button to leave.");
+	tips->setText("Tips : You can find Burny Sanders in the deep of the desert ruin.");
 	
 	//*************************************************************************
 	//the render loop
@@ -136,7 +141,7 @@ void InGame::loadGame(std::unique_ptr<StartInfo>& startInfo)
 		config.cursor.update();
 
 		//if still loading, update percent
-		if (percent < 0)
+		if (percent < 99)
 		{
 			if (clock.getElapsedTime() > sf::seconds(0.05))
 			{
