@@ -31,6 +31,7 @@
 #include <TGUI/Callback.hpp>
 
 #include <map>
+#include <deque>
 #include <memory>
 #include <cassert>
 #include <functional>
@@ -51,7 +52,7 @@ namespace tgui
 
     namespace priv
     {
-        extern TGUI_API std::vector<const void*> data;
+        extern TGUI_API std::deque<const void*> data;
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -176,19 +177,19 @@ namespace tgui
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        template <typename Func, typename Arg, typename = void>
+        template <typename Arg, typename = void>
         struct bindRemover
         {
-            static const Arg& remove(Func, const Arg& arg)
+            static Arg remove(Arg arg)
             {
                 return arg;
             }
         };
 
-        template <typename Func, typename Arg>
-        struct bindRemover<Func, Arg, typename std::enable_if<std::is_bind_expression<Arg>::value>::type>
+        template <typename Arg>
+        struct bindRemover<Arg, typename std::enable_if<std::is_bind_expression<Arg>::value>::type>
         {
-            static auto remove(Func, const Arg& arg) -> decltype(arg())
+            static auto remove(Arg arg) -> decltype(arg())
             {
                 return arg();
             }
@@ -233,7 +234,7 @@ namespace tgui
         template <typename Func, typename... Args>
         void connect(unsigned int id, Func func, Args... args)
         {
-            using type = typename priv::isFunctionConvertible<Func, decltype(priv::bindRemover<Func, Args>::remove(func, args))...>::type;
+            using type = typename priv::isFunctionConvertible<Func, decltype(priv::bindRemover<Args>::remove(args))...>::type;
             static_assert(!std::is_same<type, TypeSet<void>>::value, "Parameters passed to the connect function are wrong!");
 
             auto argPos = checkCompatibleParameterType<type>();
