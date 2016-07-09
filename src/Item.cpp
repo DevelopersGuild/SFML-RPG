@@ -16,7 +16,7 @@ Gameplay::Item::Item(const Item & newItem) :
 
 Gameplay::Item& Gameplay::Item::operator=(const Item & newItem)
 {
-	Gameplay::Item::Item(newItem);
+	//Gameplay::Item::Item(newItem);
 	return *this;
 }
 
@@ -30,7 +30,7 @@ Gameplay::Potion::Potion(const Potion & newPotion) : hp(newPotion.hp)
 
 Gameplay::Potion& Gameplay::Potion::operator=(const Potion & newPotion)
 {
-	Gameplay::Potion::Potion(newPotion);
+	//Gameplay::Potion::Potion(newPotion);
 	return *this;
 }
 
@@ -60,7 +60,7 @@ Gameplay::Equip::Equip(const Equip & newEquip)
 
 Gameplay::Equip& Gameplay::Equip::operator=(const Equip & newEquip)
 {
-	Gameplay::Equip::Equip(newEquip);
+	//Gameplay::Equip::Equip(newEquip);
 	return *this;
 }
 

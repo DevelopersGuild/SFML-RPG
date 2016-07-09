@@ -59,6 +59,7 @@
 		FACCE25A1CD4A97300327C9F /* GameInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACCE2591CD4A97300327C9F /* GameInterface.cpp */; };
 		FACCE25D1CDAAA8A00327C9F /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACCE25B1CDAAA8A00327C9F /* Player.cpp */; };
 		FACCE2601CDAAB8900327C9F /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FACCE25E1CDAAB8900327C9F /* Character.cpp */; };
+		FADAA7281D148B09007B78EC /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FADAA7271D148B09007B78EC /* Item.cpp */; };
 		FAF3A6581CFE5B5A00AB2CB6 /* maps in Resources */ = {isa = PBXBuildFile; fileRef = FAF3A6571CFE5B5A00AB2CB6 /* maps */; };
 		FAF3A65C1CFE5B7F00AB2CB6 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = FAF3A6591CFE5B7F00AB2CB6 /* Music */; };
 		FAF3A65D1CFE5B7F00AB2CB6 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = FAF3A65A1CFE5B7F00AB2CB6 /* sounds */; };
@@ -156,6 +157,7 @@
 		FACCE25C1CDAAA8A00327C9F /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = ../src/Player.h; sourceTree = SOURCE_ROOT; };
 		FACCE25E1CDAAB8900327C9F /* Character.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Character.cpp; path = ../src/Character.cpp; sourceTree = SOURCE_ROOT; };
 		FACCE25F1CDAAB8900327C9F /* Character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Character.h; path = ../src/Character.h; sourceTree = SOURCE_ROOT; };
+		FADAA7271D148B09007B78EC /* Item.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Item.cpp; path = ../src/Item.cpp; sourceTree = SOURCE_ROOT; };
 		FAF3A6571CFE5B5A00AB2CB6 /* maps */ = {isa = PBXFileReference; lastKnownFileType = folder; name = maps; path = ../maps; sourceTree = SOURCE_ROOT; };
 		FAF3A6591CFE5B7F00AB2CB6 /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Music; path = ../Music; sourceTree = SOURCE_ROOT; };
 		FAF3A65A1CFE5B7F00AB2CB6 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = ../sounds; sourceTree = SOURCE_ROOT; };
@@ -257,6 +259,7 @@
 				FACCE24E1CD452EC00327C9F /* GameSystem.h */,
 				FACCE24F1CD4866100327C9F /* GameSystem.cpp */,
 				FA54D56B1D0ABFDE001EFDA8 /* Item.h */,
+				FADAA7271D148B09007B78EC /* Item.cpp */,
 				FACCE2551CD4A8A700327C9F /* GameNetwork.h */,
 				FACCE2561CD4A8FC00327C9F /* GameNetwork.cpp */,
 				FACCE2581CD4A94E00327C9F /* GameInterface.h */,
@@ -411,6 +414,7 @@
 				FAFB1C001CBC51090012F144 /* Cursor.cpp in Sources */,
 				5F3A1B3C1BC8519100726EBF /* main.cpp in Sources */,
 				5F35EB571BC84F4300FCF070 /* ResourcePathMac.mm in Sources */,
+				FADAA7281D148B09007B78EC /* Item.cpp in Sources */,
 				FAA25A691CF3C9850002ED19 /* Battle.cpp in Sources */,
 				FAB8D9651CEB131A004466BA /* ServerSystem.cpp in Sources */,
 				FACCE2571CD4A8FC00327C9F /* GameNetwork.cpp in Sources */,
